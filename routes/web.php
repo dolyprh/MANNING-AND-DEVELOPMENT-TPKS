@@ -22,5 +22,9 @@ use App\Http\Controllers\LoginController;
 
 Route::get('/', [AdminController::class, 'index']);
 Route::get('/sidebar', [AdminController::class, 'menu']);
-Route::get('/login', [LoginController::class, 'index']);
+Route::get('/login', [LoginController::class, 'view_login']);
+Route::post('/login', [LoginController::class, 'postlogin']);
+Route::get('/logout', [LoginController::class, 'logout']);
+
+
 

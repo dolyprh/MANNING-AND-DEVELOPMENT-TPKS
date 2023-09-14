@@ -32,9 +32,15 @@ class LoginController extends Controller
             // 'aktif' => $request->aktif
         ];
         if (Auth::attempt($infologin)) {
-            return redirect('/overview')->with('toast_success', 'Berhasil Login');
+            return redirect('/')->with('toast_success', 'Berhasil Login');
         } else {
-            return redirect('/')->with('toast_error', 'Username dan Password Salah');
+            return redirect('/login')->with('toast_error', 'Username dan Password Salah');
         }
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+        return redirect('/logout')->with('toast_success', 'Berhasil Logout');
     }
 }
