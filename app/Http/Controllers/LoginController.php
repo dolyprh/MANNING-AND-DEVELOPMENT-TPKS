@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\LoginModel;
+use Illuminate\Support\Facades\Route;
+
 
 use Illuminate\Http\Request;
 
@@ -38,9 +40,15 @@ class LoginController extends Controller
         }
     }
 
-    public function logout()
+    // public function logout()
+    // {
+    //     Auth::logout();
+    //     return redirect('/logout')->with('toast_success', 'Berhasil Logout');
+    // }
+
+     public function logout()
     {
         Auth::logout();
-        return redirect('/logout')->with('toast_success', 'Berhasil Logout');
+        return redirect('/login')->with('toast_success', 'Berhasil Logout');
     }
 }

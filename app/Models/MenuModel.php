@@ -17,4 +17,17 @@ class MenuModel extends Model
     {
         return DB::table('submenus')->get();
     }
+
+    public function insert_submenu($data)
+    {
+        if (DB::table('submenus')->insert($data)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    function delete_submenu($id_menu) {
+        DB::table('submenus')->where('id', $id_menu)->delete();
+    }
 }

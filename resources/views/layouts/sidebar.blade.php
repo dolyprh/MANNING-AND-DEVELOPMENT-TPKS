@@ -5,7 +5,7 @@
     </a>
 
     <hr class="sidebar-divider my-0">
-
+@if(Auth::check())
     @foreach ($menus as $menu)
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#{{$menu->data_target}}"
@@ -17,13 +17,13 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 @foreach ($submenus->where('parent_id', $menu->id) as $submenu)
                     <a class="collapse-item" href="{{$submenu->url_submenu}}">{{$submenu->nama_submenu}}</a>
-                @endforeach
+                    @endforeach
             </div>
         </div>
     </li>
-
     <hr class="sidebar-divider my-0">
     @endforeach
+@endif
 
     <!-- <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"

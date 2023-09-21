@@ -102,6 +102,11 @@ class SubmenuSeeder extends Seeder
                 'nama_submenu' => 'Pesanan',
                 'url_submenu' => '/pesanan',
             ],
+            [
+                'parent_id' => '5',
+                'nama_submenu' => 'Laporan',
+                'url_submenu' => '/laporan',
+            ],
         ]);
     }
 }
