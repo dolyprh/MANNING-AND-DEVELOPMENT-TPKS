@@ -13,6 +13,21 @@ class SubmenuSeeder extends Seeder
         DB::table('submenus')->insert([
             [
                 'parent_id' => '1',
+                'nama_submenu' => 'Alat',
+                'url_submenu' => '/alat',
+            ],
+            [
+                'parent_id' => '1',
+                'nama_submenu' => 'Group',
+                'url_submenu' => '/group',
+            ],
+            [
+                'parent_id' => '1',
+                'nama_submenu' => 'Jenis Absen',
+                'url_submenu' => '/jenis-absen',
+            ],
+            [
+                'parent_id' => '1',
                 'nama_submenu' => 'Pegawai Mitra',
                 'url_submenu' => '/pegawai-mitra',
             ],
@@ -20,11 +35,6 @@ class SubmenuSeeder extends Seeder
                 'parent_id' => '1',
                 'nama_submenu' => 'Notifikasi',
                 'url_submenu' => '/notifikasi',
-            ],
-            [
-                'parent_id' => '1',
-                'nama_submenu' => 'Group',
-                'url_submenu' => '/group',
             ],
             [
                 'parent_id' => '1',
@@ -48,25 +58,19 @@ class SubmenuSeeder extends Seeder
             ],
             [
                 'parent_id' => '1',
-                'nama_submenu' => 'Alat',
-                'url_submenu' => '/alat',
-            ],
-            [
-                'parent_id' => '1',
                 'nama_submenu' => 'Parameter',
                 'url_submenu' => '/parameter',
-            ],
-            [
-                'parent_id' => '1',
-                'nama_submenu' => 'Jenis Absen',
-                'url_submenu' => '/jenis-absen',
             ],
             [
                 'parent_id' => '1',
                 'nama_submenu' => 'Menu',
                 'url_submenu' => '/menu',
             ],
-            
+            [
+                'parent_id' => '1',
+                'nama_submenu' => 'Menu-Hak Akses',
+                'url_submenu' => '/menu',
+            ],
             [
                 'parent_id' => '2',
                 'nama_submenu' => 'Rencana Baru',

@@ -77,15 +77,6 @@ class MasterController extends Controller
         return view('admin/master/shift', $data);
     }
 
-    public function alat() {
-        $data = [
-            'menus' => $this->MenuModel->getMenus(),
-            'submenus'    => $this->MenuModel->getSubmenus(),
-        ];
-
-        return view('admin/master/alat', $data);
-    }
-
     public function parameter() {
         $data = [
             'menus' => $this->MenuModel->getMenus(),

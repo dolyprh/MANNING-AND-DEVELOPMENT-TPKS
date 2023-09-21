@@ -49,8 +49,8 @@
         </div>
     </div>
 
-    @include('admin.modal.m_tambah_menu')
-    @include('admin.modal.m_delete_menu')
+    @include('admin.modal.m_menu_tambah')
+    @include('admin.modal.m_menu_delete')
     @include('sweetalert::alert')
 
 @endsection

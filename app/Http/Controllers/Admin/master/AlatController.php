@@ -3,24 +3,31 @@
 namespace App\Http\Controllers\Admin\Master;
 
 use App\Http\Controllers\Controller;
+use App\Models\AlatModel;
 use App\Models\MenuModel;
 use Illuminate\Http\Request;
 
-class MenuController extends Controller
+class AlatController extends Controller
 {
-    public function __construct()
+    /**
+     * Display a listing of the resource.
+     */
+
+    function __construct()
     {
         $this->MenuModel = new MenuModel();
+        $this->AlatModel = new AlatModel();   
     }
 
     public function index()
     {
         $data = [
-            'menus' => $this->MenuModel->getMenus(),
-            'submenus'    => $this->MenuModel->getSubmenus(),
+            'menus'    => $this->MenuModel->getMenus(),
+            'submenus' => $this->MenuModel->getSubmenus(),
+            'alat'     => $this->AlatModel->get_alat(),  
         ];
 
-        return view('admin/master/menu', $data);
+        return view('admin/master/alat', $data);
     }
 
     /**
@@ -37,17 +44,21 @@ class MenuController extends Controller
     public function store(Request $request)
     {
         $data = [
-            'parent_id'     => $request->input('jenis_menu'),
-            'nama_submenu'  => $request->input('nama_submenu'),
-            'url_submenu'   => $request->input('url_submenu'),
+            'kode_alat'     => $request->input('kode_alat'),
+            'nama_alat'  => $request->input('nama_alat'),
+            'jenis_alat'   => $request->input('jenis_alat'),
+            'keterangan'   => $request->input('keterangan'),
+            'kd_regional'  => $request->input(''),
+            'kd_cabang'    => $request->input(''),
+            'kd_terminal'  => $request->input(''),
             'created_at' => \Carbon\Carbon::now(),
         ];
 
-        if ($this->MenuModel->insert_submenu($data)) {
+        if ($this->AlatModel->insert_alat($data)) {
             // return redirect('/menu')->with('toast_success', 'Berhasil Tambah Menu!');
-            return redirect('/menu')->withSuccess('Menu Berhasil ditambahkan');
+            return redirect('/alat')->withSuccess('Alat Berhasil ditambahkan');
         } else {
-            return redirect('/menu')->with('toast_error', 'Gagal Tambah Menu!');
+            return redirect('/alat')->with('toast_error', 'Gagal Tambah Alat!');
 
         }
     }
@@ -79,9 +90,8 @@ class MenuController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id_menu)
+    public function destroy(string $id)
     {
-        $this->MenuModel->delete_submenu($id_menu);
-        return redirect('menu')->withSuccess('Berhasil Hapus Menu');
+        //
     }
 }

@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\fooding\JTanpaMakanController;
 use App\Http\Controllers\Admin\fooding\JKateringController;
 use App\Http\Controllers\Admin\fooding\PesananController;
 use App\Http\Controllers\Admin\laporan\LaporanController;
+use App\Http\Controllers\Admin\Master\AlatController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,8 +27,10 @@ use App\Http\Controllers\Admin\laporan\LaporanController;
 */
 
 // Route::get('/', function () {
-//     return view('welcome');
+//     return view('pengguna/pegawai');
 // });
+
+Route::get('/pengguna', [PenggunaController::class, 'pengguna']);
 
 Route::get('/', [AdminController::class, 'index'])->middleware('isLogin');
 Route::get('/sidebar', [AdminController::class, 'menu']);
@@ -42,10 +45,8 @@ Route::get('katering', [MasterController::class, 'katering']);
 Route::get('mitra-kerja', [MasterController::class, 'mitra_kerja']);
 Route::get('pegawai', [MasterController::class, 'pegawai']);
 Route::get('shift', [MasterController::class, 'shift']);
-Route::get('alat', [MasterController::class, 'alat']);
 Route::get('parameter', [MasterController::class, 'parameter']);
 Route::get('jenis-absen', [MasterController::class, 'jenis_absen']);
-Route::get('menu', [MenuController::class, 'index']);
 
 Route::get('rencana-baru', [RencanaController::class, 'rencana_baru']);
 Route::get('jadwal-group', [JGroupController::class, 'jadwal_group']);
@@ -61,6 +62,7 @@ Route::get('laporan', [LaporanController::class, 'laporan']);
 
 //Untuk CRUD Master Setup
 Route::resource('/menu', MenuController::class);
+Route::resource('/alat', AlatController::class);
 
 
 

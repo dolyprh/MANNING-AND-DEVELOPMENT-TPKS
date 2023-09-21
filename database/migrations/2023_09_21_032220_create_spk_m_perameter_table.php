@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('username')->unique();
-            $table->string('password');
-            $table->enum('role', ['admin', 'pegawai'])->default('admin');
-            $table->rememberToken();
+        Schema::create('spk_m_perameter', function (Blueprint $table) {
+            $table->id('param_id');
+            $table->string('param_code');
+            $table->string('param_label');
+            $table->string('val1')->nullable();
+            $table->string('val2')->nullable();
+            $table->string('val3')->nullable();
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('spk_m_perameter');
     }
 };
