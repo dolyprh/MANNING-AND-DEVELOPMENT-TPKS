@@ -21,4 +21,9 @@ class AlatModel extends Model
             return false;
         }
     }
+
+    function delete_alat($id_alat) 
+    {
+        DB::table('spk_m_alat')->where('id', $id_alat)->delete();    
+    }
 }

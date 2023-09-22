@@ -15,15 +15,15 @@ return new class extends Migration
             $table->id('id_shift');
             $table->string('nama_shift')->nullable();
             $table->string('waktu_mulai')->nullable();
-            $table->string('waktu_selsai')->nullable();
+            $table->string('waktu_selesai')->nullable();
             $table->timestamps();
             $table->integer('kd_regional')->nullable();
             $table->integer('kd_cabang')->nullable();
             $table->integer('kd_terminal')->nullable();
             $table->string('mulai_istirahat')->nullable();
             $table->string('selesai_istirahat')->nullable();
-            $table->char('collumn3', 10)->nullable();
-            $table->char('collumn4', 10)->nullable();
+            $table->char('column3', 10)->nullable();
+            $table->char('column4', 10)->nullable();
         });
     }
 

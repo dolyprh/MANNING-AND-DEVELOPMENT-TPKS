@@ -2,27 +2,45 @@
 @section('content')
 
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Katering</h1>
+        <h1 class="h3 mb-0 text-gray-800">Master Katering</h1>
     </div>
 
-    <div class="card p-6 col-xl-6 mb-4 p-4">
-        <form action="/alat" method="post" enctype="multipart/form-data">
+    <div class="card p-6 col-xl-8 mb-4 p-4">
+        <form action="/katering" method="post" enctype="multipart/form-data">
             @csrf
             <div class="mb-2">
-                <label for="kode_alat" class="form-label">Kode Alat</label>
-                <input type="text" class="form-control" name="kode_alat" id="kode_alat" placeholder="kode alat">
+                <label for="nama_katering" class="form-label">Nama Katering</label>
+                <input type="text" class="form-control" name="nama_katering" id="nama_katering" value="{{ old('nama_katering') }}">
+                @error('nama_katering')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+           
+            <div class="mb-2">
+                <label for="email_vendor" class="form-label">Email Vendor</label>
+                <input type="text" class="form-control" name="email_vendor" id="email_vendor" value="{{ old('email_vendor') }}">
+                @error('email_vendor')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
             </div>
             <div class="mb-2">
-                <label for="nama_alat" class="form-label">Nama Alat</label>
-                <input type="text" class="form-control" name="nama_alat" id="nama_alat" placeholder="nama alat">
+                <label for="phone" class="form-label">Phone</label>
+                <input type="text" class="form-control" name="phone" id="phone" value="{{ old('phone') }}">
+                @error('phone')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
             </div>
             <div class="mb-2">
-                <label for="jenis_alat" class="form-label">Jenis</label>
-                <input type="text" class="form-control" name="jenis_alat" id="jenis_alat" placeholder="jenis alat">
+                <label for="kode_cabang" class="form-label">Kode Cabang</label>
+                <input type="text" class="form-control" name="kode_cabang" id="kode_cabang">
             </div>
             <div class="mb-2">
-                <label for="keterangan" class="form-label">Keterangan</label>
-                <input type="text" class="form-control" name="keterangan" id="keterangan" placeholder="keterangan">
+                <label for="kode_terminal" class="form-label">Kode Terminal</label>
+                <input type="text" class="form-control" name="kode_terminal" id="kode_terminal">
+            </div>
+            <div class="mb-2">
+                <label for="kode_regional" class="form-label">Kode Regional</label>
+                <input type="text" class="form-control" name="kode_regional" id="kode_regional">
             </div>
             <button type="submit" class="btn btn-small btn-primary tombol-aksi float-right">Tambah</button>
         </form>
@@ -48,11 +66,30 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php $no = 1; ?>
+                        @foreach ($katering as $item)
+                            <tr>
+                                <td>{{ $item->nama }}</td>
+                                <td>{{ $item->email_vendor_food}}</td>
+                                <td>{{ $item->kode_cabang}}</td>
+                                <td>{{ $item->kode_terminal}}</td>
+                                <td>{{ $item->kode_regional}}</td>
+                                <td>{{ $item->phone}}</td>
+                                <td class="text-center">
+                                    <a href='' class="btn btn-sm bg-warning text-white">
+                                        <i class="fas fa-edit fa-primary"></i>
+                                    </a>
+                                    <button class="btn btn-sm btn-danger" data-toggle="modal" data-target='#deleteKatering{{ $item->id }}'>
+                                        <i class="fas fa-trash fa-danger"></i> 
+                                    </button>
+                                </td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 
+    @include('admin.modal.m_katering_delete')
+    @include('sweetalert::alert')
 @endsection

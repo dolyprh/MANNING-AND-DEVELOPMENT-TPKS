@@ -9,8 +9,8 @@
         <form action="/alat" method="post" enctype="multipart/form-data">
             @csrf
             <div class="mb-2">
-                <label for="kode_alat" class="form-label">Kode Alat</label>
-                <input type="text" class="form-control" name="kode_alat" id="kode_alat" placeholder="kode alat">
+                <label for="nama_group" class="form-label">Nama Group</label>
+                <input type="text" class="form-control" name="nama_group" id="nama_group" placeholder="kode alat">
             </div>
             <div class="mb-2">
                 <label for="nama_alat" class="form-label">Nama Alat</label>
@@ -65,6 +65,5 @@
         </div>
     </div>
 
-    @include('admin.modal.m_group_tambah')
-    @include('admin.modal.m_group_edit')
+    @include('sweetalert::alert')
 @endsection

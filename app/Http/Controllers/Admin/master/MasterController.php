@@ -41,15 +41,6 @@ class MasterController extends Controller
         return view('admin/master/group', $data);
     }
 
-    public function katering() {
-        $data = [
-            'menus' => $this->MenuModel->getMenus(),
-            'submenus'    => $this->MenuModel->getSubmenus(),
-        ];
-
-        return view('admin/master/katering', $data);
-    }
-
     public function mitra_kerja() {
         $data = [
             'menus' => $this->MenuModel->getMenus(),
@@ -66,24 +57,6 @@ class MasterController extends Controller
         ];
 
         return view('admin/master/pegawai', $data);
-    }
-
-    public function shift() {
-        $data = [
-            'menus' => $this->MenuModel->getMenus(),
-            'submenus'    => $this->MenuModel->getSubmenus(),
-        ];
-
-        return view('admin/master/shift', $data);
-    }
-
-    public function parameter() {
-        $data = [
-            'menus' => $this->MenuModel->getMenus(),
-            'submenus'    => $this->MenuModel->getSubmenus(),
-        ];
-
-        return view('admin/master/parameter', $data);
     }
 
     public function jenis_absen() {

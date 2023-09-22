@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nama')->nullable();
             $table->string('email_vendor_food')->nullable();
-            $table->integer('kd_cabang')->nullable();
+            $table->integer('kode_cabang')->nullable();
             $table->integer('kode_terminal')->nullable();
             $table->integer('kode_regional')->nullable();
             $table->string('phone')->nullable();

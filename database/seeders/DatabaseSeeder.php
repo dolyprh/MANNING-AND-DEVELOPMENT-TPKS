@@ -15,5 +15,7 @@ class DatabaseSeeder extends Seeder
         $this->call(UserSeeder::class);
         $this->call(MenuSeeder::class);
         $this->call(SubmenuSeeder::class);
+        $this->call(KateringSeeder::class);
+        $this->call(ShiftSeeder::class);
     }
 }

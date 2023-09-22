@@ -43,6 +43,21 @@ class AlatController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate(
+            [
+                'kode_alat'    => 'required',
+                'nama_alat'    => 'required',
+                'jenis_alat'   => 'required',
+                'keterangan'   => 'required',
+            ],
+            [
+                'kode_alat.required'         => 'kode alat tidak boleh kosong',
+                'nama_alat.required'          => 'nama alat tidak boleh kosong',
+                'jenis_alat.required'         => 'jenis alat tidak boleh kosong',
+                'keterangan.required'          => 'keterangan tidak boleh kosong',
+            ]
+        );
+        
         $data = [
             'kode_alat'     => $request->input('kode_alat'),
             'nama_alat'  => $request->input('nama_alat'),
@@ -74,9 +89,9 @@ class AlatController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        //
+        return 'HI' . $id ;
     }
 
     /**
@@ -84,14 +99,15 @@ class AlatController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id_alat)
     {
-        //
+        $this->AlatModel->delete_alat($id_alat);
+        return redirect('alat')->withSuccess('Berhasil Hapus Alat');
     }
 }

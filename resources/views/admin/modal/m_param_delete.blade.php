@@ -1,18 +1,18 @@
 <!-- Modal Hapus -->
-@foreach ($submenus as $submenu)
-    <div class="modal fade" id="deleteParam" tabindex="-1" role="dialog"
+    @foreach ($param as $item)
+    <div class="modal fade" id="deleteParam{{ $item->param_id }}" tabindex="-1" role="dialog"
         aria-labelledby="deleteParam" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable" role="document">
             <div class="modal-content">
                 <div class="modal-header bg-danger">
-                    <h5 class="modal-title text-white" id="nama_param">Hapus Menu</h5>
+                    <h5 class="modal-title text-white" id="nama_param">Hapus Parameter</h5>
                     <button type="button" class="close text-white" data-dismiss="modal"
                         aria-hidden="true">&times;</button>
                 </div>
                 <div class="modal-body">
-                    Yakin Ingin Menghapus Paramter?
+                        Yakin Ingin Menghapus Paramter {{ $item->param_code}} ?
                 </div>
-                <form action="/" method="POST">
+                <form action="/parameter/{{ $item->param_id }}" method="POST">
                     @csrf
                     @method('DELETE')
                     <div class="modal-footer">
@@ -23,4 +23,4 @@
             </div>
         </div>
     </div>
-@endforeach
+    @endforeach

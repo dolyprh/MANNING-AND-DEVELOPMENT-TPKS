@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('spk_m_perameter', function (Blueprint $table) {
+        Schema::create('spk_m_parameter', function (Blueprint $table) {
             $table->id('param_id');
             $table->string('param_code');
             $table->string('param_label');
