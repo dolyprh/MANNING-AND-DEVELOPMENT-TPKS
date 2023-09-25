@@ -6,24 +6,17 @@
     </div>
 
     <div class="card p-6 col-xl-6 mb-4 p-4">
-        <form action="/alat" method="post" enctype="multipart/form-data">
+        <form action="/group" method="post" enctype="multipart/form-data">
             @csrf
             <div class="mb-2">
                 <label for="nama_group" class="form-label">Nama Group</label>
                 <input type="text" class="form-control" name="nama_group" id="nama_group" placeholder="kode alat">
             </div>
             <div class="mb-2">
-                <label for="nama_alat" class="form-label">Nama Alat</label>
-                <input type="text" class="form-control" name="nama_alat" id="nama_alat" placeholder="nama alat">
+                <label for="kode_group" class="form-label">Kode Group</label>
+                <input type="text" class="form-control" name="kode_group" id="kode_group" placeholder="Kode Group">
             </div>
-            <div class="mb-2">
-                <label for="jenis_alat" class="form-label">Jenis</label>
-                <input type="text" class="form-control" name="jenis_alat" id="jenis_alat" placeholder="jenis alat">
-            </div>
-            <div class="mb-2">
-                <label for="keterangan" class="form-label">Keterangan</label>
-                <input type="text" class="form-control" name="keterangan" id="keterangan" placeholder="keterangan">
-            </div>
+            
             <button type="submit" class="btn btn-small btn-primary tombol-aksi float-right">Tambah</button>
         </form>
     </div>
@@ -40,30 +33,33 @@
                         <tr>
                             <th>No</th>
                             <th>Nama Group</th>
-                            <th>Keterangan</th>
+                            <th>Kode Group</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php $no = 1; ?>
+                        @foreach ($group as $item)
                             <tr>
                                 <td>{{ $no++ }}</td>
-                                <td>SDM</td>
-                                <td>Sumber Daya Manusia</td>
+                                <td>{{ $item->nama_group }}</td>
+                                <td>{{ $item->kode }}</td>
                                 <td class="text-center">
                                     <button class="btn btn-sm bg-warning text-white" data-toggle="modal" data-target="#editGroup">
                                         <i class="fas fa-edit fa-primary"></i>
                                     </button>
-                                    <button class="btn btn-sm btn-danger" data-toggle="modal" data-target='#deleteGroup'>
+                                    <button class="btn btn-sm btn-danger" data-toggle="modal" data-target='#deleteGroup{{ $item->id }}'>
                                         <i class="fas fa-trash fa-danger"></i> 
                                     </button>
                                 </td>
                             </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 
+    @include('admin.modal.m_group_delete')
     @include('sweetalert::alert')
 @endsection

@@ -6,7 +6,7 @@
     </div>
 
     <div class="card p-6 col-xl-6 mb-4 p-4">
-        <form action="/alat" method="post" enctype="multipart/form-data">
+        <form action="/pegawai-mitra" method="post" enctype="multipart/form-data">
             @csrf
             <div class="mb-2">
                 <label for="kode_alat" class="form-label">Kode Alat</label>

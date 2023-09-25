@@ -69,11 +69,11 @@
                     <tbody>
                         @foreach ($param as $item)
                         <tr>
-                            <td>{{ $item->param_code}}</td>
-                            <td>{{ $item->param_label}}</td>
-                            <td>{{ $item->val1}}</td>
-                            <td>{{ $item->val2}}</td>
-                            <td>{{ $item->val3}}</td>
+                            <td>{{ $item->param_code }}</td>
+                            <td>{{ $item->param_label }}</td>
+                            <td>{{ $item->val1 }}</td>
+                            <td>{{ $item->val2 }}</td>
+                            <td>{{ $item->val3 }}</td>
                             <td class="text-center">
                                 <button class="btn btn-sm bg-warning text-white">
                                     <i class="fas fa-edit fa-primary"></i>

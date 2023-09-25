@@ -6,18 +6,9 @@
 </button>
 
 <!-- Topbar Search -->
-<form
-    class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-    <div class="input-group">
-        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-            aria-label="Search" aria-describedby="basic-addon2">
-        <div class="input-group-append">
-            <button class="btn btn-primary" type="button">
-                <i class="fas fa-search fa-sm"></i>
-            </button>
-        </div>
-    </div>
-</form>
+<div class="d-sm-flex align-items-center justify-content-between ">
+    <h4 class=" mb-0 text-gray-8000 ml-2 mx-3">Aplikasi Surat Perintah Kerja</h4>
+</div>
 
 <ul class="navbar-nav ml-auto">
 

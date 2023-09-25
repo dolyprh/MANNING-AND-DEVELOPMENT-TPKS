@@ -17,5 +17,8 @@ class DatabaseSeeder extends Seeder
         $this->call(SubmenuSeeder::class);
         $this->call(KateringSeeder::class);
         $this->call(ShiftSeeder::class);
+        $this->call(PegawaiSeeder::class);
+        $this->call(GroupSeeder::class);
+        $this->call(AbsenSeeder::class);
     }
 }
