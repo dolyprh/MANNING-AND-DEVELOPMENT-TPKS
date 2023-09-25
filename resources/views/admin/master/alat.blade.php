@@ -65,7 +65,7 @@
                                 <td>{{ $item->jenis_alat}}</td>
                                 <td>{{ $item->keterangan}}</td>
                                 <td class="text-center">
-                                    <a href='{{ url('admin/master/edit/alat_edit/' .$item->id) }}' class="btn btn-sm bg-warning text-white">
+                                    <a href="{{ url('/alat/edit_alat/' .$item->id) }}" class="btn btn-sm bg-warning text-white">
                                         <i class="fas fa-edit fa-primary"></i>
                                     </a>
                                     <button class="btn btn-sm btn-danger" data-toggle="modal" data-target='#deleteAlat{{ $item->id }}'>

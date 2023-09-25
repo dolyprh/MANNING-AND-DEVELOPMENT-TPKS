@@ -94,56 +94,51 @@
 </div>
 
 <div class="card shadow mb-4">
-        <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Data Pegawai</h6>
-        </div>
-        <div class="card-body">
-            <div class="table-responsive table-center text-dark text-center">
-                <table class="table table-bordered table-align-center" id="dataTable" width="100%" cellspacing="0">
-                    <thead>
-                        <tr>
-                            <th>Nama</th>
-                            <th>NIPP</th>
-                            <th>Email</th>
-                            <th>Status</th>
-                            <th>Type</th>
-                            <th>Phone</th>
-                            <th>Kode Cabang</th>
-                            <th>Kode Terminal</th>
-                            <th>Kode Regional</th>
-                            <th class="col-sm-2">Aksi</th>
-                        </tr>
-                    </thead>
-                        @foreach ($pegawai as $item)
-                        <tr>
-                            <td>{{ $item->nama }}</td>
-                            <td>{{ $item->nipp }}</td>
-                            <td>{{ $item->email_address }}</td>
-                            <td>{{ $item->status }}</td>
-                            <td>{{ $item->type }}</td>
-                            <td>{{ $item->phone }}</td>
-                            <td>{{ $item->kd_cabang }}</td>
-                            <td>{{ $item->kd_terminal }}</td>
-                            <td>{{ $item->kd_regional }}</td>
-                            <td class="text-center">
-                                <a href='' class="btn btn-sm bg-warning text-white">
-                                    <i class="fas fa-edit fa-primary"></i>
-                                </a>
-                                <button class="btn btn-sm btn-danger" data-toggle="modal" data-target='#deletePegawai{{ $item->id }}'>
-                                    <i class="fas fa-trash fa-danger"></i> 
-                                </button>
-                            </td>
-                        </tr>
-                        @endforeach
-                    <tbody>
-                        
-                    </tbody>
-                </table>
-            </div>
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Data Pegawai</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive text-dark">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Nama</th>
+                        <th>NIPP</th>
+                        <th>Email</th>
+                        <th>Status</th>
+                        <th>Type</th>
+                        <th>Phone</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($pegawai as $item)
+                    <tr>
+                        <td>{{ $item->nama }}</td>
+                        <td>{{ $item->nipp }}</td>
+                        <td>{{ $item->email_address }}</td>
+                        <td>{{ $item->status }}</td>
+                        <td>{{ $item->type }}</td>
+                        <td>{{ $item->phone }}</td>
+                        <td class="text-center" >
+                            <a href='' class="btn btn-sm bg-warning text-white">
+                                <i class="fas fa-edit fa-primary"></i>
+                            </a>
+                            <button class="btn btn-sm btn-danger" data-toggle="modal" data-target='#deletePegawai{{ $item->id }}'>
+                                <i class="fas fa-trash fa-danger"></i> 
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+                    @endforeach
+                <tbody>
+                    
+                </tbody>
+            </table>
         </div>
     </div>
+</div>
     
     @include('admin.modal.m_pegawai_delete')
     @include('sweetalert::alert')
-
 @endsection

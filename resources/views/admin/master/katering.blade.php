@@ -52,7 +52,7 @@
             <h6 class="m-0 font-weight-bold text-primary">Data Katering</h6>
         </div>
         <div class="card-body">
-            <div class="table-responsive table-center text-dark">
+            <div class="table-responsive text-dark">
                 <table class="table table-bordered table-align-center" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
@@ -74,7 +74,7 @@
                                 <td>{{ $item->kode_terminal}}</td>
                                 <td>{{ $item->kode_regional}}</td>
                                 <td>{{ $item->phone}}</td>
-                                <td class="text-center">
+                                <td class="text-center ">
                                     <a href='' class="btn btn-sm bg-warning text-white">
                                         <i class="fas fa-edit fa-primary"></i>
                                     </a>

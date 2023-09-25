@@ -81,9 +81,11 @@ class AlatController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        $data = AlatModel::find($id);
+
+        return view('admin.master.alat_edit', $data);
     }
 
     /**
@@ -91,7 +93,7 @@ class AlatController extends Controller
      */
     public function edit($id)
     {
-        return 'HI' . $id ;
+       
     }
 
     /**

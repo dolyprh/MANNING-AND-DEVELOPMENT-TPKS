@@ -12,3 +12,4 @@
 
     <!-- Custom styles for this template-->
     <link href="{{ asset('templates/css/sb-admin-2.min.css')}}" rel="stylesheet">
+    <link href="{{ asset('https://cdn.datatables.net/v/bs5/dt-1.13.6/datatables.min.css" rel="stylesheet')}}">

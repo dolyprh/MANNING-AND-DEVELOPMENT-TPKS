@@ -27,6 +27,8 @@ class PegawaiController extends Controller
             'pegawai'     => $this->PegawaiModel->get_pegawai(),  
         ];
 
+        
+
         return view('admin/master/pegawai', $data);
     }
 

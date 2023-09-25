@@ -46,7 +46,7 @@ class MenuSeeder extends Seeder
             [
                 'nama_menu' => 'Laporan',
                 'url_menu' => '/master',
-                'icon' => 'fa-table',
+                'icon' => 'fa-file-alt',
                 'data_target' => 'collapseLaporan',
                 'data_parent' => 'collapseLaporan'
             ],
