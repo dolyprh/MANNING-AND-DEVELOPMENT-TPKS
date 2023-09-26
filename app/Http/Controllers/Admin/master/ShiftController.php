@@ -75,17 +75,41 @@ class ShiftController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id_shift)
     {
-        //
+        $data = [
+            'menus'    => $this->MenuModel->getMenus(),
+            'submenus' => $this->MenuModel->getSubmenus(),
+            'shift'     => $this->ShiftModel->get_shiftById($id_shift),  
+        ];
+
+        return view('admin.master.edit.shift_edit', $data);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id_shift)
     {
-        //
+        $data = [
+            'nama_shift'     => $request->input('nama_shift'),
+            'waktu_mulai'  => $request->input('w_mulai'),
+            'waktu_selesai'   => $request->input('w_selesai'),
+            'mulai_istirahat'  => $request->input('m_istirahat'),
+            'selesai_istirahat'   => $request->input('s_istirahat'),
+            'kd_regional'  => $request->input('kode_regional'),
+            'kd_cabang'    => $request->input('kode_cabang'),
+            'kd_terminal'  => $request->input('kode_terminal'),
+            'created_at' => \Carbon\Carbon::now(),
+        ];
+
+        if ($this->ShiftModel->update_shift($data, $id_shift)) {
+            // return redirect('/menu')->with('toast_success', 'Berhasil Tambah Menu!');
+            return redirect('/shift')->with('toast_success','Shift Berhasil di Update');
+        } else {
+            return redirect('/shift')->with('toast_error', 'Gagal Update Shift!');
+
+        }
     }
 
     /**

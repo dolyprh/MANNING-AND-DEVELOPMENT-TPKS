@@ -11,12 +11,17 @@
             <div class="mb-2">
                 <label for="nama_group" class="form-label">Nama Group</label>
                 <input type="text" class="form-control" name="nama_group" id="nama_group" placeholder="kode alat">
+                @error('nama_group')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
             </div>
             <div class="mb-2">
                 <label for="kode_group" class="form-label">Kode Group</label>
                 <input type="text" class="form-control" name="kode_group" id="kode_group" placeholder="Kode Group">
+                @error('kode_group')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
             </div>
-            
             <button type="submit" class="btn btn-small btn-primary tombol-aksi float-right">Tambah</button>
         </form>
     </div>
@@ -29,7 +34,7 @@
         <div class="card-body">
             <div class="table-responsive table-center text-dark">
                 <table class="table table-bordered table-align-center" id="dataTable" width="100%" cellspacing="0">
-                    <thead>
+                    <thead class="table-dark">
                         <tr>
                             <th>No</th>
                             <th>Nama Group</th>
@@ -45,9 +50,9 @@
                                 <td>{{ $item->nama_group }}</td>
                                 <td>{{ $item->kode }}</td>
                                 <td class="text-center">
-                                    <button class="btn btn-sm bg-warning text-white" data-toggle="modal" data-target="#editGroup">
+                                    <a href="{{ url('/group/'.$item->id.'/edit') }}" class="btn btn-sm bg-warning text-white">
                                         <i class="fas fa-edit fa-primary"></i>
-                                    </button>
+                                    </a>
                                     <button class="btn btn-sm btn-danger" data-toggle="modal" data-target='#deleteGroup{{ $item->id }}'>
                                         <i class="fas fa-trash fa-danger"></i> 
                                     </button>

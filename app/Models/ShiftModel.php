@@ -23,6 +23,20 @@ class ShiftModel extends Model
         }
     }
 
+    function get_shiftById($id_shift) 
+    {
+        return DB::table('spk_m_shift')->where('id_shift', $id_shift)->get();
+    }
+
+    function update_shift($data, $id_shift)
+    {
+        if(DB::table('spk_m_shift')->where('id_shift', $id_shift)->update($data)){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     function delete_shift($id_shift) 
     {
         DB::table('spk_m_shift')->where('id_shift', $id_shift)->delete();    

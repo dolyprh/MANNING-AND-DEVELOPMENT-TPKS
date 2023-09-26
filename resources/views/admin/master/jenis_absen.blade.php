@@ -11,10 +11,16 @@
             <div class="mb-2">
                 <label for="nama" class="form-label">Nama Jenis Absen</label>
                 <input type="text" class="form-control" name="nama" id="nama">
+                @error('nama')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
             </div>
             <div class="mb-2">
                 <label for="jenis_absen" class="form-label">Kode</label>
                 <input type="text" class="form-control" name="jenis_absen" id="jenis_absen" >
+                @error('jenis_absen')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
             </div>
             
             <button type="submit" class="btn btn-small btn-primary tombol-aksi float-right">Tambah</button>
@@ -29,7 +35,7 @@
         <div class="card-body">
             <div class="table-responsive table-center text-dark">
                 <table class="table table-bordered table-align-center" id="dataTable" width="100%" cellspacing="0">
-                    <thead>
+                    <thead class="table-dark">
                         <tr>
                             <th>No</th>
                             <th>Jenis Absen</th>
@@ -45,9 +51,9 @@
                                 <td>{{ $item->nama }}</td>
                                 <td>{{ $item->kode }}</td>
                                 <td class="text-center">
-                                    <button class="btn btn-sm bg-warning text-white" data-toggle="modal" data-target="#editGroup">
+                                    <a href="{{ url('/jenis-absen/'.$item->id.'/edit') }}" class="btn btn-sm bg-warning text-white">
                                         <i class="fas fa-edit fa-primary"></i>
-                                    </button>
+                                    </a>
                                     <button class="btn btn-sm btn-danger" data-toggle="modal" data-target='#deleteAbsen{{ $item->id }}'>
                                         <i class="fas fa-trash fa-danger"></i> 
                                     </button>

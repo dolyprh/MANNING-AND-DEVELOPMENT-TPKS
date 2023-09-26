@@ -45,6 +45,29 @@ class PegawaiController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate(
+            [
+                'nama'  => 'required',
+                'nipp' => 'required',
+                'status' => 'required',
+                'email_address' => 'required',
+                'keterangan' => 'required',
+                'type' => 'required',
+                'phone' => 'required',
+                'jobdesk' => 'required',
+            ],
+            [
+                'nama.required'          => 'nama pegawai harus diisi',
+                'nipp.required'          => 'nipp pegawai harus diisi',
+                'status.required'        => 'status pegawai harus diisi',
+                'email_address.required' => 'email_address pegawai harus diisi',
+                'keterangan.required'    => 'keterangan harus diisi',
+                'type.required'          => 'type harus diisi',
+                'phone.required'         => 'phone harus diisi',
+                'jobdesk.required'       => 'jobdesk harus diisi',
+            ]
+        );
+
         $data = [
             'nama'     => $request->input('nama'),
             'nipp'  => $request->input('nipp'),
@@ -53,9 +76,9 @@ class PegawaiController extends Controller
             'keterangan'   => $request->input('keterangan'),
             'type'   => $request->input('type'),
             'phone'   => $request->input('phone'),
-            'kd_cabang'   => $request->input('kd_cabang'),
-            'kd_terminal'   => $request->input('kd_terminal'),
-            'kd_regional'   => $request->input('kd_regional'),
+            'kd_cabang'   => $request->input('kode_cabang'),
+            'kd_terminal'   => $request->input('kode_terminal'),
+            'kd_regional'   => $request->input('kode_regional'),
             'jobdesk'   => $request->input('jobdesk'),
             'group_id'   => $request->input('group_id'),
             'created_at' => \Carbon\Carbon::now(),
@@ -73,25 +96,82 @@ class PegawaiController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id_pegawai)
     {
-        //
+        $data = [
+            'menus'    => $this->MenuModel->getMenus(),
+            'submenus' => $this->MenuModel->getSubmenus(),
+            'pegawai'     => $this->PegawaiModel->get_pegawaiById($id_pegawai),  
+        ];
+
+        return view('admin.master.detail_pegawai', $data);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id_pegawai)
     {
-        //
+        $data = [
+            'menus'    => $this->MenuModel->getMenus(),
+            'submenus' => $this->MenuModel->getSubmenus(),
+            'pegawai'     => $this->PegawaiModel->get_pegawaiById($id_pegawai),  
+        ];
+
+        return view('admin.master.edit.pegawai_edit', $data);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id_pegawai)
     {
-        //
+        $request->validate(
+            [
+                'nama'  => 'required',
+                'nipp' => 'required',
+                'status' => 'required',
+                'email_address' => 'required',
+                'keterangan' => 'required',
+                'type' => 'required',
+                'phone' => 'required',
+                'jobdesk' => 'required',
+            ],
+            [
+                'nama.required'          => 'nama pegawai harus diisi',
+                'nipp.required'          => 'nipp pegawai harus diisi',
+                'status.required'        => 'status pegawai harus diisi',
+                'email_address.required' => 'email_address pegawai harus diisi',
+                'keterangan.required'    => 'keterangan harus diisi',
+                'type.required'          => 'type harus diisi',
+                'phone.required'         => 'phone harus diisi',
+                'jobdesk.required'       => 'jobdesk harus diisi',
+            ]
+        );
+
+        $data = [
+            'nama'     => $request->input('nama'),
+            'nipp'  => $request->input('nipp'),
+            'status'   => $request->input('status'),
+            'email_address'   => $request->input('email_address'),
+            'keterangan'   => $request->input('keterangan'),
+            'type'   => $request->input('type'),
+            'phone'   => $request->input('phone'),
+            'kd_cabang'   => $request->input('kode_cabang'),
+            'kd_terminal'   => $request->input('kode_terminal'),
+            'kd_regional'   => $request->input('kode_regional'),
+            'jobdesk'   => $request->input('jobdesk'),
+            'group_id'   => $request->input('group_id'),
+            'created_at' => \Carbon\Carbon::now(),
+        ];
+
+        if ($this->PegawaiModel->update_pegawai($data, $id_pegawai)) {
+            // return redirect('/menu')->with('toast_success', 'Berhasil Tambah Menu!');
+            return redirect('/pegawai')->with('toast_success','Berhasil Update Pegawai');
+        } else {
+            return redirect('/pegawai')->with('toast_error', 'Gagal Update Pegawai!');
+
+        }
     }
 
     /**

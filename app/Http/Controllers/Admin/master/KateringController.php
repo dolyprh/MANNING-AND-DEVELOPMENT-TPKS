@@ -85,17 +85,51 @@ class KateringController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id_katering)
     {
-        //
+        $data = [
+            'menus'    => $this->MenuModel->getMenus(),
+            'submenus' => $this->MenuModel->getSubmenus(),
+            'katering'     => $this->KaterModel->get_kateringById($id_katering),  
+        ];
+
+        return view('admin.master.edit.katering_edit', $data);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id_katering)
     {
-        //
+        $request->validate(
+            [
+                'nama_katering' => 'required',
+                'phone'         => 'required',
+                'email_vendor'  => 'required',
+            ],
+            [
+                'nama_katering.required'    => 'nama tidak boleh kosong',
+                'phone.required'            => 'nomor tidak boleh kosong',
+                'email_vendor.required'     => 'email tidak boleh kosong',
+            ]
+        );
+
+        $data = [
+            'nama'              => $request->input('nama_katering'),
+            'email_vendor_food' => $request->input('email_vendor'),
+            'kode_cabang'       => $request->input('kode_cabang'),
+            'kode_terminal'     => $request->input('kode_terminal'),
+            'kode_regional'     => $request->input('kode_regional'),
+            'phone'             => $request->input('phone'),
+            'created_at'        => \Carbon\Carbon::now(),
+        ];
+
+        if ($this->KaterModel->update_katering($data, $id_katering)) {
+            return redirect('katering')->with('toast_success', 'Katering Berhasil di Update');
+        } else {
+            return redirect('katering')->with('toast_error', 'Gagal Update katering!');
+
+        }
     }
 
     /**

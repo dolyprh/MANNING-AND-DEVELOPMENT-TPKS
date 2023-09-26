@@ -23,7 +23,7 @@
         <div class="card-body">
             <div class="table-responsive table-center">
                 <table class="table table-bordered table-align-center" id="dataTable" width="100%" cellspacing="0">
-                    <thead>
+                    <thead class="table-dark">
                         <tr>
                             <th>No</th>
                             <th>Nama Menu</th>

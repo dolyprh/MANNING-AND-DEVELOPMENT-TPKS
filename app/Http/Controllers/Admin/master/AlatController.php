@@ -51,10 +51,10 @@ class AlatController extends Controller
                 'keterangan'   => 'required',
             ],
             [
-                'kode_alat.required'         => 'kode alat tidak boleh kosong',
-                'nama_alat.required'          => 'nama alat tidak boleh kosong',
-                'jenis_alat.required'         => 'jenis alat tidak boleh kosong',
-                'keterangan.required'          => 'keterangan tidak boleh kosong',
+                'kode_alat.required'         => 'kode alat wajib diisi',
+                'nama_alat.required'          => 'nama alat wajib diisi',
+                'jenis_alat.required'         => 'jenis alat wajib diisi',
+                'keterangan.required'          => 'keterangan wajib diisi',
             ]
         );
         
@@ -63,10 +63,10 @@ class AlatController extends Controller
             'nama_alat'  => $request->input('nama_alat'),
             'jenis_alat'   => $request->input('jenis_alat'),
             'keterangan'   => $request->input('keterangan'),
-            'kd_regional'  => $request->input(''),
-            'kd_cabang'    => $request->input(''),
-            'kd_terminal'  => $request->input(''),
-            'created_at' => \Carbon\Carbon::now(),
+            'kd_regional'  => $request->input('kd_regional'),
+            'kd_cabang'    => $request->input('kd_cabang'),
+            'kd_terminal'  => $request->input('kd_terminal'),
+            // 'created_at' => \Carbon\Carbon::now(),
         ];
 
         if ($this->AlatModel->insert_alat($data)) {
@@ -81,27 +81,63 @@ class AlatController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show()
     {
-        $data = AlatModel::find($id);
+        // $data = AlatModel::find($id);
 
-        return view('admin.master.alat_edit', $data);
+        // return view('admin.master.alat_edit', $data);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($id)
+    public function edit($id_alat)
     {
-       
+        $data = [
+            'menus'    => $this->MenuModel->getMenus(),
+            'submenus' => $this->MenuModel->getSubmenus(),
+            'alat'     => $this->AlatModel->get_alatById($id_alat),  
+        ];
+
+        return view('admin.master.edit.alat_edit', $data);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id_alat)
     {
+        $request->validate(
+            [
+                'kode_alat'    => 'required',
+                'nama_alat'    => 'required',
+                'jenis_alat'   => 'required',
+                'keterangan'   => 'required',
+            ],
+            [
+                'kode_alat.required'         => 'kode alat tidak boleh kosong',
+                'nama_alat.required'          => 'nama alat tidak boleh kosong',
+                'jenis_alat.required'         => 'jenis alat tidak boleh kosong',
+                'keterangan.required'          => 'keterangan tidak boleh kosong',
+            ]
+        );
+        
+        $data = [
+            'kode_alat'    => $request->input('kode_alat'),
+            'nama_alat'    => $request->input('nama_alat'),
+            'jenis_alat'   => $request->input('jenis_alat'),
+            'keterangan'   => $request->input('keterangan'),
+            'kd_regional'  => $request->input('kd_regional'),
+            'kd_cabang'    => $request->input('kd_cabang'),
+            'kd_terminal'  => $request->input('kd_terminal'),
+            'created_at'   => \Carbon\Carbon::now(),
+        ];
 
+        if($this->AlatModel->update_alat($data, $id_alat)) {
+            return redirect('/alat')->with('toast_success', 'Alat Berhasil di Update');
+        } else {
+            return redirect('/alat')->with('toast_error', 'Gagal Update Alat!');
+        }
     }
 
     /**

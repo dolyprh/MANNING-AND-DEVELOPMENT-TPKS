@@ -22,6 +22,18 @@ class AbsenModel extends Model
         }
     }
 
+    function get_absenById($id_absen) {
+        return DB::table('spk_m_jenisabsen')->where('id', $id_absen)->get();
+    }
+
+    function update_absen($data, $id_absen) {
+        if(DB::table('spk_m_jenisabsen')->where('id', $id_absen)->update($data)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     function delete_absen($id_absen)
     {
         DB::table('spk_m_jenisabsen')->where('id', $id_absen)->delete();    

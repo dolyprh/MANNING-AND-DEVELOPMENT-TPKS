@@ -16,11 +16,11 @@ return new class extends Migration
             $table->string('kode_alat');
             $table->string('nama_alat');
             $table->string('jenis_alat');
-            $table->timestamps();
             $table->string('keterangan');
             $table->integer('kd_regional')->nullable();
             $table->integer('kd_cabang')->nullable();
             $table->integer('kd_terminal')->nullable();
+            $table->timestamps();
         });
     }
 

@@ -22,6 +22,20 @@ class MKerjaModel extends Model
         }
     }
 
+    function get_mitraById($id_mitra) 
+    {
+        return DB::table('spk_m_mitrakerja')->where('id', $id_mitra)->get();
+    }
+
+    function update_mitra($data, $id_mitra)
+    {
+        if(DB::table('spk_m_mitrakerja')->where('id', $id_mitra)->update($data)){
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
     function delete_mitra($id_mitra)
     {
         DB::table('spk_m_mitrakerja')->where('id', $id_mitra)->delete();    

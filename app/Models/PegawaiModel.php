@@ -22,6 +22,20 @@ class PegawaiModel extends Model
         }
     }
 
+    function get_pegawaiById($id_pegawai) 
+    {
+        return DB::table('spk_m_pegawai')->where('id', $id_pegawai)->get();
+    }
+
+    function update_pegawai($data, $id_pegawai)
+    {
+        if(DB::table('spk_m_pegawai')->where('id', $id_pegawai)->update($data)){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     function delete_pegawai($id_pegawai) 
     {
         DB::table('spk_m_pegawai')->where('id', $id_pegawai)->delete();    

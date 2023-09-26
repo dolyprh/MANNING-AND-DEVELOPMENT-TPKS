@@ -83,17 +83,48 @@ class ParamController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id_param)
     {
-        //
+        $data = [
+            'menus'    => $this->MenuModel->getMenus(),
+            'submenus' => $this->MenuModel->getSubmenus(),
+            'param'     => $this->ParamModel->get_paramById($id_param),  
+        ];
+
+        return view('admin.master.edit.parameter_edit', $data);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id_param)
     {
-        //
+        $request->validate(
+            [
+                'kode_param'  => 'required',
+                'keterangan' => 'required',
+            ],
+            [
+                'kode_param.required'         => 'kode Parameter Tidak boleh kosong',
+                'keterangan.required'          => 'keterangan Tidak Boleh Kosong',
+            ]
+        );
+
+        $data = [
+            'param_code'    => $request->input('kode_param'),
+            'param_label'   => $request->input('keterangan'),
+            'val1'          => $request->input('nilai1'),
+            'val2'          => $request->input('nilai2'),
+            'val3'          => $request->input('nilai3'),
+            'created_at'    => \Carbon\Carbon::now(),
+        ];
+
+        if ($this->ParamModel->update_param($data, $id_param)) {
+            return redirect('/parameter')->with('toast_success', 'Mitra Kerja Berhasil di Update');
+        } else {
+            return redirect('/parameter')->with('toast_error', 'Gagal Tambah Parameter!');
+
+        }
     }
 
     /**

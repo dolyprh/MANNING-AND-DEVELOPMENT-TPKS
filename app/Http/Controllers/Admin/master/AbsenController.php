@@ -49,8 +49,8 @@ class AbsenController extends Controller
                 'jenis_absen'         => 'required',
             ],
             [
-                'nama.required'    => 'nama tidak boleh kosong',
-                'jenis_absen.required'            => 'kode tidak boleh kosong',
+                'nama.required'         => 'nama harus diisi',
+                'jenis_absen.required'  => 'kode harus diisi',
             ]
         );
 
@@ -80,17 +80,45 @@ class AbsenController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id_absen)
     {
-        //
+        $data = [
+            'menus'    => $this->MenuModel->getMenus(),
+            'submenus' => $this->MenuModel->getSubmenus(),
+            'absen'     => $this->AbsenModel->get_absenById($id_absen),  
+        ];
+
+        return view('admin.master.edit.absen_edit', $data);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id_absen)
     {
-        //
+        $request->validate(
+            [
+                'nama'          => 'required',
+                'jenis_absen'   => 'required',
+            ],
+            [
+                'nama.required'         => 'nama harus diisi',
+                'jenis_absen.required'  => 'kode harus diisi',
+            ]
+        );
+
+        $data = [
+            'nama'          => $request->input('nama'),
+            'kode'          => $request->input('jenis_absen'),
+            'created_at'    => \Carbon\Carbon::now(),
+        ];
+
+        if ($this->AbsenModel->update_absen($data, $id_absen)) {
+            return redirect('/jenis-absen')->with('toast_success', 'Jenis Absen Berhasil di Update');
+        } else {
+            return redirect('/jenis-absen')->with('toast_error', 'Gagal Update Absen!');
+
+        }
     }
 
     /**

@@ -22,6 +22,18 @@ class GroupModel extends Model
         }
     }
 
+    function get_groupById($id_group) {
+        return DB::table('spk_m_group')->where('id', $id_group)->get();
+    }
+
+    function update_group($data, $id_group) {
+        if(DB::table('spk_m_group')->where('id', $id_group)->update($data)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     function delete_group($id_group)
     {
         DB::table('spk_m_group')->where('id', $id_group)->delete();    

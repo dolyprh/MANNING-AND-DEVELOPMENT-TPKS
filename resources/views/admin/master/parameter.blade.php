@@ -56,14 +56,14 @@
         <div class="card-body">
             <div class="table-responsive table-center text-dark">
                 <table class="table table-bordered table-align-center" id="dataTable" width="100%" cellspacing="0">
-                    <thead>
+                    <thead class="table-dark">
                         <tr>
                             <th>Kode</th>
-                            <th>Keterangan</th>
-                            <th>Nilai 1</th>
-                            <th>Nilai 2</th>
-                            <th>Nilai 3</th>
-                            <th>Aksi</th>
+                            <th class="col-sm-4">Keterangan</th>
+                            <th class="col-sm-2">Nilai 1</th>
+                            <th class="col-sm-2">Nilai 2</th>
+                            <th class="col-sm-2">Nilai 3</th>
+                            <th class="col-sm-2">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -75,9 +75,9 @@
                             <td>{{ $item->val2 }}</td>
                             <td>{{ $item->val3 }}</td>
                             <td class="text-center">
-                                <button class="btn btn-sm bg-warning text-white">
+                                <a href="{{ url('/parameter/'.$item->param_id. '/edit') }}" class="btn btn-sm bg-warning text-white">
                                     <i class="fas fa-edit fa-primary"></i>
-                                </button>
+                                </a>
                                 <button class="btn btn-sm btn-danger" data-toggle="modal" data-target='#deleteParam{{ $item->param_id }}'>
                                     <i class="fas fa-trash fa-danger"></i> 
                                 </button>

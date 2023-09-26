@@ -13,11 +13,23 @@ class AlatModel extends Model
         return DB::table('spk_m_alat')->get();    
     }
 
-    public function insert_alat($data)
+    function insert_alat($data)
     {
         if (DB::table('spk_m_alat')->insert($data)){
             return true;
         }else{
+            return false;
+        }
+    }
+
+    function get_alatById($id_alat) {
+        return DB::table('spk_m_alat')->where('id', $id_alat)->get();
+    }
+
+    function update_alat($data, $id_alat) {
+        if(DB::table('spk_m_alat')->where('id', $id_alat)->update($data)) {
+            return true;
+        } else {
             return false;
         }
     }

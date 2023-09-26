@@ -8,39 +8,45 @@
     <div class="card p-6 col-xl-8 mb-4 p-4">
         <form action="/katering" method="post" enctype="multipart/form-data">
             @csrf
-            <div class="mb-2">
-                <label for="nama_katering" class="form-label">Nama Katering</label>
-                <input type="text" class="form-control" name="nama_katering" id="nama_katering" value="{{ old('nama_katering') }}">
-                @error('nama_katering')
-                    <div class="text-danger">{{ $message }}</div>
-                @enderror
-            </div>
-           
-            <div class="mb-2">
-                <label for="email_vendor" class="form-label">Email Vendor</label>
-                <input type="text" class="form-control" name="email_vendor" id="email_vendor" value="{{ old('email_vendor') }}">
-                @error('email_vendor')
-                    <div class="text-danger">{{ $message }}</div>
-                @enderror
-            </div>
-            <div class="mb-2">
-                <label for="phone" class="form-label">Phone</label>
-                <input type="text" class="form-control" name="phone" id="phone" value="{{ old('phone') }}">
-                @error('phone')
-                    <div class="text-danger">{{ $message }}</div>
-                @enderror
-            </div>
-            <div class="mb-2">
-                <label for="kode_cabang" class="form-label">Kode Cabang</label>
-                <input type="text" class="form-control" name="kode_cabang" id="kode_cabang">
-            </div>
-            <div class="mb-2">
-                <label for="kode_terminal" class="form-label">Kode Terminal</label>
-                <input type="text" class="form-control" name="kode_terminal" id="kode_terminal">
-            </div>
-            <div class="mb-2">
-                <label for="kode_regional" class="form-label">Kode Regional</label>
-                <input type="text" class="form-control" name="kode_regional" id="kode_regional">
+            <div class="form-group row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                    <div class="mb-2">
+                        <label for="nama_katering" class="form-label">Nama Katering</label>
+                        <input type="text" class="form-control" name="nama_katering" id="nama_katering" value="{{ old('nama_katering') }}">
+                        @error('nama_katering')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                
+                    <div class="mb-2">
+                        <label for="email_vendor" class="form-label">Email Vendor</label>
+                        <input type="text" class="form-control" name="email_vendor" id="email_vendor" value="{{ old('email_vendor') }}">
+                        @error('email_vendor')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="mb-2">
+                        <label for="phone" class="form-label">Phone</label>
+                        <input type="text" class="form-control" name="phone" id="phone" value="{{ old('phone') }}">
+                        @error('phone')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                    <div class="mb-2">
+                        <label for="kode_cabang" class="form-label">Kode Cabang</label>
+                        <input type="text" class="form-control" name="kode_cabang" id="kode_cabang">
+                    </div>
+                    <div class="mb-2">
+                        <label for="kode_terminal" class="form-label">Kode Terminal</label>
+                        <input type="text" class="form-control" name="kode_terminal" id="kode_terminal">
+                    </div>
+                    <div class="mb-2">
+                        <label for="kode_regional" class="form-label">Kode Regional</label>
+                        <input type="text" class="form-control" name="kode_regional" id="kode_regional">
+                    </div>
+                </div>
             </div>
             <button type="submit" class="btn btn-small btn-primary tombol-aksi float-right">Tambah</button>
         </form>
@@ -54,15 +60,15 @@
         <div class="card-body">
             <div class="table-responsive text-dark">
                 <table class="table table-bordered table-align-center" id="dataTable" width="100%" cellspacing="0">
-                    <thead>
+                    <thead class="table-dark text-center">
                         <tr>
-                            <th>Nama</th>
-                            <th>Email Vendor</th>
-                            <th>Kode Cabang</th>
-                            <th>Kode Terminal</th>
-                            <th>Kode Regional</th>
-                            <th>Phone</th>
-                            <th>Aksi</th>
+                            <th class="col-sm-2">Nama</th>
+                            <th >Email Vendor</th>
+                            <th >Kode Cabang</th>
+                            <th >Kode Terminal</th>
+                            <th >Kode Regional</th>
+                            <th class="col-sm-2">Phone</th>
+                            <th class="col-sm-2">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -75,7 +81,7 @@
                                 <td>{{ $item->kode_regional}}</td>
                                 <td>{{ $item->phone}}</td>
                                 <td class="text-center ">
-                                    <a href='' class="btn btn-sm bg-warning text-white">
+                                    <a href="{{ url('/katering/'.$item->id.'/edit') }}" class="btn btn-sm bg-warning text-white">
                                         <i class="fas fa-edit fa-primary"></i>
                                     </a>
                                     <button class="btn btn-sm btn-danger" data-toggle="modal" data-target='#deleteKatering{{ $item->id }}'>

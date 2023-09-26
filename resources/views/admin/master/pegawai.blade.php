@@ -33,7 +33,7 @@
                 </div>
                 <div class="mb-2">
                     <label for="email_address" class="form-label">Email Adress</label>
-                    <input type="text" class="form-control" name="status" id="email_address" value="{{ old('email_address') }}">
+                    <input type="text" class="form-control" name="email_address" id="email_address" value="{{ old('email_address') }}">
                     @error('email_address')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
@@ -70,7 +70,7 @@
                 </div>
                 <div class="mb-2">
                     <label for="group" class="form-label">Group</label>
-                    <input type="text" class="form-control" name="keterangan" id="group" value="{{ old('group') }}">
+                    <input type="text" class="form-control" name="group_id" id="group" value="{{ old('group') }}">
                     @error('group')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
@@ -98,17 +98,16 @@
         <h6 class="m-0 font-weight-bold text-primary">Data Pegawai</h6>
     </div>
     <div class="card-body">
-        <div class="table-responsive text-dark">
+        <div class="table-responsive ">
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                <thead>
+                <thead class="table-dark">
                     <tr>
-                        <th>Nama</th>
+                        <th class="col-sm-2">Nama</th>
                         <th>NIPP</th>
-                        <th>Email</th>
-                        <th>Status</th>
-                        <th>Type</th>
-                        <th>Phone</th>
-                        <th>Aksi</th>
+                        <th class="col-sm-2">Email</th>
+                        <th >Status</th>
+                        <th class="col-sm-4">Type</th>
+                        <th class="col-sm-4">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -119,9 +118,11 @@
                         <td>{{ $item->email_address }}</td>
                         <td>{{ $item->status }}</td>
                         <td>{{ $item->type }}</td>
-                        <td>{{ $item->phone }}</td>
                         <td class="text-center" >
-                            <a href='' class="btn btn-sm bg-warning text-white">
+                            <a href="{{ url('/pegawai/' .$item->id) }}" class="btn btn-sm btn-success">
+                                <i class="fas fa-eye fa-success"></i> 
+                            </a>
+                            <a href="{{ url('/pegawai/' .$item->id. '/edit') }}" class="btn btn-sm bg-warning text-white">
                                 <i class="fas fa-edit fa-primary"></i>
                             </a>
                             <button class="btn btn-sm btn-danger" data-toggle="modal" data-target='#deletePegawai{{ $item->id }}'>
@@ -129,10 +130,7 @@
                             </button>
                         </td>
                     </tr>
-                </tbody>
                     @endforeach
-                <tbody>
-                    
                 </tbody>
             </table>
         </div>
