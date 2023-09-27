@@ -12,21 +12,21 @@
                 <div class="form-group row">
                     <label for="staticEmail" class="col-sm-5 col-form-label">Nama</label>
                     <div class="col-sm-6">
-                        <label class="col-form-label"> {{ $item->nama}} </label>
+                        <label class="col-form-label">: <b> {{ $item->nama}} </b></label>
                     </div>
                 </div>
                 <hr>
                 <div class="form-group row">
                     <label for="staticEmail" class="col-sm-5 col-form-label">NIPP</label>
                     <div class="col-sm-6">
-                        <label class=" col-form-label">{{ $item->nipp}}</label>
+                        <label class=" col-form-label">: <b>{{ $item->nipp}}</b></label>
                     </div>
                 </div>
                 <hr>
                 <div class="form-group row">
                     <label for="staticEmail" class="col-sm-5 col-form-label">Status</label>
                     <div class="col-sm-6">
-                        <label class=" col-form-label">{{ $item->status}}</label>
+                        <label class=" col-form-label">: <b>{{ $item->status}}</b></label>
                     </div>
                 </div>
 
@@ -35,48 +35,48 @@
                 <div class="form-group row">
                     <label for="staticEmail" class="col-sm-5 col-form-label">Alamat Email</label>
                     <div class="col-sm-6">
-                        <label class=" col-form-label">{{ $item->email_address}}</label>
+                        <label class=" col-form-label">: <b>{{ $item->email_address}}</b></label>
                     </div>
                 </div>
                 <hr>
                 <div class="form-group row">
                     <label for="staticEmail" class="col-sm-5 col-form-label">Keterangan</label>
                     <div class="col-sm-6">
-                        <label class=" col-form-label">{{ $item->keterangan}}</label>
+                        <label class=" col-form-label">: <b> {{ $item->keterangan}} </b></label>
                     </div>
                 </div>
                 <hr>
                 <div class="form-group row">
                     <label for="staticEmail" class="col-sm-5 col-form-label">Type</label>
                     <div class="col-sm-6">
-                        <label class="col-form-label">{{ $item->type}}</label>
+                        <label class="col-form-label">: <b>{{ $item->type}}</b></label>
                     </div>
                 </div>
                 <hr>
                 <div class="form-group row">
                     <label for="staticEmail" class="col-sm-5 col-form-label">Phone</label>
                     <div class="col-sm-6">
-                            <label class="col-form-label">{{ $item->phone }}</label>
+                            <label class="col-form-label">: <b>{{ $item->phone }}</b></label>
                     </div>
                 </div>
                 <hr>
                 <div class="form-group row">
                     <label for="staticEmail" class="col-sm-5 col-form-label">Kode Cabang</label>
                     <div class="col-sm-6">
-                            <label class="col-form-label">{{ $item->kd_cabang }}</label>
+                            <label class="col-form-label">: <b>{{ $item->kd_cabang }}</b></label>
                     </div>
                 </div>
                 <hr>
                 <div class="form-group row">
                     <label for="staticEmail" class="col-sm-5 col-form-label">Kode Terminal</label>
                     <div class="col-sm-6">
-                            <label class="col-form-label">{{ $item->kd_terminal }}</label>
+                            <label class="col-form-label">: <b>{{ $item->kd_terminal }}</b></label>
                     </div>
                 </div>
                 <div class="form-group row">
                     <label for="staticEmail" class="col-sm-5 col-form-label">Kode Regional</label>
                     <div class="col-sm-6">
-                            <label class="col-form-label">{{ $item->kd_regional}}</label>
+                            <label class="col-form-label">: <b>{{ $item->kd_regional}}</b></label>
                     </div>
                 </div>
                 <hr>

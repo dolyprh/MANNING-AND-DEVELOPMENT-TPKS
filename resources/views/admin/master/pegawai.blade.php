@@ -89,7 +89,7 @@
                 </div>
             </div>
         </div>
-        <button type="submit" class="btn btn-small btn-primary tombol-aksi float-right">Tambah</button>
+        <button type="submit" class="btn btn-sm mt-2 btn-success tombol-aksi float-left">Tambah</button>
     </form>
 </div>
 

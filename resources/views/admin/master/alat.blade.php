@@ -5,7 +5,7 @@
         <h1 class="h3 mb-0 text-gray-800">Master Alat</h1>
     </div>
 
-    <div class="card p-6 col-xl-8 mb-4 p-4">
+    <div class="card p-6 mb-4 p-4">
         <form action="/alat" method="post" enctype="multipart/form-data">
             @csrf
             <div class="form-group row">
@@ -63,7 +63,7 @@
                     </div>
                 </div>
             </div>
-            <button type="submit" class="btn btn-small btn-primary tombol-aksi float-right">Tambah</button>
+            <button type="submit" class="btn btn-sm mt-2 btn-success tombol-aksi float-left">Tambah</button>
         </form>
     </div>
 

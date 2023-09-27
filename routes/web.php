@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\Admin\Master\MasterController;
 use App\Http\Controllers\Admin\Master\MenuController;
+use App\Http\Controllers\Admin\perencanaan\JadwalGroupController;
 use App\Http\Controllers\Admin\perencanaan\JGroupController;
 use App\Http\Controllers\Admin\perencanaan\RencanaController;
 use App\Http\Controllers\Admin\spk\SpkBaruController;
@@ -49,7 +50,7 @@ Route::get('pegawai-mitra', [MasterController::class, 'pegawai_mitra']);
 Route::get('notifikasi', [MasterController::class, 'notifikasi']);
 
 Route::get('rencana-baru', [RencanaController::class, 'rencana_baru']);
-Route::get('jadwal-group', [JGroupController::class, 'jadwal_group']);
+// Route::get('jadwal-group', [JGroupController::class, 'jadwal_group']);
 
 Route::get('spk-baru', [SpkBaruController::class, 'spk_baru']);
 Route::get('riwayat-spk', [RiwayatSpkController::class, 'riwayat_spk']);
@@ -70,6 +71,9 @@ Route::resource('/pegawai', PegawaiController::class);
 Route::resource('/group', GroupController::class);
 Route::resource('/jenis-absen', AbsenController::class);
 Route::resource('/mitra-kerja', MitraController::class);
+
+//Untuk CRUD Perencanaan Setup
+Route::resource('/jadwal-group', JadwalGroupController::class);
 
 
 

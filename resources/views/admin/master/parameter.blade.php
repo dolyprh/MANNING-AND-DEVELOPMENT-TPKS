@@ -44,7 +44,7 @@
                 @enderror
             </div>
 
-            <button type="submit" class="btn btn-small mt-2 btn-success tombol-aksi float-right">Tambah</button>
+            <button type="submit" class="btn btn-sm mt-3 mt-2 btn-success tombol-aksi float-left">Tambah</button>
         </form>
     </div>
 

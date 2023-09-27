@@ -24,7 +24,7 @@
                 <label for="keterangan" class="form-label">Keterangan</label>
                 <input type="text" class="form-control" name="keterangan" id="keterangan" placeholder="keterangan">
             </div>
-            <button type="submit" class="btn btn-small btn-primary tombol-aksi float-right">Tambah</button>
+            <button type="submit" class="btn btn-sm mt-3 btn-success tombol-aksi float-left">Tambah</button>
         </form>
     </div>
 
