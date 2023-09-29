@@ -50,16 +50,16 @@
             <button type="submit" class="btn btn-sm btn-success tombol-aksi float-left">Tambah</button>
         </form>
         
-        <form action="/jadwal-group" method="post" enctype="multipart/form-data">
+        <form action="{{ route('import-excel') }}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="input-group mt-4">
                 <div class="input-group-prepend">
-                    <span class="input-group-text" id="inputGroupFileAddon01">Atau import langsung dari excel</span>
+                    <span class="input-group-text" id="file">Atau import langsung dari excel</span>
                 </div>
                 <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="inputGroupFile01"
+                    <input type="file" class="custom-file-input" id="file" name="file_import" accept=".xlsx"
                     aria-describedby="inputGroupFileAddon01">
-                    <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                    <label class="custom-file-label" for="inputGroupFile01">Pilih File</label>
                 </div>
             </div>
             <button type="submit" class="btn btn-sm mt-3 btn-success tombol-aksi float-right">Import</button>

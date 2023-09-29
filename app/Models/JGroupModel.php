@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\DB;
 
 class JGroupModel extends Model
 {
+    protected $fillable = [
+        'tanggal',
+        'id_group',
+        'id_shift',
+    ];
 
     function get_jadwal_group()
     {

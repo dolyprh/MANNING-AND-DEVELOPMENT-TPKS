@@ -75,6 +75,9 @@ Route::resource('/mitra-kerja', MitraController::class);
 //Untuk CRUD Perencanaan Setup
 Route::resource('/jadwal-group', JadwalGroupController::class);
 
+//Untuk Import Perencanaan Jadwal Group
+// Route::get('/jadwal-group', [JGroupController::class, 'importExcel']);
+Route::get('/jadwal-group', [JGroupController::class, 'import']);
 
 
 
