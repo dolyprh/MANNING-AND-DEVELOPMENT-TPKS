@@ -4,9 +4,9 @@ namespace App\Imports;
 
 use App\Models\perencanaan\JGroup;
 use Maatwebsite\Excel\Concerns\ToModel;
-use Maatwebsite\Excel\Concerns\WithHeadingRow;
+// use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
-class jgrupImport implements ToModel, WithHeadingRow
+class jgrupImport implements ToModel
 {
     /**
     * @param array $row
@@ -15,10 +15,13 @@ class jgrupImport implements ToModel, WithHeadingRow
     */
     public function model(array $row)
     {
+        $UNIX_DATE = ($row[1] - 25569) * 86400;
+        $date_column = gmdate("Y-m-d H:i:s", $UNIX_DATE);
+
         return new JGroup([
-            'tanggal'     => $row['tanggal'],
-            'id_group'    => $row['id_group'], 
-            'id_shift'    => $row['id_shift'],
+            'tanggal'     => $date_column,
+            'id_group'    => $row[2], 
+            'id_shift'    => $row[3],
         ]);
     }
 }

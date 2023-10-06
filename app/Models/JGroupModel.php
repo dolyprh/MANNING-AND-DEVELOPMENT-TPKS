@@ -28,11 +28,23 @@ class JGroupModel extends Model
         }
     }
 
-    function get_jgroupById() {
-        return DB::table('spk_t_jadwal_group')
-            ->leftjoin('spk_m_group', 'spk_m_group.id', '=' , 'spk_t_jadwal_group.id_group')
-            ->leftjoin('spk_m_shift', 'spk_m_shift.id_shift', '=', 'spk_t_jadwal_group.id_shift')
-            ->get();
+    function get_jgroupById($bulan) {
+        if($bulan) {
+            return DB::table('spk_t_jadwal_group')
+                ->whereMonth('tanggal', '=' , $bulan)
+                ->leftjoin('spk_m_group', 'spk_m_group.id', '=' , 'spk_t_jadwal_group.id_group')
+                ->leftjoin('spk_m_shift', 'spk_m_shift.id_shift', '=', 'spk_t_jadwal_group.id_shift')
+                ->get();
+        } else {
+            return DB::table('spk_t_jadwal_group')
+                ->leftjoin('spk_m_group', 'spk_m_group.id', '=' , 'spk_t_jadwal_group.id_group')
+                ->leftjoin('spk_m_shift', 'spk_m_shift.id_shift', '=', 'spk_t_jadwal_group.id_shift')
+                ->get();
+        }
+    }
+
+    function FunctionName() : Returntype {
+        
     }
 
     function delete_jgroup($id_jgroup)

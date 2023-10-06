@@ -15,16 +15,35 @@ class ShiftSeeder extends Seeder
     {
         DB::table('spk_m_shift')->insert([
             [
-                'nama_shift'         => 'CV.aditria',
-                'waktu_mulai'        => '12:00 AM',
-                'waktu_selesai'      => '07:59 AM',
-                'mulai_istirahat'    => '04:00 AM',
-                'selesai_istirahat'  => '05:00 AM',
+                'nama_shift'         => 'Shift 1',
+                'waktu_mulai'        => '12:00',
+                'waktu_selesai'      => '07:59',
+                'mulai_istirahat'    => '04:00',
+                'selesai_istirahat'  => '05:00',
                 'kd_cabang'          => '40',
                 'kd_terminal'        => '40',
                 'kd_regional'        => '9',
             ],
-            
+            [
+                'nama_shift'         => 'Shift 2',
+                'waktu_mulai'        => '08:00',
+                'waktu_selesai'      => '15:59',
+                'mulai_istirahat'    => '12:00',
+                'selesai_istirahat'  => '13:00',
+                'kd_cabang'          => '40',
+                'kd_terminal'        => '40',
+                'kd_regional'        => '9',
+            ],
+            [
+                'nama_shift'         => 'Shift 3',
+                'waktu_mulai'        => '16:00',
+                'waktu_selesai'      => '11:59',
+                'mulai_istirahat'    => '20:00',
+                'selesai_istirahat'  => '21:00',
+                'kd_cabang'          => '40',
+                'kd_terminal'        => '40',
+                'kd_regional'        => '9',
+            ],
         ]);
     }
 }

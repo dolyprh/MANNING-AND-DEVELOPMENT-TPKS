@@ -23,15 +23,34 @@ class JadwalGroupController extends Controller
         $this->JGroupModel = new JGroupModel();
     }
 
-    public function index()
+    public function index(Request $request)
     {
+        $keyword = $request->keyword;
+
         $data = [
             'menus'     => $this->MenuModel->getMenus(),
             'submenus'  => $this->MenuModel->getSubmenus(),
             'shift'     => $this->ShiftModel->get_shift(),
             'group'     => $this->GroupModel->get_group(),  
-            'jadwal_group'     => $this->JGroupModel->get_jgroupById(),  
+            'jadwal_group'     => $this->JGroupModel->get_jgroupById($keyword), 
+            'old_selected'     => $keyword,   
 
+        ];
+
+        return view('admin/perencanaan/jadwal_group', $data);
+    }
+
+    public function search(Request $request)
+    {
+        $keyword = $request->keyword;
+
+        $data = [
+            'menus'     => $this->MenuModel->getMenus(),
+            'submenus'  => $this->MenuModel->getSubmenus(),
+            'shift'     => $this->ShiftModel->get_shift(),
+            'group'     => $this->GroupModel->get_group(),  
+            'jadwal_group'     => $this->JGroupModel->get_jgroupById($keyword),
+            'old_selected'     => $keyword,  
         ];
 
         return view('admin/perencanaan/jadwal_group', $data);

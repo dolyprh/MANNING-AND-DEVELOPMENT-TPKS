@@ -80,9 +80,6 @@
                             <th class="col-sm-2">Waktu Selesai</th>
                             <th class="col-sm-2">Mulai Istirahat</th>
                             <th class="col-sm-2">Selsai Istirahat</th>
-                            <th>Kode Cabang</th>
-                            <th>Kode Terminal</th>
-                            <th>Kode Regional</th>
                             <th class="col-sm-2">Aksi</th>
                         </tr>
                     </thead>
@@ -94,9 +91,6 @@
                             <td>{{ $item->waktu_selesai }}</td>
                             <td>{{ $item->mulai_istirahat }}</td>
                             <td>{{ $item->selesai_istirahat }}</td>
-                            <td>{{ $item->kd_regional }}</td>
-                            <td>{{ $item->kd_cabang }}</td>
-                            <td>{{ $item->kd_cabang }}</td>
                             <td class="text-center">
                                 <a href="{{ url('/shift/' .$item->id_shift. '/edit') }}" class="btn btn-sm bg-warning text-white">
                                     <i class="fas fa-edit fa-primary"></i>

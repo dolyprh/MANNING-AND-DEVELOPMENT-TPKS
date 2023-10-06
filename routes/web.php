@@ -7,7 +7,7 @@ use App\Http\Controllers\Admin\Master\MasterController;
 use App\Http\Controllers\Admin\Master\MenuController;
 use App\Http\Controllers\Admin\perencanaan\JadwalGroupController;
 use App\Http\Controllers\Admin\perencanaan\JGroupController;
-use App\Http\Controllers\Admin\perencanaan\RencanaController;
+use App\Http\Controllers\Admin\perencanaan\RBaruController;
 use App\Http\Controllers\Admin\spk\SpkBaruController;
 use App\Http\Controllers\Admin\spk\RiwayatSpkController;
 use App\Http\Controllers\Admin\fooding\JTanpaMakanController;
@@ -71,14 +71,17 @@ Route::resource('/pegawai', PegawaiController::class);
 Route::resource('/group', GroupController::class);
 Route::resource('/jenis-absen', AbsenController::class);
 Route::resource('/mitra-kerja', MitraController::class);
+Route::resource('/rencana-baru', RBaruController::class);
 
 //Untuk CRUD Perencanaan Setup
 Route::resource('/jadwal-group', JadwalGroupController::class);
+Route::post('/search-data', [JadwalGroupController::class, 'search'])->name('search-data');
 
 //Untuk Import Perencanaan Jadwal Group
 // Route::get('/jadwal-group', [JGroupController::class, 'importExcel']);
-Route::get('/jadwal-group', [JGroupController::class, 'import']);
+Route::post('/import-excel', [JGroupController::class, 'import'])->name('import-excel');
 
+Route::get('/perencanaan-operasi', [RBaruController::class, 'detail_rencana']);
 
 
 
