@@ -18,23 +18,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($rencana as $item)
-                        <tr>
-                            <td> <b>{{$item->nama_kapal}} </b>  <br/> {{$item->pelayaran}} </td>
-                            <td> {{$item->in_voyage}} - {{$item->out_voyage}}</td>
-                            <td> {{$item->kd_awal}} - {{$item->kd_akhir}} </td>
-                            <td> Dari: {{date('d/m/Y', strtotime ($item->rcn_sandar))}} {{date('H:i', strtotime ($item->rcn_sandar))}}
-                                <br/> 
-                                 sampai: {{ date('d/m/Y', strtotime  ($item->rcn_berangkat)) }} {{date('H:i', strtotime ($item->rcn_berangkat))}} 
-                            </td>
-                            <td> Dari: {{date('d/m/Y', strtotime ($item->rcn_awal_kerja))}} {{date('H:i', strtotime ($item->rcn_awal_kerja))}}
-                                <br/> 
-                                 sampai: {{ date('d/m/Y', strtotime  ($item->rcn_akhir_kerja)) }} {{date('H:i', strtotime ($item->rcn_akhir_kerja))}} </td>
-                            <td class="text-center">
-                                    {{$item->rcn_no}}
-                            </td>
-                        </tr>
-                        @endforeach
+                        
                     </tbody>
                 </table>
             </div>
@@ -45,7 +29,7 @@
         <div class="card-header py-3">
             <h5 class="m-0 font-weight-bold text-dark">Alat</h5>
         </div>
-        <div class="card-body p-6 mb-4 p-4">
+        <div class="p-6 mb-4 p-4">
             <div class="mb-4">
                 <form action="" method="get" enctype="multipart/form-data">
                     <button type="submit" class="btn btn-outline-success mr-2 float-left">Semua</button>
@@ -61,15 +45,14 @@
                 </form>
             </div>
             <br/>
-            <div class="mb-4">
-                <form action="/perencanaan-operasi" method="get" enctype="multipart/form-data">
+            <div class="mb-2">
+                <form action="" method="get" enctype="multipart/form-data">
                     <!-- @csrf -->
                     <div class="form-group">
                         <div class="mb-2">
-                            <label for="valey" class="form-label">Pilih Alat (Bisa pilih alat lebih dari satu)</label>
-                            <select class="form-control choices-multiple" multiple="multiple" name="pilih_alat" size="20" style="height: 100%;" >
+                            <select class="form-select form-control" name="pilih_alat" size="20" style="height: 100%;" >
                                 @foreach ($alat as $item)
-                                <option value="{{ $item->id }}"> {{ $item->nama_alat}} </opt class="form-check-input"ion>
+                                <option value="{{ $item->id }}"> {{ $item->nama_alat}} </option>
                                 @endforeach
                             </select>
                             @error('pilih_alat')
@@ -79,16 +62,19 @@
                     </div>
                     <button type="submit" class="btn btn-success tombol-aksi float-left">Selanjutnya</button>
                 </form>
-                <!-- <a href="/rencana-baru/perencanaan-operasi" class="btn bg-primary text-white">
-                    Selanjutnya
-                </a> -->
             </div>
+            <!-- <a href="/rencana-baru/perencanaan-operasi" class="btn bg-primary text-white">
+                Selanjutnya
+            </a> -->
         </div>
-    </div>  
-
-    <script type="text/javascript">
-    $(document).ready(function() {
-        $('#example-getting-started').multiselect();
-    });
-</script>
+    </div>
+    
+     <script>
+        $(document).ready(function() {
+            $('.form-select').change(function() {
+            var selectedOptions = $(this).val();
+            console.log(selectedOptions); 
+            });
+        });
+    </script>
     @endsection

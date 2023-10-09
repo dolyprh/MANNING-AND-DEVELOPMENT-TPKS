@@ -27,7 +27,7 @@ class RBaruController extends Controller
             'menus' => $this->MenuModel->getMenus(),
             'submenus'    => $this->MenuModel->getSubmenus(),
             'rencana' => $this->RBaru->get_rencanaBaru(),
-            'status_rencana'    => $this->RBaru->get_kapal(),
+            'rencana_kapal'    => $this->RBaru->get_kapal(),
         ];
 
         return view('admin/perencanaan/rencana_baru', $data);
@@ -95,5 +95,17 @@ class RBaruController extends Controller
         ];
 
         return view('admin.perencanaan.edit_detail_rencana', $data);
+    }
+
+    function insert_vassel() {
+        $data = [
+            'menus'    => $this->MenuModel->getMenus(),
+            'submenus' => $this->MenuModel->getSubmenus(),
+            'alat'     => $this->AlatModel->get_alat(),
+        ];
+
+
+        return view('admin.perencanaan.tambah_rencana', $data);
+
     }
 }

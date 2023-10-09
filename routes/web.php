@@ -82,6 +82,7 @@ Route::post('/search-data', [JadwalGroupController::class, 'search'])->name('sea
 Route::post('/import-excel', [JGroupController::class, 'import'])->name('import-excel');
 
 Route::get('/perencanaan-operasi', [RBaruController::class, 'detail_rencana']);
+Route::get('/rencana-kapal/insert', [RBaruController::class, 'insert_vassel']);
 
 
 

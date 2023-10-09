@@ -19,11 +19,21 @@
 <script src="{{ asset('templates/js/demo/chart-area-demo.js')}}"></script>
 <script src="{{ asset('templates/js/demo/chart-pie-demo.js')}}"></script>
 
+<script type="text/javascript" src="{{ asset('js/bootstrap-multiselect.js')}}"></script>
+<script src="{{ asset('https://code.jquery.com/jquery-3.6.0.min.js')}}"></script>
+
+
 <script type="text/javascript">
     $(document).ready( function () {
     $('#dataTable').DataTable();
   
     new Choices(document.querySelector(".choices-multiple"));
 
-} );
+    } );
+
+    $( ".select2-multiple" ).select2({
+        theme: "bootstrap",
+        placeholder: "Select a State",
+        containerCssClass: ':all:'
+    });
 </script>

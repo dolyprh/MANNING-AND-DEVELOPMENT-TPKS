@@ -5,23 +5,26 @@
         <h4 class="h3 mb-0 text-gray-800">Perencanaan Operasi</h4>
     </div>
     <div class="card border-left-secondary p-6 mb-4 p-4">
-        <form action="/jadwal-group" method="post" enctype="multipart/form-data">
-            @csrf
-            <div class="form-group">
-                <div class="mb-2">
-                    <label for="valey" class="form-label">Input Vassel</label>
-                    <select class="form-control form-multi-select" aria-label="Default select example" name="valey" id="valey">
-                        <option selected>Pilih Vassel</option>
-                        @foreach ($status_rencana as $item)
-                            <option value="{{ $item->ves_id }}">{{ $item->ves_name }} {{ $item->in_voyage}} {{ $item->out_voyage}} </option>
-                        @endforeach
+        <form input="id_input" method="post" enctype="multipart/form-data">    
+        @csrf
+        <div class="form-group">
+            <div class="mb-2">
+                <label for="valey" class="form-label">Input Vassel</label>
+                <select class="form-control form-multi-select" aria-label="Default select example" name="valey" id="valey">
+                    <option selected>Pilih Vassel</option>
+                    @foreach ($rencana_kapal as $item)
+                        <option value="{{ $item->ves_id }}">{{ $item->ves_name }}
+                                ( {{ $item->in_voyage}} - {{ $item->out_voyage}} )
+                                ( {{ date('d/m/Y h-m-s', strtotime ($item->rcn_sandar)) }} - {{ date('d/m/Y h-m-s', strtotime ($item->rcn_berangkat)) }} )
+                        </option>
+                    @endforeach
                     </select>
-                    @error('valey')
-                        <div class="text-danger">{{ $message }}</div>
+                @error('valey')
+                    <div class="text-danger">{{ $message }}</div>
                     @enderror
                 </div>
             </div>
-            <button type="submit" class="btn btn-success tombol-aksi float-left">Selanjutnya</button>
+            <a href="{{url('/rencana-kapal/insert')}}" type="submit" class="btn btn-success tombol-aksi float-left">Selanjutnya</a>
         </form>
     </div>
 
@@ -57,7 +60,7 @@
                                  sampai: {{ date('d/m/Y', strtotime  ($item->rcn_akhir_kerja)) }} {{date('H:i', strtotime ($item->rcn_akhir_kerja))}} </td>
                             <td class="text-center">
                                     {{$item->rcn_no}}
-                                    <a href="{{ url('/rencana-baru/'.$item->id) }}" class="btn btn-sm bg-primary text-white">
+                                    <a href="{{ url('/rencana-baru/'.$item->rcn_no) }}" class="btn btn-sm bg-primary text-white">
                                         edit
                                     </a>
                             </td>
