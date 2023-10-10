@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('spk_t_rcn_header', function (Blueprint $table) {
-            $table->integer('id');
+            // $table->integer('id');
             $table->string('ves_id');
             $table->string('ves_code')->nullable();
             $table->string('nama_kapal')->nullable();
@@ -30,7 +30,7 @@ return new class extends Migration
             $table->integer('kd_cabang')->nullable();
             $table->integer('kd_terminal')->nullable();
             $table->integer('status')->nullable();
-            // $table->timestamps();
+            $table->timestamps();
         });
     }
 

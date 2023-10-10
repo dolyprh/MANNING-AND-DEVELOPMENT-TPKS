@@ -5,7 +5,7 @@
         <h4 class="h3 mb-0 text-gray-800">Perencanaan Operasi</h4>
     </div>
     <div class="card border-left-secondary p-6 mb-4 p-4">
-        <form input="id_input" method="post" enctype="multipart/form-data">    
+        <form action="/rencana-baru" method="post" enctype="multipart/form-data">    
         @csrf
         <div class="form-group">
             <div class="mb-2">
@@ -19,12 +19,26 @@
                         </option>
                     @endforeach
                     </select>
-                @error('valey')
-                    <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
             </div>
-            <a href="{{url('/rencana-kapal/insert')}}" type="submit" class="btn btn-success tombol-aksi float-left">Selanjutnya</a>
+            @foreach ($rencana_kapal as $item)
+                <input type="hidden" value="{{ $item->ves_id }}" name="ves_id" name="key">
+                <input type="hidden" value="{{ $item->ves_code }}" name="ves_code" name="key">
+                <input type="hidden" value="{{ $item->ves_name }}" name="ves_name" name="key">
+                <input type="hidden" value="{{ $item->pelayaran }}" name="pelayaran" name="key">
+                <input type="hidden" value="{{ $item->in_voyage }}" name="in_voyage" name="key">
+                <input type="hidden" value="{{ $item->out_voyage }}" name="out_voyage" name="key">
+                <input type="hidden" value="{{ $item->kd_awal }}" name="kd_awal" name="key">
+                <input type="hidden" value="{{ $item->kd_akhir }}" name="kd_akhir" name="key">
+                <input type="hidden" value="{{ $item->rcn_sandar }}" name="rcn_sandar" name="key">
+                <input type="hidden" value="{{ $item->rcn_berangkat }}" name="rcn_berangkat" name="key">
+                <input type="hidden" value="{{ $item->rcn_awal_kerja }}" name="rcn_awal_kerja" name="key">
+                <input type="hidden" value="{{ $item->rcn_akhir_kerja }}" name="rcn_akhir_kerja" name="key">
+                <input type="hidden" value="{{ $item->rcn_akhir_kerja }}" name="rcn_akhir_kerja" name="key">
+                <input type="hidden" value="{{ $item->created_at }}" name="created_at" name="key">
+            @endforeach
+
+        </div>
+            <button  type="submit" class="btn btn-success tombol-aksi float-left">Selanjutnya</button>
         </form>
     </div>
 
@@ -59,7 +73,7 @@
                                 <br/> 
                                  sampai: {{ date('d/m/Y', strtotime  ($item->rcn_akhir_kerja)) }} {{date('H:i', strtotime ($item->rcn_akhir_kerja))}} </td>
                             <td class="text-center">
-                                    {{$item->rcn_no}}
+                                    {{$item->rcn_no}} <br/>
                                     <a href="{{ url('/rencana-baru/'.$item->rcn_no) }}" class="btn btn-sm bg-primary text-white">
                                         edit
                                     </a>

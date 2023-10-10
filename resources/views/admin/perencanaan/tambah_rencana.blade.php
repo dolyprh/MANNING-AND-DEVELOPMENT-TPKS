@@ -14,11 +14,27 @@
                             <th >Kode</th>
                             <th >Rencana Sandar</th>
                             <th >Rencana Kerja</th>
-                            <th class="col-sm-2"></th>
+                            <th class="col-sm-2">NO RCN</th>
                         </tr>
                     </thead>
                     <tbody>
-                        
+                        @foreach ($rencana as $item)
+                        <tr>
+                            <td> <b>{{$item->nama_kapal}} </b> <br/> {{$item->pelayaran}} </td>
+                            <td> in {{$item->in_voyage}} <br/> out {{$item->out_voyage}}</td>
+                            <td> {{$item->kd_awal}} - {{$item->kd_akhir}} </td>
+                            <td> Dari: {{date('d/m/Y', strtotime ($item->rcn_sandar))}} {{date('H:i', strtotime ($item->rcn_sandar))}}
+                                <br/> 
+                                 sampai: {{ date('d/m/Y', strtotime  ($item->rcn_berangkat)) }} {{date('H:i', strtotime ($item->rcn_berangkat))}} 
+                            </td>
+                            <td> Dari: {{date('d/m/Y', strtotime ($item->rcn_awal_kerja))}} {{date('H:i', strtotime ($item->rcn_awal_kerja))}}
+                                <br/> 
+                                 sampai: {{ date('d/m/Y', strtotime  ($item->rcn_akhir_kerja)) }} {{date('H:i', strtotime ($item->rcn_akhir_kerja))}} </td>
+                            <td class="text-center">
+                                    {{$item->rcn_no}}
+                            </td>
+                        </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -68,13 +84,4 @@
             </a> -->
         </div>
     </div>
-    
-     <script>
-        $(document).ready(function() {
-            $('.form-select').change(function() {
-            var selectedOptions = $(this).val();
-            console.log(selectedOptions); 
-            });
-        });
-    </script>
     @endsection

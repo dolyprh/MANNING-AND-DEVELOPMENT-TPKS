@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\Master\MenuController;
 use App\Http\Controllers\Admin\perencanaan\JadwalGroupController;
 use App\Http\Controllers\Admin\perencanaan\JGroupController;
 use App\Http\Controllers\Admin\perencanaan\RBaruController;
+use App\Http\Controllers\Admin\perencanaan\RcnHeaderController;
 use App\Http\Controllers\Admin\spk\SpkBaruController;
 use App\Http\Controllers\Admin\spk\RiwayatSpkController;
 use App\Http\Controllers\Admin\fooding\JTanpaMakanController;
@@ -82,7 +83,8 @@ Route::post('/search-data', [JadwalGroupController::class, 'search'])->name('sea
 Route::post('/import-excel', [JGroupController::class, 'import'])->name('import-excel');
 
 Route::get('/perencanaan-operasi', [RBaruController::class, 'detail_rencana']);
-Route::get('/rencana-kapal/insert', [RBaruController::class, 'insert_vassel']);
+Route::post('/rencana-kapal/detail', [RBaruController::class, 'view_rencana']);
 
+// Route::get('/insert-header', [RcnHeaderController::class, 'insert_header'])->name('insert-header');
 
 

@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\DB;
 class RBaru extends Model
 {
     function get_rencanaBaru() {
-        return DB::table('spk_t_rcn_header')->where('status', 1)->get();
+        return DB::table('spk_t_rcn_header')->where('status', 0)->get();
     }
 
     function get_rencanaBaruByStatus() {
@@ -33,9 +33,8 @@ class RBaru extends Model
         return DB::table('spk_v_rcn_kapal')->get();
     }
 
-    function get_kapalById($id_kapal) {
-        return DB::table('spk_v_rcn_kapal')->where('ves_id', $id_kapal)->get();
-    }
-
+    // function get_kapalById($id_kapal) {
+    //     return DB::table('spk_v_rcn_kapal')->where('ves_id', $id_kapal)->get();
+    // }
 
 }
