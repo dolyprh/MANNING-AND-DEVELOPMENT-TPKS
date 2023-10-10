@@ -8,33 +8,36 @@
             <div class="table-responsive text-dark">
                 <table class="table table-bordered table-align-center" width="100%" cellspacing="0">
                     <thead class="table-dark text-center">
-                        <tr>
-                            <th >Kapal</th>
-                            <th >Voyage</th>
-                            <th >Kode</th>
-                            <th >Rencana Sandar</th>
-                            <th >Rencana Kerja</th>
-                            <th class="col-sm-2">NO RCN</th>
-                        </tr>
+                    <tr>
+                        <th>Kapal</th>
+                        <th>Voyage</th>
+                        <th>Kode</th>
+                        <th>Rencana Sandar</th>
+                        <th>Rencana Kerja</th>
+                        <th class="col-sm-2">NO RCN</th>
+                    </tr>
                     </thead>
                     <tbody>
-                        @foreach ($rencana as $item)
+                    @foreach ($rencana as $item)
                         <tr>
-                            <td> <b>{{$item->nama_kapal}} </b> <br/> {{$item->pelayaran}} </td>
+                            <td><b>{{$item->nama_kapal}} </b> <br/> {{$item->pelayaran}} </td>
                             <td> in {{$item->in_voyage}} <br/> out {{$item->out_voyage}}</td>
                             <td> {{$item->kd_awal}} - {{$item->kd_akhir}} </td>
-                            <td> Dari: {{date('d/m/Y', strtotime ($item->rcn_sandar))}} {{date('H:i', strtotime ($item->rcn_sandar))}}
-                                <br/> 
-                                 sampai: {{ date('d/m/Y', strtotime  ($item->rcn_berangkat)) }} {{date('H:i', strtotime ($item->rcn_berangkat))}} 
+                            <td>
+                                Dari: {{date('d/m/Y', strtotime ($item->rcn_sandar))}} {{date('H:i', strtotime ($item->rcn_sandar))}}
+                                <br/>
+                                sampai: {{ date('d/m/Y', strtotime  ($item->rcn_berangkat)) }} {{date('H:i', strtotime ($item->rcn_berangkat))}}
                             </td>
-                            <td> Dari: {{date('d/m/Y', strtotime ($item->rcn_awal_kerja))}} {{date('H:i', strtotime ($item->rcn_awal_kerja))}}
-                                <br/> 
-                                 sampai: {{ date('d/m/Y', strtotime  ($item->rcn_akhir_kerja)) }} {{date('H:i', strtotime ($item->rcn_akhir_kerja))}} </td>
+                            <td>
+                                Dari: {{date('d/m/Y', strtotime ($item->rcn_awal_kerja))}} {{date('H:i', strtotime ($item->rcn_awal_kerja))}}
+                                <br/>
+                                sampai: {{ date('d/m/Y', strtotime  ($item->rcn_akhir_kerja)) }} {{date('H:i', strtotime ($item->rcn_akhir_kerja))}}
+                            </td>
                             <td class="text-center">
-                                    {{$item->rcn_no}}
+                                {{$item->rcn_no}}
                             </td>
                         </tr>
-                        @endforeach
+                    @endforeach
                     </tbody>
                 </table>
             </div>
@@ -57,7 +60,8 @@
                     <button type="submit" class="btn btn-outline-info mr-2 float-left">Ruber Tyre Gantry</button>
                 </form>
                 <form action="" method="get" enctype="multipart/form-data">
-                    <button type="submit" class="btn btn-outline-warning mr-2 float-left">Automated Ruber Tyre Gantry</button>
+                    <button type="submit" class="btn btn-outline-warning mr-2 float-left">Automated Ruber Tyre Gantry
+                    </button>
                 </form>
             </div>
             <br/>
@@ -66,13 +70,10 @@
                     <!-- @csrf -->
                     <div class="form-group">
                         <div class="mb-2">
-                            <select class="form-select form-control" name="pilih_alat" size="20" style="height: 100%;" >
-                                @foreach ($alat as $item)
-                                <option value="{{ $item->id }}"> {{ $item->nama_alat}} </option>
-                                @endforeach
+                            <select class="js-example-basic-multiple" name="alat[]" multiple="multiple">
                             </select>
                             @error('pilih_alat')
-                                <div class="text-danger">{{ $message }}</div>
+                            <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
                     </div>
@@ -84,4 +85,16 @@
             </a> -->
         </div>
     </div>
-    @endsection
+    <script>
+        window.onload = function() {
+            $(document).ready(function() {
+                $('.js-example-basic-multiple').select2({
+                    data: <?= json_encode($alat) ?>,
+                    theme: "bootstrap-5",
+                    placeholder: "Pilih Alat",
+                    width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style'
+                });
+            });
+        }
+    </script>
+@endsection

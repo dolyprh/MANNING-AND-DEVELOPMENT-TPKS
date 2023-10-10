@@ -8,9 +8,14 @@ use Illuminate\Support\Facades\DB;
 
 class AlatModel extends Model
 {
-    function get_alat() 
+    function get_alat()
     {
-        return DB::table('spk_m_alat')->get();    
+        return DB::table('spk_m_alat')->get();
+    }
+
+    function getDataAlat()
+    {
+        return DB::table('spk_m_alat')->select('id', 'nama_alat as text')->get();
     }
 
     function insert_alat($data)
@@ -34,9 +39,9 @@ class AlatModel extends Model
         }
     }
 
-    function delete_alat($id_alat) 
+    function delete_alat($id_alat)
     {
-        DB::table('spk_m_alat')->where('id', $id_alat)->delete();    
+        DB::table('spk_m_alat')->where('id', $id_alat)->delete();
     }
 
     // function get_alatByRTG($rtg) {

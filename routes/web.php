@@ -50,7 +50,7 @@ Route::get('/logout', [LoginController::class, 'logout']);
 Route::get('pegawai-mitra', [MasterController::class, 'pegawai_mitra']);
 Route::get('notifikasi', [MasterController::class, 'notifikasi']);
 
-Route::get('rencana-baru', [RencanaController::class, 'rencana_baru']);
+//Route::get('rencana-baru', [RencanaController::class, 'rencana_baru']);
 // Route::get('jadwal-group', [JGroupController::class, 'jadwal_group']);
 
 Route::get('spk-baru', [SpkBaruController::class, 'spk_baru']);

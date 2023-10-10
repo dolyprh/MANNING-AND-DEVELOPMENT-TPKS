@@ -5,7 +5,7 @@
         <h4 class="h3 mb-0 text-gray-800">Perencanaan Operasi</h4>
     </div>
     <div class="card border-left-secondary p-6 mb-4 p-4">
-        <form action="/rencana-baru" method="post" enctype="multipart/form-data">    
+        <form action="/rencana-baru" method="post" enctype="multipart/form-data">
         @csrf
         <div class="form-group">
             <div class="mb-2">
@@ -20,23 +20,6 @@
                     @endforeach
                     </select>
             </div>
-            @foreach ($rencana_kapal as $item)
-                <input type="hidden" value="{{ $item->ves_id }}" name="ves_id" name="key">
-                <input type="hidden" value="{{ $item->ves_code }}" name="ves_code" name="key">
-                <input type="hidden" value="{{ $item->ves_name }}" name="ves_name" name="key">
-                <input type="hidden" value="{{ $item->pelayaran }}" name="pelayaran" name="key">
-                <input type="hidden" value="{{ $item->in_voyage }}" name="in_voyage" name="key">
-                <input type="hidden" value="{{ $item->out_voyage }}" name="out_voyage" name="key">
-                <input type="hidden" value="{{ $item->kd_awal }}" name="kd_awal" name="key">
-                <input type="hidden" value="{{ $item->kd_akhir }}" name="kd_akhir" name="key">
-                <input type="hidden" value="{{ $item->rcn_sandar }}" name="rcn_sandar" name="key">
-                <input type="hidden" value="{{ $item->rcn_berangkat }}" name="rcn_berangkat" name="key">
-                <input type="hidden" value="{{ $item->rcn_awal_kerja }}" name="rcn_awal_kerja" name="key">
-                <input type="hidden" value="{{ $item->rcn_akhir_kerja }}" name="rcn_akhir_kerja" name="key">
-                <input type="hidden" value="{{ $item->rcn_akhir_kerja }}" name="rcn_akhir_kerja" name="key">
-                <input type="hidden" value="{{ $item->created_at }}" name="created_at" name="key">
-            @endforeach
-
         </div>
             <button  type="submit" class="btn btn-success tombol-aksi float-left">Selanjutnya</button>
         </form>
@@ -48,7 +31,7 @@
         </div>
         <div class="card-body">
             <div class="table-responsive text-dark">
-                <table class="table table-bordered table-align-center" id="dataTable" width="100%" cellspacing="0">
+                <table class="table table-bordered table-align-center" width="100%" cellspacing="0">
                     <thead class="table-dark text-center">
                         <tr>
                             <th >Kapal</th>
@@ -66,11 +49,11 @@
                             <td> in {{$item->in_voyage}} <br/> out {{$item->out_voyage}}</td>
                             <td> {{$item->kd_awal}} - {{$item->kd_akhir}} </td>
                             <td> Dari: {{date('d/m/Y', strtotime ($item->rcn_sandar))}} {{date('H:i', strtotime ($item->rcn_sandar))}}
-                                <br/> 
-                                 sampai: {{ date('d/m/Y', strtotime  ($item->rcn_berangkat)) }} {{date('H:i', strtotime ($item->rcn_berangkat))}} 
+                                <br/>
+                                 sampai: {{ date('d/m/Y', strtotime  ($item->rcn_berangkat)) }} {{date('H:i', strtotime ($item->rcn_berangkat))}}
                             </td>
                             <td> Dari: {{date('d/m/Y', strtotime ($item->rcn_awal_kerja))}} {{date('H:i', strtotime ($item->rcn_awal_kerja))}}
-                                <br/> 
+                                <br/>
                                  sampai: {{ date('d/m/Y', strtotime  ($item->rcn_akhir_kerja)) }} {{date('H:i', strtotime ($item->rcn_akhir_kerja))}} </td>
                             <td class="text-center">
                                     {{$item->rcn_no}} <br/>
