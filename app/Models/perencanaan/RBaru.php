@@ -52,4 +52,16 @@ class RBaru extends Model
         return DB::table('spk_v_rcn_kapal')->where('ves_id', $id_kapal)->get();
     }
 
+    function insertRcnAlat($data){
+        return DB::table('spk_t_rcn_alat')->insert($data);
+    }
+
+    function InsertRcnDetail($data){
+        return DB::table('spk_t_rcn_detail')->insert($data);
+    }
+
+    function checkRcnNoInDetail($rcnNo){
+        return DB::table('spk_t_rcn_detail')->select('detail_id')->where('rcn_no', $rcnNo)->limit(1)->orderBy('detail_id', 'desc')->get();
+    }
+
 }
