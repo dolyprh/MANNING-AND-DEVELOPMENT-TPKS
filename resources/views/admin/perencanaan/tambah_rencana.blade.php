@@ -49,27 +49,12 @@
             <h5 class="m-0 font-weight-bold text-dark">Alat</h5>
         </div>
         <div class="p-6 mb-4 p-4">
-            <div class="mb-4">
-                <form action="" method="get" enctype="multipart/form-data">
-                    <button type="submit" class="btn btn-outline-success mr-2 float-left">Semua</button>
-                </form>
-                <form action="" method="get" enctype="multipart/form-data">
-                    <button type="submit" class="btn btn-outline-primary mr-2 float-left">Quay Crane</button>
-                </form>
-                <form action="" method="get" enctype="multipart/form-data">
-                    <button type="submit" class="btn btn-outline-info mr-2 float-left">Ruber Tyre Gantry</button>
-                </form>
-                <form action="" method="get" enctype="multipart/form-data">
-                    <button type="submit" class="btn btn-outline-warning mr-2 float-left">Automated Ruber Tyre Gantry
-                    </button>
-                </form>
-            </div>
-            <br/>
             <div class="mb-2">
-                <form action="" method="get" enctype="multipart/form-data">
+                <form action="rencana-baru" method="get" enctype="multipart/form-data">
                     <!-- @csrf -->
                     <div class="form-group">
                         <div class="mb-2">
+                            <label for="valey" class="form-label">Pilih Alat (Bisa pilih alat lebih dari satu)</label>
                             <select class="js-example-basic-multiple" name="alat[]" multiple="multiple">
                             </select>
                             @error('pilih_alat')
@@ -77,7 +62,7 @@
                             @enderror
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-success tombol-aksi float-left">Selanjutnya</button>
+                    <button type="submit" class="btn btn-success tombol-aksi float-left">Tambah</button>
                 </form>
             </div>
             <!-- <a href="/rencana-baru/perencanaan-operasi" class="btn bg-primary text-white">

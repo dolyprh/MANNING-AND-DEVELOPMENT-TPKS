@@ -18,7 +18,10 @@
                                 ( {{ date('d/m/Y h-m-s', strtotime ($item->rcn_sandar)) }} - {{ date('d/m/Y h-m-s', strtotime ($item->rcn_berangkat)) }} )
                         </option>
                     @endforeach
-                    </select>
+                </select>
+                @error('valey')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
             </div>
         </div>
             <button  type="submit" class="btn btn-success tombol-aksi float-left">Selanjutnya</button>
@@ -57,7 +60,7 @@
                                  sampai: {{ date('d/m/Y', strtotime  ($item->rcn_akhir_kerja)) }} {{date('H:i', strtotime ($item->rcn_akhir_kerja))}} </td>
                             <td class="text-center">
                                     {{$item->rcn_no}} <br/>
-                                    <a href="{{ url('/rencana-baru/'.$item->rcn_no) }}" class="btn btn-sm bg-primary text-white">
+                                    <a href="/rencana-baru/update/{{ $item->rcn_no }}" class="btn btn-sm bg-primary text-white">
                                         edit
                                     </a>
                             </td>

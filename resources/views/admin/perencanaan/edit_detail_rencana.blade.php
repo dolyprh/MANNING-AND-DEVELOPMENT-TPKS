@@ -19,14 +19,23 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach ($rencana as $item)
                         <tr>
-                            <td> <b>ADVANCE</b> <br/> Internasional </td>
-                            <td> 0239-057S - 0239-057N </td>
-                            <td> 405 - 587 </td>
-                            <td> Dari: 13/11/2021 13:00 <br/> sampai: 01/11/2021 01:00 </td>
-                            <td> Dari: 13/11/2021 13:30 <br/> sampai: 01/11/2021 12:59</td>
-                            <td class="text-center">RCN-ADVN01209112021</td>
+                            <td> <b>{{$item->nama_kapal}} </b>  <br/> {{$item->pelayaran}} </td>
+                            <td> {{$item->in_voyage}} - {{$item->out_voyage}}</td>
+                            <td> {{$item->kd_awal}} - {{$item->kd_akhir}} </td>
+                            <td> Dari: {{date('d/m/Y', strtotime ($item->rcn_sandar))}} {{date('H:i', strtotime ($item->rcn_sandar))}}
+                                <br/> 
+                                 sampai: {{ date('d/m/Y', strtotime  ($item->rcn_berangkat)) }} {{date('H:i', strtotime ($item->rcn_berangkat))}} 
+                            </td>
+                            <td> Dari: {{date('d/m/Y', strtotime ($item->rcn_awal_kerja))}} {{date('H:i', strtotime ($item->rcn_awal_kerja))}}
+                                <br/> 
+                                 sampai: {{ date('d/m/Y', strtotime  ($item->rcn_akhir_kerja)) }} {{date('H:i', strtotime ($item->rcn_akhir_kerja))}} </td>
+                            <td class="text-center">
+                                    {{$item->rcn_no}}
+                            </td>
                         </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>

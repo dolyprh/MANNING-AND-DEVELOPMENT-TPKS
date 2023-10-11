@@ -47,7 +47,7 @@
                     </div>
                 </div>
             </div>
-            <button type="submit" class="btn btn-success tombol-aksi float-right">Tambah</button>
+            <button type="submit" class="btn btn-success px-4 tombol-aksi">Tambah</button>
         </form>
 
         <form action="{{ route('import-excel')}}" method="post" enctype="multipart/form-data" class="mt-4">
@@ -67,7 +67,7 @@
         <div class="card-body">
             <form action="{{ route('search-data')}}" method="POST" enctype="multipart/form-data" class="mt-4">
                 @csrf
-                <div class="input-group mb-4 mt-4">
+                <div class="input-group w-50 mb-4">
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="jadwal_group">Tampilkan jadwal pada bulan  </span>
                     </div>
@@ -87,16 +87,21 @@
                         <option value="11" <?php if($old_selected=="11") {echo'selected';} ?> >November</option>
                         <option value="12" <?php if($old_selected=="12") {echo'selected';} ?> >Desember</option>
                     </select>
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="">Tahun </span>
-                    </div>
-                    <select class="custom-select" name="bulan" id="bulan">
-                        <option value="01">2022</option>
-                        <option value="02">2023</option>
-                        <option value="03">2024</option>
-                    </select>
+                </form>
+                
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="jadwal_group">Tahun </span>
                 </div>
-            </form>
+                <form action="{{ route('search-year')}}" method="POST" enctype="multipart/form-data">
+                    @csrf    
+                    <select class="custom-select" onchange="this.form.submit()" name="keyword_year" id="tahun">
+                        <option value="" >Semua</option>
+                        @foreach ($jadwal_bytahun as $item)
+                        <option value="{{date('Y', strtotime ($item->tanggal)) }}" <?php if($old_selected=="{{date('Y', strtotime ($item->tanggal)) }}") {echo'selected';} ?> >{{date('Y', strtotime ($item->tanggal)) }}</option>
+                        @endforeach
+                    </select>
+                </form>
+            </div>
 
 
             <div class="table-responsive text-dark">

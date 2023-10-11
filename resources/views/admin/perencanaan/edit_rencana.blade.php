@@ -1,8 +1,12 @@
 @extends('layouts.main')
 @section('content')
+    <a href="/rencana-baru" class="btn bg-dark text-white mb-4">
+        Kembali
+    </a>
+
     <div class="card border-left-dark mb-4">
         <div class="card-header py-3">
-            <h5 class="m-0 font-weight-bold text-dark">Detail Rencana Baru</h5>
+            <h5 class="m-0 font-weight-bold text-dark">Edit Rencana</h5>
         </div>
         <div class="card-body">
             <div class="table-responsive text-dark">
@@ -47,37 +51,24 @@
         </div>
         <div class="card-body p-6 mb-4 p-4">
             <div class="mb-4">
-                <form action="" method="get" enctype="multipart/form-data">
-                    <button type="submit" class="btn btn-outline-success mr-2 float-left">Semua</button>
-                </form>
-                <form action="" method="get" enctype="multipart/form-data">
-                    <button type="submit" class="btn btn-outline-primary mr-2 float-left">Quay Crane</button>
-                </form>
-                <form action="" method="get" enctype="multipart/form-data">
-                    <button type="submit" class="btn btn-outline-info mr-2 float-left">Ruber Tyre Gantry</button>
-                </form>
-                <form action="" method="get" enctype="multipart/form-data">
-                    <button type="submit" class="btn btn-outline-warning mr-2 float-left">Automated Ruber Tyre Gantry</button>
-                </form>
-            </div>
-            <br/>
-            <div class="mb-4">
-                <form action="/perencanaan-operasi" method="get" enctype="multipart/form-data">
+                <form input="id" method="get" enctype="multipart/form-data">
                     <!-- @csrf -->
                     <div class="form-group">
                         <div class="mb-2">
-                            <label for="valey" class="form-label">Pilih Alat (Bisa pilih alat lebih dari satu)</label>
-                            <select class="form-control choices-multiple" multiple="multiple" name="pilih_alat" size="20" style="height: 100%;" >
-                                @foreach ($alat as $item)
-                                <option value="{{ $item->id }}"> {{ $item->nama_alat}} </opt class="form-check-input"ion>
-                                @endforeach
+                            <label for="valey" class="form-label">Ganti Alat (Bisa pilih alat lebih dari satu)</label>
+                            <select class="js-example-basic-multiple" name="edit_alat[]" multiple="multiple">
                             </select>
-                            @error('pilih_alat')
-                                <div class="text-danger">{{ $message }}</div>
+                            @error('edit_alat')
+                            <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-success tombol-aksi float-left">Selanjutnya</button>
+                    <!-- <button type="submit" class="btn btn-success tombol-aksi float-left">Selanjutnya</button> -->
+                    @foreach ($rencana as $item)
+                    <a href="/rencana-baru/update/detail/{{ $item->rcn_no }}/{{ $item->ves_id }}" class="btn bg-success text-white">
+                        Selanjutnya
+                    </a>
+                    @endforeach
                 </form>
                 <!-- <a href="/rencana-baru/perencanaan-operasi" class="btn bg-primary text-white">
                     Selanjutnya
@@ -85,10 +76,16 @@
             </div>
         </div>
     </div>  
-
-    <script type="text/javascript">
-    $(document).ready(function() {
-        $('#example-getting-started').multiselect();
-    });
-</script>
+    <script>
+        window.onload = function() {
+            $(document).ready(function() {
+                $('.js-example-basic-multiple').select2({
+                    data: <?= json_encode($alat) ?>,
+                    theme: "bootstrap-5",
+                    placeholder: "Pilih Alat",
+                    width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style'
+                });
+            });
+        }
+    </script>
     @endsection

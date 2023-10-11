@@ -8,7 +8,6 @@ use App\Http\Controllers\Admin\Master\MenuController;
 use App\Http\Controllers\Admin\perencanaan\JadwalGroupController;
 use App\Http\Controllers\Admin\perencanaan\JGroupController;
 use App\Http\Controllers\Admin\perencanaan\RBaruController;
-use App\Http\Controllers\Admin\perencanaan\RcnHeaderController;
 use App\Http\Controllers\Admin\spk\SpkBaruController;
 use App\Http\Controllers\Admin\spk\RiwayatSpkController;
 use App\Http\Controllers\Admin\fooding\JTanpaMakanController;
@@ -77,13 +76,15 @@ Route::resource('/rencana-baru', RBaruController::class);
 //Untuk CRUD Perencanaan Setup
 Route::resource('/jadwal-group', JadwalGroupController::class);
 Route::post('/search-data', [JadwalGroupController::class, 'search'])->name('search-data');
+Route::post('/search-year', [JadwalGroupController::class, 'search_year'])->name('search-year');
 
 //Untuk Import Perencanaan Jadwal Group
 // Route::get('/jadwal-group', [JGroupController::class, 'importExcel']);
 Route::post('/import-excel', [JGroupController::class, 'import'])->name('import-excel');
 
-Route::get('/perencanaan-operasi', [RBaruController::class, 'detail_rencana']);
+Route::get('/rencana-baru/update/detail/{id}/{ves_id}', [RBaruController::class, 'detail_rencana']);
 Route::post('/rencana-kapal/detail', [RBaruController::class, 'view_rencana']);
+Route::get('/rencana-baru/update/{id}', [RBaruController::class, 'edit_rencana']);
 
 // Route::get('/insert-header', [RcnHeaderController::class, 'insert_header'])->name('insert-header');
 

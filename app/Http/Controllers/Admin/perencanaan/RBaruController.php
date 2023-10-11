@@ -58,6 +58,7 @@ class RBaruController extends Controller
     {
         $id = $request->valey;
         $kapal = $this->RBaru->get_kapalById($id);
+
         $data = [
             'ves_id' => $id,
             'ves_code' => $kapal[0]->ves_code,
@@ -76,7 +77,7 @@ class RBaruController extends Controller
             'kd_terminal' => 40,
             'status' => 0,
             'created_at' => \Carbon\Carbon::now(),
-            'rcn_no' => DB::raw("CONCAT(ves_id, DATE_FORMAT(created_at, '%d%m%Y'))")
+            'rcn_no' => DB::raw("CONCAT('RCN-',ves_id, DATE_FORMAT(created_at, '%d%m%Y'))")
         ];
 
         if ($this->RBaru->insert_rcn_header($data)) {
@@ -90,12 +91,11 @@ class RBaruController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id_rencana)
+    public function show()
     {
         $data = [
             'menus' => $this->MenuModel->getMenus(),
             'submenus' => $this->MenuModel->getSubmenus(),
-            'rencana' => $this->RBaru->get_rencanaById($id_rencana),
             'alat' => $this->AlatModel->getDataAlat(),
             'rencana' => $this->RBaru->getRencanaBaruLimit(),
 
@@ -128,27 +128,18 @@ class RBaruController extends Controller
         //
     }
 
-    function view_rencana()
-    {
-        $data = [
-            'menus' => $this->MenuModel->getMenus(),
-            'submenus' => $this->MenuModel->getSubmenus(),
-            'rencana' => $this->RBaru->get_rencanaBaru(),
-        ];
+    // function view_rencana()
+    // {
+    //     $data = [
+    //         'menus' => $this->MenuModel->getMenus(),
+    //         'submenus' => $this->MenuModel->getSubmenus(),
+    //         'rencana' => $this->RBaru->get_rencanaBaru(),
+    //     ];
 
-        return view('admin.perencanaan.tambah_rencana', $data);
-    }
+    //     return view('admin.perencanaan.tambah_rencana', $data);
+    // }
 
-    function detail_rencana()
-    {
-        $data = [
-            'menus' => $this->MenuModel->getMenus(),
-            'submenus' => $this->MenuModel->getSubmenus(),
-        ];
-
-        return view('admin.perencanaan.edit_detail_rencana', $data);
-    }
-
+    
     function insert_vassel()
     {
         $data = [
@@ -156,9 +147,45 @@ class RBaruController extends Controller
             'submenus' => $this->MenuModel->getSubmenus(),
             'alat' => $this->AlatModel->get_alat(),
         ];
-
-
+        
         return view('admin.perencanaan.tambah_rencana', $data);
+        
+    }
+    
+    function edit_rencana($id_rencana) {
+        $data = [
+            'menus' => $this->MenuModel->getMenus(),
+            'submenus' => $this->MenuModel->getSubmenus(),
+            'rencana' => $this->RBaru->get_rencanaById($id_rencana),
+            'alat' => $this->AlatModel->getDataAlat(),
+        ];
+    
+        return view('admin.perencanaan.edit_rencana', $data);
+    }
 
+    function update_rencana()
+    {
+        $data = [
+            'menus' => $this->MenuModel->getMenus(),
+            'submenus' => $this->MenuModel->getSubmenus(),
+            'rencana' => $this->RBaru->get_rencanaById($id_rencana),
+            'alat' => $this->AlatModel->getDataAlat(),
+            'rencana' => $this->RBaru->getRencanaBaruLimit(),
+            
+        ];
+        
+        return view('admin.perencanaan.edit_detail_rencana', $data);
+    }
+    
+    function detail_rencana($id_rencana)
+    {
+        $data = [
+            'menus' => $this->MenuModel->getMenus(),
+            'submenus' => $this->MenuModel->getSubmenus(),
+            'rencana' => $this->RBaru->get_rencanaById($id_rencana),
+            'alat' => $this->AlatModel->getDataAlat(),
+        ];
+    
+        return view('admin.perencanaan.edit_detail_rencana', $data);
     }
 }
