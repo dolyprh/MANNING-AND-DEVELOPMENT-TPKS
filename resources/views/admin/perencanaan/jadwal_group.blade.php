@@ -97,7 +97,7 @@
                     <select class="custom-select" onchange="this.form.submit()" name="keyword_year" id="tahun">
                         <option value="" >Semua</option>
                         @foreach ($jadwal_bytahun as $item)
-                        <option value="{{date('Y', strtotime ($item->tanggal)) }}" <?php if($old_selected=="{{date('Y', strtotime ($item->tanggal)) }}") {echo'selected';} ?> >{{date('Y', strtotime ($item->tanggal)) }}</option>
+                        <option value="{{ $item->year }}" <?php if($old_selected=="{{ $item->year}}") {echo'selected';} ?> >{{ $item->year }}</option>
                         @endforeach
                     </select>
                 </form>

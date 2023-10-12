@@ -32,7 +32,7 @@ class JadwalGroupController extends Controller
             'submenus'  => $this->MenuModel->getSubmenus(),
             'shift'     => $this->ShiftModel->get_shift(),
             'group'     => $this->GroupModel->get_group(),  
-            'jadwal_bytahun'     => $this->JGroupModel->get_jadwal_group(),
+            'jadwal_bytahun'     => $this->JGroupModel->get_jadwalByYear(),
             'jadwal_group'     => $this->JGroupModel->get_jgroupById($keyword), 
             'old_selected'     => $keyword,   
 
@@ -50,7 +50,7 @@ class JadwalGroupController extends Controller
             'submenus'         => $this->MenuModel->getSubmenus(),
             'shift'            => $this->ShiftModel->get_shift(),
             'group'            => $this->GroupModel->get_group(), 
-            'jadwal_bytahun'     => $this->JGroupModel->get_jadwal_group(), 
+            'jadwal_bytahun'     => $this->JGroupModel->get_jadwalByYear(), 
             'jadwal_group'     => $this->JGroupModel->get_jgroupById($keyword),
             'old_selected'     => $keyword,  
         ];
@@ -67,7 +67,7 @@ class JadwalGroupController extends Controller
             'submenus'         => $this->MenuModel->getSubmenus(),
             'shift'            => $this->ShiftModel->get_shift(),
             'group'            => $this->GroupModel->get_group(),  
-            'jadwal_bytahun'     => $this->JGroupModel->get_jadwal_group(),
+            'jadwal_bytahun'     => $this->JGroupModel->get_jadwalByYear(),
             'jadwal_group'     => $this->JGroupModel->get_jgroupByYear($keyword),
             'old_selected'     => $keyword,  
         ];

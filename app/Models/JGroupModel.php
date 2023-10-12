@@ -21,8 +21,8 @@ class JGroupModel extends Model
 
     function get_jadwalByYear() {
         return DB::table('spk_t_jadwal_group')
-                    ->select('tanggal')
-                    ->distinct()
+                    ->select(DB::raw('YEAR(tanggal) as year'))
+                    ->groupBy('year')
                     ->get();
     }
     
