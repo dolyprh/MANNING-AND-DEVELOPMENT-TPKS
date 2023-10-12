@@ -15,7 +15,7 @@ class AlatModel extends Model
 
     function getDataAlat()
     {
-        return DB::table('spk_m_alat')->select('id', 'nama_alat as text')->get();
+        return DB::table('spk_m_alat')->select(DB::raw("CONCAT(id, ',', nama_alat) as id"), 'nama_alat as text')->get();
     }
 
     function insert_alat($data)

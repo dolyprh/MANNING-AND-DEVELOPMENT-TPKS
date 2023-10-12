@@ -82,7 +82,7 @@ Route::post('/search-year', [JadwalGroupController::class, 'search_year'])->name
 // Route::get('/jadwal-group', [JGroupController::class, 'importExcel']);
 Route::post('/import-excel', [JGroupController::class, 'import'])->name('import-excel');
 
-Route::get('/rencana-baru/update/detail/{id}/{ves_id}', [RBaruController::class, 'detail_rencana']);
+Route::post('/rencana-baru/update/detail/{id}/{ves_id}', [RBaruController::class, 'detail_rencana']);
 Route::post('/rencana-kapal/detail', [RBaruController::class, 'view_rencana']);
 Route::get('/rencana-baru/update/{id}', [RBaruController::class, 'edit_rencana']);
 
