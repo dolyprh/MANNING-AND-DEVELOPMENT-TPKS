@@ -99,7 +99,8 @@ class RBaruController extends Controller
             'submenus' => $this->MenuModel->getSubmenus(),
             'alat' => $this->AlatModel->getDataAlat(),
             'rencana' => $this->RBaru->getRencanaBaruLimit(),
-
+            'alat_ccr'    => $this->AlatModel->getDataCraine(),
+            'alat_artg'    => $this->AlatModel->getDataArtg(),
         ];
 
         return view('admin.perencanaan.tambah_rencana', $data);
@@ -129,16 +130,81 @@ class RBaruController extends Controller
         //
     }
 
-    // function view_rencana()
-    // {
-    //     $data = [
-    //         'menus' => $this->MenuModel->getMenus(),
-    //         'submenus' => $this->MenuModel->getSubmenus(),
-    //         'rencana' => $this->RBaru->get_rencanaBaru(),
-    //     ];
+    function insert_alat_rcn(Request $request, $id_rencana, $rcn_no)
+    {
+        $request->validate(
+            [
+                "tambah_alat_ccr" => "required",
+                "tambah_alat_artg" => "required",
+            ],
+            [
+                "tambah_alat_ccr.required" => "Isi Alat!",
+                "tambah_alat_artg.required" => "Isi Alat!",
+            ]
+        );
 
-    //     return view('admin.perencanaan.tambah_rencana', $data);
-    // }
+        $tambah_alat = array_merge($request->tambah_alat_ccr, $request->tambah_alat_artg);
+        
+        $date = Carbon::now()->timezone('Asia/Jakarta')->format('H');
+        $idShift = 0;
+        if ($date >= '00' && $date <= '08') {
+            $idShift = 3;
+        } else if ($date >= '08' && $date <= '16') {
+            $idShift = 1;
+        } else {
+            $idShift = 2;
+        }
+        $idDetail = 1;
+        $dataIdDetail = $this->RBaru->checkRcnNoInDetail($request->rcnNo);
+        if (count($dataIdDetail) != 0) {
+            $idDetail = $dataIdDetail[0]->detail_id + 1;
+        }
+        $dataDetail = [
+            "detail_id" => $idDetail,
+            "rcn_no" => $request->rcnNo,
+            "id_shift" => $idShift,
+            'waktu_mulai' => $request->waktuMulai,
+            'waktu_selesai' => $request->waktuSelesai,
+            "nama_shift" => "SHIFT $idShift",
+            "ves_id" => $request->vesId
+        ];
+        $this->RBaru->InsertRcnDetail($dataDetail);
+        foreach ($tambah_alat as $alat) {
+            $dataAlat = explode(',', $alat);
+            $dataInputAlat = [
+                'detail_id' => $idDetail,
+                'kd_alat' => $dataAlat[0],
+                'nama_alat' => $dataAlat[1],
+                'waktu_mulai' => $request->waktuMulai,
+                'waktu_selesai' => $request->waktuSelesai,
+                'rcn_no' => $request->rcnNo,
+            ];
+            $this->RBaru->insertRcnAlat($dataInputAlat);
+        }
+        $data = [
+            'menus' => $this->MenuModel->getMenus(),
+            'submenus' => $this->MenuModel->getSubmenus(),
+            'rencana' => $this->RBaru->get_rencanaById($id_rencana),
+            'alat' => $this->AlatModel->getDataAlat(),
+            'detail_alat' => $this->RBaru->getAlatlByRcn($rcn_no),
+            'alat_ccr'    => $this->AlatModel->getDataCraine(),
+
+        ];
+
+        // if ($data) {
+        //     return redirect('/rencana-baru')->withSuccess('Alat Berhasil di tambah');
+        // } else {
+        //     return redirect('/rencana-baru')->with('toast_error', 'Gagal tambah alat!');
+
+        // }
+
+        if($data) {
+            return redirect('/rencana-kapal/edit-rencana/'.$id_rencana.'/'.$rcn_no);
+        } else {
+            return redirect('/rencana-baru')->with('toast_error', 'Gagal tambah alat!');
+        }
+
+    }
 
 
     function insert_vassel()
@@ -160,43 +226,35 @@ class RBaruController extends Controller
             'submenus' => $this->MenuModel->getSubmenus(),
             'rencana' => $this->RBaru->get_rencanaById($id_rencana),
             'alat' => $this->AlatModel->getDataAlat(),
+            'alat_ccr'    => $this->AlatModel->getDataCraine(),
+            'alat_artg'    => $this->AlatModel->getDataArtg(),
         ];
 
         return view('admin.perencanaan.edit_rencana', $data);
     }
 
-    function update_rencana()
-    {
-        $data = [
-            'menus' => $this->MenuModel->getMenus(),
-            'submenus' => $this->MenuModel->getSubmenus(),
-            'rencana' => $this->RBaru->get_rencanaById($id_rencana),
-            'alat' => $this->AlatModel->getDataAlat(),
-            'rencana' => $this->RBaru->getRencanaBaruLimit(),
-
-        ];
-
-        return view('admin.perencanaan.edit_detail_rencana', $data);
-    }
-
-    function detail_rencana(Request $request, $id_rencana)
+    function detail_rencana(Request $request, $id_rencana, $rcn_no)
     {
         $request->validate(
             [
-                "edit_alat" => "required"
+                "edit_alat_ccr" => "required",
+                "edit_alat_artg" => "required"
             ],
             [
-                "edit_alat.required" => "Isi Alat!"
+                "edit_alat_ccr.required" => "Isi Alat!",
+                "edit_alat_artg.required" => "Isi Alat!"
             ]
         );
+
+        $edit_alat = array_merge($request->edit_alat_ccr, $request->edit_alat_artg);
         $date = Carbon::now()->timezone('Asia/Jakarta')->format('H');
         $idShift = 0;
         if ($date >= '00' && $date <= '08') {
-            $idShift = 3;
-        } else if ($date >= '08' && $date <= '16') {
             $idShift = 1;
-        } else {
+        } else if ($date >= '08' && $date <= '16') {
             $idShift = 2;
+        } else {
+            $idShift = 3;
         }
         $idDetail = 1;
         $dataIdDetail = $this->RBaru->checkRcnNoInDetail($request->rcnNo);
@@ -213,7 +271,7 @@ class RBaruController extends Controller
             "ves_id" => $request->vesId
         ];
         $this->RBaru->InsertRcnDetail($dataDetail);
-        foreach ($request->edit_alat as $alat) {
+        foreach ($edit_alat as $alat) {
             $dataAlat = explode(',', $alat);
             $dataInputAlat = [
                 'detail_id' => $idDetail,
@@ -225,15 +283,40 @@ class RBaruController extends Controller
             ];
             $this->RBaru->insertRcnAlat($dataInputAlat);
         }
+
         $data = [
             'menus' => $this->MenuModel->getMenus(),
             'submenus' => $this->MenuModel->getSubmenus(),
             'rencana' => $this->RBaru->get_rencanaById($id_rencana),
             'alat' => $this->AlatModel->getDataAlat(),
+            'detail_rcn' => $this->RBaru->getDetailByRcn($rcn_no),
+            'detail_alat' => $this->RBaru->getAlatlByRcn($rcn_no),
+            'alat_ccr'    => $this->AlatModel->getDataCraine(),
+            'alat_artg'    => $this->AlatModel->getDataArtg(),
         ];
 
 //        return $request->edit_alat;
 //        return $dataDetail;
+        return redirect('/rencana-kapal/edit-rencana/'.$id_rencana.'/'.$rcn_no);
+    }
+
+    function view_detail_rencana($id_rencana, $no_rcn)
+    {
+        $data = [
+            'menus' => $this->MenuModel->getMenus(),
+            'submenus' => $this->MenuModel->getSubmenus(),
+            'rencana' => $this->RBaru->get_rencanaById($id_rencana),
+            'rencana' => $this->RBaru->getRencanaBaruLimit(),
+            'detail_rcn' => $this->RBaru->getDetailByRcn($no_rcn),
+            'detail_alat' => $this->RBaru->getAlatlByRcn($no_rcn),
+            'alat_ccr'    => $this->AlatModel->getDataCraine(),
+            'alat_artg'    => $this->AlatModel->getDataArtg(),
+        ];
+
         return view('admin.perencanaan.edit_detail_rencana', $data);
+    }
+
+    function generate_shift() : Returntype {
+        
     }
 }

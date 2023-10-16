@@ -60,8 +60,27 @@ class RBaru extends Model
         return DB::table('spk_t_rcn_detail')->insert($data);
     }
 
+    // function updateRcnAlat($data, $ves_id) {
+    //    if(DB::table('spk_t_rcn_header')->where('ves_id', $ves_id)->update($data)){
+    //         return true;
+    //    } else {
+    //         return false;
+    //    }
+    // }
+
     function checkRcnNoInDetail($rcnNo){
         return DB::table('spk_t_rcn_detail')->select('detail_id')->where('rcn_no', $rcnNo)->limit(1)->orderBy('detail_id', 'desc')->get();
     }
 
+    function getDetailByRcn($no_rcn) {
+        return DB::table('spk_t_rcn_detail')->where('ves_id', $no_rcn)->get();
+    }
+    
+    function getAlatlByRcn($no_rcn) {
+        return DB::table('spk_t_rcn_alat')->where('detail_id', $no_rcn)->get();
+    }
+
+    function generate_rnc() : Returntype {
+           
+    }
 }

@@ -18,6 +18,16 @@ class AlatModel extends Model
         return DB::table('spk_m_alat')->select(DB::raw("CONCAT(id, ',', nama_alat) as id"), 'nama_alat as text')->get();
     }
 
+    function getDataCraine()
+    {
+        return DB::table('spk_m_alat')->select(DB::raw("CONCAT(id, ',', nama_alat) as id"), 'nama_alat as text')->where('jenis_alat', 'CCR')->get();
+    }
+
+    function getDataArtg()
+    {
+        return DB::table('spk_m_alat')->select(DB::raw("CONCAT(id, ',', nama_alat) as id"), 'nama_alat as text')->where('jenis_alat', 'ARTG')->orWhere('jenis_alat', 'RTG')->get();
+    }
+    
     function insert_alat($data)
     {
         if (DB::table('spk_m_alat')->insert($data)){

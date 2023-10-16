@@ -15,7 +15,7 @@
                     @foreach ($rencana_kapal as $item)
                         <option value="{{ $item->ves_id }}">{{ $item->ves_name }}
                                 ( {{ $item->in_voyage}} - {{ $item->out_voyage}} )
-                                ( {{ date('d/m/Y h-m-s', strtotime ($item->rcn_sandar)) }} - {{ date('d/m/Y h-m-s', strtotime ($item->rcn_berangkat)) }} )
+                                ( {{ date('d/m/Y H-i-s', strtotime ($item->rcn_sandar)) }} - {{ date('d/m/Y H-i-s', strtotime ($item->rcn_berangkat)) }} )
                         </option>
                     @endforeach
                 </select>
@@ -71,4 +71,5 @@
             </div>
         </div>
     </div>
+    @include('sweetalert::alert')
 @endsection

@@ -83,9 +83,17 @@ Route::post('/search-year', [JadwalGroupController::class, 'search_year'])->name
 Route::post('/import-excel', [JGroupController::class, 'import'])->name('import-excel');
 
 Route::post('/rencana-baru/update/detail/{id}/{ves_id}', [RBaruController::class, 'detail_rencana']);
-Route::post('/rencana-kapal/detail', [RBaruController::class, 'view_rencana']);
+Route::post('/rencana-baru/tambah-alat/{id}/{ves_id}', [RBaruController::class, 'insert_alat_rcn']);
 Route::get('/rencana-baru/update/{id}', [RBaruController::class, 'edit_rencana']);
+Route::get('/rencana-kapal/edit-rencana/{id}/{id2}', [RBaruController::class, 'view_detail_rencana']);
+// Route::get('/rencana-kapal/edit-rencana/{id2}', [RBaruController::class, 'view_detail_rencana']);
 
 // Route::get('/insert-header', [RcnHeaderController::class, 'insert_header'])->name('insert-header');
 
-
+Route::get('call-procedure', function () {
+    $userId = 1;
+    $getPost = DB::select(
+       'CALL spk_gen_rencana_ops('.$userId.')'
+    );
+    dd($getPost);
+});

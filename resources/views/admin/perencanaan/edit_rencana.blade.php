@@ -56,35 +56,62 @@
                     <div class="form-group">
                         <div class="mb-2">
                             <label for="valey" class="form-label">Ganti Alat (Bisa pilih alat lebih dari satu)</label>
-                            <input type="text" name="waktuAwal" value="{{$rencana[0]->rcn_awal_kerja}}" hidden>
-                            <input type="text" name="waktuAkhir" value="{{$rencana[0]->rcn_akhir_kerja}}" hidden>
+                            <input type="text" name="waktuAwal" value="{{$rencana[0]->rcn_sandar}}" hidden>
+                            <input type="text" name="waktuAkhir" value="{{$rencana[0]->rcn_berangkat}}" hidden>
                             <input type="text" name="rcnNo" value="{{$rencana[0]->rcn_no}}" hidden>
                             <input type="text" name="vesId" value="{{$rencana[0]->ves_id}}" hidden>
-                            <select class="js-example-basic-multiple" name="edit_alat[]" multiple="multiple">
-                            </select>
-                            @error('edit_alat')
-                            <div class="text-danger">{{ $message }}</div>
-                            @enderror
+                            <div class="container">
+                                <div class="row text-center">
+                                    <div class="card-body p-6 mb-4 col-4">
+                                        <div class="card-header py-3">
+                                            <h6 class="font-weight-bold text-dark">Porttainer or Quay Crane</h6>
+                                        </div>
+                                        <div class="text-center mb-2">
+                                            <img src="{{ asset('templates/img/craine_Images/craine_ImgID1.png') }}" width="144px" class="rounded" alt="...">
+                                        </div>
+                                        <select class="js-example-basic-multiple-ccr" name="edit_alat_ccr[]" multiple="multiple">
+                                        </select>
+                                        @error('edit_alat')
+                                        <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                    <div class="card-body p-6 mb-4 col-4">
+                                        <div class="card-header py-3">
+                                            <h6 class="font-weight-bold text-dark">ARTG & RTG</h6>
+                                        </div>
+                                        <div class="text-center mb-2">
+                                            <img src="{{ asset('templates/img/artg_Images/artg_ImgID1.png') }}" width="150px" class="rounded" alt="...">
+                                        </div>
+                                        <select class="js-example-basic-multiple-artg" name="edit_alat_artg[]" multiple="multiple">
+                                        </select>
+                                        @error('edit_alat')
+                                        <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>  
+                            </div>
+                            @foreach ($rencana as $item)
+                            <button type="submit" name="submit" class="btn bg-success text-white">
+                                Selanjutnya
+                            </button>
+                            @endforeach
                         </div>
                     </div>
-                    <!-- <button type="submit" class="btn btn-success tombol-aksi float-left">Selanjutnya</button> -->
-                    @foreach ($rencana as $item)
-                    <button type="submit" name="submit" class="btn bg-success text-white">
-                        Selanjutnya
-                    </button>
-                    @endforeach
                 </form>
-                <!-- <a href="/rencana-baru/perencanaan-operasi" class="btn bg-primary text-white">
-                    Selanjutnya
-                </a> -->
             </div>
         </div>
     </div>
     <script>
         window.onload = function() {
             $(document).ready(function() {
-                $('.js-example-basic-multiple').select2({
-                    data: <?= json_encode($alat) ?>,
+                $('.js-example-basic-multiple-ccr').select2({
+                    data: <?= json_encode($alat_ccr) ?>,
+                    theme: "bootstrap-5",
+                    placeholder: "Pilih Alat",
+                    width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style'
+                });
+                $('.js-example-basic-multiple-artg').select2({
+                    data: <?= json_encode($alat_artg) ?>,
                     theme: "bootstrap-5",
                     placeholder: "Pilih Alat",
                     width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style'
