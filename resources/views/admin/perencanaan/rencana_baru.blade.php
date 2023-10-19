@@ -9,13 +9,13 @@
         @csrf
         <div class="form-group">
             <div class="mb-2">
-                <label for="valey" class="form-label">Input Vassel</label>
+                <label for="valey" class="form-label">Input Vassel </label>
                 <select class="form-control form-multi-select" aria-label="Default select example" name="valey" id="valey">
                     <option selected>Pilih Vassel</option>
                     @foreach ($rencana_kapal as $item)
-                        <option value="{{ $item->ves_id }}">{{ $item->ves_name }}
+                        <option value="{{ $item->ves_id}} ">{{ $item->ves_name }}
                                 ( {{ $item->in_voyage}} - {{ $item->out_voyage}} )
-                                ( {{ date('d/m/Y H-i-s', strtotime ($item->rcn_sandar)) }} - {{ date('d/m/Y H-i-s', strtotime ($item->rcn_berangkat)) }} )
+                                ( {{ date('d/m/Y H-i-s', strtotime ($item->rcn_awal_kerja)) }} - {{ date('d/m/Y H-i-s', strtotime ($item->rcn_akhir_kerja)) }} )
                         </option>
                     @endforeach
                 </select>

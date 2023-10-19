@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 
 class RBaru extends Model
 {
+
     function get_rencanaBaru()
     {
         return DB::table('spk_t_rcn_header')->where('status', 0)->get();
@@ -80,7 +81,39 @@ class RBaru extends Model
         return DB::table('spk_t_rcn_alat')->where('detail_id', $no_rcn)->get();
     }
 
-    function generate_rnc() : Returntype {
-           
+    function insert_shift_temp($data) {
+        return DB::table('spk_shift_temp')->insert($data);
+    }
+
+    function get_rcnAwalKerja($xves_id) {
+        return DB::table('spk_v_rcn_kapal')
+            ->where('ves_id', $xves_id)
+            ->value('rcn_awal_kerja');
+    }
+
+    function get_rcnAkhirKerja($xves_id) {
+        return DB::table('spk_v_rcn_kapal')
+            ->where('ves_id', $xves_id)
+            ->value('rcn_akhir_kerja');
+    }
+
+    function get_rcn_xvesid($xves_id) {
+        DB::table('spk_v_rcn_kapal')
+            ->where('ves_id', $xves_id)
+            ->selectRaw('DATEDIFF(rcn_akhir_kerja, rcn_awal_kerja) + 1 as xdays')
+            ->value('xdays');
+    }
+
+//contoh memanggil procedure
+    function generate_rnc($xves_id) {
+        return DB::table('spk_v_rcn_kapal')
+            ->where('ves_id', $xves_id)
+            ->selectRaw('DATEDIFF(rcn_akhir_kerja, rcn_awal_kerja) + 1 as xdays, rcn_awal_kerja, rcn_akhir_kerja')
+            ->first();
+    }
+
+    function get_procedure($xves_id, $vrcnno) {
+        $data = "CALL spk_gen_rencana_ops(?,?)";
+        return DB::statement($data, [$xves_id, $vrcnno]);
     }
 }

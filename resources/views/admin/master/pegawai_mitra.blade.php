@@ -33,8 +33,8 @@
         <div class="card-body">
             <div class="table-responsive table-center text-dark">
                 <table class="table table-bordered table-align-center" id="dataTable" width="100%" cellspacing="0">
-                    <thead>
-                        <tr class="table-dark">
+                    <thead class="table-dark">
+                        <tr>
                             <th>Kode</th>
                             <th>Keterangan</th>
                             <th>Nilai 1</th>

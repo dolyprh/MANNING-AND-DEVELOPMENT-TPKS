@@ -64,9 +64,6 @@
                         <tr>
                             <th class="col-sm-2">Nama</th>
                             <th >Email Vendor</th>
-                            <th >Kode Cabang</th>
-                            <th >Kode Terminal</th>
-                            <th >Kode Regional</th>
                             <th class="col-sm-2">Phone</th>
                             <th class="col-sm-2">Aksi</th>
                         </tr>
@@ -76,9 +73,6 @@
                             <tr>
                                 <td>{{ $item->nama }}</td>
                                 <td>{{ $item->email_vendor_food}}</td>
-                                <td>{{ $item->kode_cabang}}</td>
-                                <td>{{ $item->kode_terminal}}</td>
-                                <td>{{ $item->kode_regional}}</td>
                                 <td>{{ $item->phone}}</td>
                                 <td class="text-center ">
                                     <a href="{{ url('/katering/'.$item->id.'/edit') }}" class="btn btn-sm bg-warning text-white">

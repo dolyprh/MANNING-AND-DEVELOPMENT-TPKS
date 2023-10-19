@@ -91,9 +91,18 @@ Route::get('/rencana-kapal/edit-rencana/{id}/{id2}', [RBaruController::class, 'v
 // Route::get('/insert-header', [RcnHeaderController::class, 'insert_header'])->name('insert-header');
 
 Route::get('call-procedure', function () {
-    $userId = 1;
+    $xves_id = 'MESO007';
+    $xrcnno = 'RCN-MESO00717102023';
     $getPost = DB::select(
-       'CALL spk_gen_rencana_ops('.$userId.')'
+       'CALL spk_gen_rencana_ops(\''.$xves_id.'\', \''.$xrcnno.'\')'
     );
-    dd($getPost);
+    dd($getPost); 
+
 });
+
+Route::get('/eksekusi-procedure/{xves_id}/{vrcnno?}', [RBaruController::class, 'generate_rnc']);
+
+//belajar manggil procedure
+Route::get("data-kapal/{xves_id}", [RBaruController::class, 'getDetailKapal']);
+Route::get("data-kapal", [RBaruController::class, 'getDataKapal']);
+Route::get("run-prosedure/{xves_id}/{vrcnno}", [RBaruController::class, 'runProcedure']);

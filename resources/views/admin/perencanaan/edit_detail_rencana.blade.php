@@ -79,7 +79,7 @@
     
         <div class="card border-left-dark ml-4 mb-4 col-5">
             <div class="card-header mb-4">
-                <h6 class="text-dark">Detail Rencana Baru</h6>
+                <h6 class="text-dark">Detail Alat</h6>
             </div>
             <table class="table table-bordered detail-table">
                 <thead class="table-secondary text-center text-dark">
