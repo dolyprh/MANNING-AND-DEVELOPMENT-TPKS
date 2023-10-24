@@ -15,7 +15,7 @@
                     @foreach ($rencana_kapal as $item)
                         <option value="{{ $item->ves_id}} ">{{ $item->ves_name }}
                                 ( {{ $item->in_voyage}} - {{ $item->out_voyage}} )
-                                ( {{ date('d/m/Y H-i-s', strtotime ($item->rcn_awal_kerja)) }} - {{ date('d/m/Y H-i-s', strtotime ($item->rcn_akhir_kerja)) }} )
+                                ( {{ date('d/m/Y H-i-s', strtotime ($item->rcn_sandar)) }} - {{ date('d/m/Y H-i-s', strtotime ($item->rcn_berangkat)) }} )
                         </option>
                     @endforeach
                 </select>

@@ -45,13 +45,14 @@ class ShiftController extends Controller
     {
         $data = [
             'nama_shift'     => $request->input('nama_shift'),
+            'no_shift'   => $request->input('no_shift'),
             'waktu_mulai'  => $request->input('w_mulai'),
             'waktu_selesai'   => $request->input('w_selesai'),
             'mulai_istirahat'  => $request->input('m_istirahat'),
             'selesai_istirahat'   => $request->input('s_istirahat'),
-            'kd_regional'  => $request->input('kode_regional'),
-            'kd_cabang'    => $request->input('kode_cabang'),
-            'kd_terminal'  => $request->input('kode_terminal'),
+            'kd_regional'  => 9,
+            'kd_cabang'    => 40,
+            'kd_terminal'  => 40,
             'created_at' => \Carbon\Carbon::now(),
         ];
 

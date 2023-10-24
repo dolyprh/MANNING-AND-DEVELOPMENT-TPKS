@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('spk_t_rcn_detail', function (Blueprint $table) {
-            $table->integer('detail_id');
+            $table->integer('detail_id')->nullable();
             $table->string('rcn_no');
             $table->integer('id_shift');
             $table->dateTime('waktu_mulai');

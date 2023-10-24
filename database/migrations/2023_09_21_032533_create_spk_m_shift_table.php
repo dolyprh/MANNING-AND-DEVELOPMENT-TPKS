@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('spk_m_shift', function (Blueprint $table) {
             $table->id('id_shift');
+            $table->integer('no_shift');
             $table->string('nama_shift')->nullable();
             $table->string('waktu_mulai')->nullable();
             $table->string('waktu_selesai')->nullable();

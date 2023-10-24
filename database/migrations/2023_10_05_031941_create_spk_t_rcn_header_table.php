@@ -29,8 +29,8 @@ return new class extends Migration
             $table->integer('kd_regional')->nullable();
             $table->integer('kd_cabang')->nullable();
             $table->integer('kd_terminal')->nullable();
-            $table->integer('status')->nullable();
             $table->timestamps();
+            $table->integer('status')->nullable();
         });
     }
 

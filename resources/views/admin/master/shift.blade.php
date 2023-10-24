@@ -18,16 +18,13 @@
                         @enderror
                     </div>
                     <div class="mb-2">
-                        <label for="kode_cabang" class="form-label">Kode Cabang</label>
-                        <input type="text" class="form-control" name="kode_cabang" id="kode_cabang">
-                    </div>
-                    <div class="mb-2">
-                        <label for="kode_terminal" class="form-label">Kode Terminal</label>
-                        <input type="text" class="form-control" name="kode_terminal" id="kode_terminal">
-                    </div>
-                    <div class="mb-2">
-                        <label for="kode_regional" class="form-label">Kode Regional</label>
-                        <input type="text" class="form-control" name="kode_regional" id="kode_regional">
+                        <label for="kode_cabang" class="form-label">Nomor Shift</label>
+                        <select class="form-control form-multi-select" aria-label="Default select example" name="no_shift" id="valey">
+                            <option selected>Pilih shift</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                        </select>
                     </div>
                 </div>
                 <div class="col-sm-6 mb-3 mb-sm-0">

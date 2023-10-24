@@ -61,14 +61,6 @@ class RBaru extends Model
         return DB::table('spk_t_rcn_detail')->insert($data);
     }
 
-    // function updateRcnAlat($data, $ves_id) {
-    //    if(DB::table('spk_t_rcn_header')->where('ves_id', $ves_id)->update($data)){
-    //         return true;
-    //    } else {
-    //         return false;
-    //    }
-    // }
-
     function checkRcnNoInDetail($rcnNo){
         return DB::table('spk_t_rcn_detail')->select('detail_id')->where('rcn_no', $rcnNo)->limit(1)->orderBy('detail_id', 'desc')->get();
     }
@@ -104,16 +96,9 @@ class RBaru extends Model
             ->value('xdays');
     }
 
-//contoh memanggil procedure
-    function generate_rnc($xves_id) {
-        return DB::table('spk_v_rcn_kapal')
-            ->where('ves_id', $xves_id)
-            ->selectRaw('DATEDIFF(rcn_akhir_kerja, rcn_awal_kerja) + 1 as xdays, rcn_awal_kerja, rcn_akhir_kerja')
-            ->first();
+    public static function executeStoredProc($xves_id, $vrcnno)
+    {
+        DB::statement("CALL spk_gen_rencana_ops(?, ?)", [$xves_id, $vrcnno]);
     }
 
-    function get_procedure($xves_id, $vrcnno) {
-        $data = "CALL spk_gen_rencana_ops(?,?)";
-        return DB::statement($data, [$xves_id, $vrcnno]);
-    }
 }
