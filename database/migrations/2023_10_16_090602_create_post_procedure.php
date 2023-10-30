@@ -64,7 +64,7 @@ return new class extends Migration
             WHILE x < xdays DO
                 INSERT INTO spk_shift_tmp
                 SELECT
-                    (@row_number := @row_number + 1) AS detail_id,
+                    NULL,
                     vrcnno,
                     no_shift,
                     CONCAT(DATE_FORMAT(DATE_ADD(rcn_awal_kerja, INTERVAL x DAY), '%Y/%m/%d'), ' ', waktu_mulai) AS mulai,
@@ -85,7 +85,7 @@ return new class extends Migration
         
             INSERT INTO spk_t_rcn_detail
             SELECT
-                detail_id,
+                (@row_number := @row_number + 1) AS detail_id,
                 rcn_no,
                 id_shift,
                 waktu_mulai,

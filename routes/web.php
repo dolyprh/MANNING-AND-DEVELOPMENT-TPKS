@@ -82,27 +82,14 @@ Route::post('/search-year', [JadwalGroupController::class, 'search_year'])->name
 // Route::get('/jadwal-group', [JGroupController::class, 'importExcel']);
 Route::post('/import-excel', [JGroupController::class, 'import'])->name('import-excel');
 
-Route::post('/rencana-baru/update/detail/{id}/{ves_id}', [RBaruController::class, 'detail_rencana']);
+Route::post('/rencana-baru/update-alat/{id}/{ves_id}', [RBaruController::class, 'detail_rencana']);
 Route::post('/rencana-baru/tambah-alat/{id}/{ves_id}', [RBaruController::class, 'insert_alat_rcn']);
 Route::get('/rencana-baru/update/{id}', [RBaruController::class, 'edit_rencana']);
-Route::get('/rencana-kapal/edit-rencana/{id}/{id2}', [RBaruController::class, 'view_detail_rencana']);
-// Route::get('/rencana-kapal/edit-rencana/{id2}', [RBaruController::class, 'view_detail_rencana']);
+Route::get('/rencana-kapal/{id}/{id2}', [RBaruController::class, 'view_detail_rencana']);
+Route::delete('/rencana-kapal/{id}/{id2}', [RBaruController::class, 'delete_rcnalat']);
 
 // Route::get('/insert-header', [RcnHeaderController::class, 'insert_header'])->name('insert-header');
-
-Route::get('call-procedure', function () {
-    $xves_id = 'MESO007';
-    $xrcnno = 'RCN-MESO00717102023';
-    $getPost = DB::select(
-       'CALL spk_gen_rencana_ops(\''.$xves_id.'\', \''.$xrcnno.'\')'
-    );
-    dd($getPost); 
-
-});
-
-Route::get('/eksekusi-procedure/{xves_id}/{vrcnno?}', [RBaruController::class, 'generate_rnc']);
-
-//belajar manggil procedure
-Route::get("data-kapal/{xves_id}", [RBaruController::class, 'getDetailKapal']);
-Route::get("data-kapal", [RBaruController::class, 'getDataKapal']);
 Route::get("run-prosedure/{xves_id}/{vrcnno}", [RBaruController::class, 'runProcedure']);
+
+Route::get("rencana-kapal/{id}/{id2}", [RBaruController::class, 'get_jason_detail']);
+

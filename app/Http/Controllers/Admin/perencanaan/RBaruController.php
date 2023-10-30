@@ -164,86 +164,18 @@ class RBaruController extends Controller
 
     }
 
-
-    function generateRcn() {
-
-        DB::beginTransaction();
-
-        $xves_id = 'MESO007';
-        $vrcnno = '';
-
-        if (is_null($vrcnno)) {
-            $xrcn_no = 'RCN-' . $xves_id . date('dmY');
-        } else {
-            $xrcn_no = $vrcnno;
-        }
-
-        DB::table('spk_t_rcn_header')->where('rcn_no', $xrcn_no)->delete();
-        DB::table('spk_t_rcn_detail')->where('rcn_no', $xrcn_no)->delete();
-
-        DB::commit();
-
-        // INSERT data ke spk_t_rcn_header
-        $id = $request->valey;
-        $kapal = $this->RBaru->get_kapalById($id);
-
-        $data = [
-            'ves_id' => $id,
-            'ves_code' => $kapal[0]->ves_code,
-            'nama_kapal' => $kapal[0]->ves_name,
-            'pelayaran' => $kapal[0]->pelayaran,
-            'in_voyage' => $kapal[0]->in_voyage,
-            'out_voyage' => $kapal[0]->out_voyage,
-            'kd_awal' => $kapal[0]->kd_awal,
-            'kd_akhir' => $kapal[0]->kd_akhir,
-            'rcn_sandar' => $kapal[0]->rcn_sandar,
-            'rcn_berangkat' => $kapal[0]->rcn_berangkat,
-            'rcn_awal_kerja' => $kapal[0]->rcn_awal_kerja,
-            'rcn_akhir_kerja' => $kapal[0]->rcn_akhir_kerja,
-            'kd_regional' => 9,
-            'kd_cabang' => 40,
-            'kd_terminal' => 40,
-            'status' => 0,
-            'created_at' => \Carbon\Carbon::now(),
-            'rcn_no' => DB::raw("CONCAT('RCN-',ves_id, DATE_FORMAT(created_at, '%d%m%Y'))")
-        ];
-
-        $this->RBaru->insert_rcn_header($data);
-
-        DB::commit();
-
-        // SELECT data dari spk_v_rcn_kapal dan isi ke dalam variabel
-        // $result = DB::table('spk_v_rcn_kapal')
-        //     ->selectRaw('DATEDIFF(rcn_akhir_kerja, rcn_awal_kerja) + 1 as xdays, rcn_awal_kerja, rcn_akhir_kerja')
-        //     ->where('ves_id', $xves_id)
-        //     ->first();
-
-        // $xdays = $result->xdays;
-        // $xrcn_awal_kerja = $result->rcn_awal_kerja;
-        // $xrcn_akhir_kerja = $result->rcn_akhir_kerja;
-
-        // $x = 0;
-
-        // while ($x < $xdays) {
-        //     DB::table('spk_shift_tmp')->insert([
-                
-        //     ]);
-
-        //     DB::commit();
-
-        //     $x++;
-        // }
-    }
     /**
      * Display the specified resource.
      */
-    public function show()
+    public function show(Request $request, $id_rcn)
     {
+
         $data = [
             'menus' => $this->MenuModel->getMenus(),
             'submenus' => $this->MenuModel->getSubmenus(),
             'alat' => $this->AlatModel->getDataAlat(),
             'rencana' => $this->RBaru->getRencanaBaruLimit(),
+            'rcn_detail' => $this->RBaru->getDetail($id_rcn),
             'alat_ccr'    => $this->AlatModel->getDataCraine(),
             'alat_artg'    => $this->AlatModel->getDataArtg(),
         ];
@@ -270,9 +202,10 @@ class RBaruController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy()
     {
-        //
+        // $this->RBaru->delete_RcnAlat($seq_id, $rcn_no);
+        // return redirect('rencana-kapal/detail-rencana/MKAT159/RCN-MKAT15930102023')->withSuccess('Berhasil Hapus Alat');
     }
 
     function insert_alat_rcn(Request $request, $id_rencana, $rcn_no)
@@ -290,36 +223,44 @@ class RBaruController extends Controller
 
         $tambah_alat = array_merge($request->tambah_alat_ccr, $request->tambah_alat_artg);
         
-        $idDetail = 1;
-        $dataIdDetail = $this->RBaru->checkRcnNoInDetail($request->rcnNo);
-        if (count($dataIdDetail) != 0) {
-            $idDetail = $dataIdDetail[0]->detail_id + 1;
-        }
+        $detail_id = 0;
 
-        foreach ($tambah_alat as $alat) {
-            $dataAlat = explode(',', $alat);
-            $dataInputAlat = [
-                'detail_id' => $idDetail,
-                'kd_alat' => $dataAlat[0],
-                'nama_alat' => $dataAlat[1],
-                'waktu_mulai' => $request->waktuMulai,
-                'waktu_selesai' => $request->waktuSelesai,
-                'rcn_no' => $request->rcnNo,
-            ];
-            $this->RBaru->insertRcnAlat($dataInputAlat);
+        $id_rcn = $request->rcnNo;
+        $get_rcn_detail = $this->RBaru->getDetail($id_rcn);
+
+        foreach ($get_rcn_detail as $item) {
+            
+            foreach ($tambah_alat as $alat) {
+                $dataAlat = explode(',', $alat);
+                $seq_id = $detail_id + 1;
+                $dataInputAlat = [
+                    'seq_id'    => $seq_id,
+                    'detail_id' => $item->detail_id,
+                    'kd_alat' => $dataAlat[0],
+                    'nama_alat' => $dataAlat[1],
+                    'waktu_mulai' => $item->waktu_mulai,
+                    'waktu_selesai' => $item->waktu_selesai,
+                    'rcn_no' => $request->rcnNo,
+                ];
+
+                $detail_id++;
+                $this->RBaru->insertRcnAlat($dataInputAlat);
+            }
         }
+        
+
         $data = [
             'menus' => $this->MenuModel->getMenus(),
             'submenus' => $this->MenuModel->getSubmenus(),
             'rencana' => $this->RBaru->get_rencanaById($id_rencana),
             'alat' => $this->AlatModel->getDataAlat(),
-            'detail_alat' => $this->RBaru->getAlatlByRcn($rcn_no),
             'alat_ccr'    => $this->AlatModel->getDataCraine(),
+            'detail_alat' => $this->RBaru->getAlatlByRcn($rcn_no),
 
         ];
 
         if($data) {
-            return redirect('/rencana-kapal/edit-rencana/'.$id_rencana.'/'.$rcn_no);
+            return redirect('/rencana-kapal/'.$id_rencana.'/'.$rcn_no);
         } else {
             return redirect('/rencana-baru')->with('toast_error', 'Gagal tambah alat!');
         }
@@ -366,77 +307,85 @@ class RBaruController extends Controller
             ]
         );
 
-        $edit_alat = array_merge($request->edit_alat_ccr, $request->edit_alat_artg);
-        $date = Carbon::now()->timezone('Asia/Jakarta')->format('H');
+        $update_alat = array_merge($request->edit_alat_ccr, $request->edit_alat_artg);
+        
+        $detail_id = 0;
 
-        $idShift = 0;
-        if ($date >= '00' && $date <= '08') {
-            $idShift = 1;
-        } else if ($date >= '08' && $date <= '16') {
-            $idShift = 2;
-        } else {
-            $idShift = 3;
-        }
+        $id_rcn = $request->rcnNo;
+        $get_rcn_detail = $this->RBaru->getDetail($id_rcn);
 
-        $idDetail = 1;
-        $dataIdDetail = $this->RBaru->checkRcnNoInDetail($request->rcnNo);
-        if (count($dataIdDetail) != 0) {
-            $idDetail = $dataIdDetail[0]->detail_id + 1;
+        foreach ($get_rcn_detail as $item) {
+            
+            foreach ($update_alat as $alat) {
+                $dataAlat = explode(',', $alat);
+                $seq_id = $detail_id + 1;
+                $dataInputAlat = [
+                    'seq_id'    => $seq_id,
+                    'detail_id' => $item->detail_id,
+                    'kd_alat' => $dataAlat[0],
+                    'nama_alat' => $dataAlat[1],
+                    'waktu_mulai' => $item->waktu_mulai,
+                    'waktu_selesai' => $item->waktu_selesai,
+                    'rcn_no' => $request->rcnNo,
+                ];
+
+                $detail_id++;
+                $this->RBaru->insertRcnAlat($dataInputAlat);
+            }
         }
         
-        $dataDetail = [
-            "detail_id" => $idDetail,
-            "rcn_no" => $request->rcnNo,
-            "id_shift" => $idShift,
-            'waktu_mulai' => $request->waktuAwal,
-            'waktu_selesai' => $request->waktuAkhir,
-            "nama_shift" => "SHIFT $idShift",
-            "ves_id" => $request->vesId
-        ];
-
-        $this->RBaru->InsertRcnDetail($dataDetail);
-        foreach ($edit_alat as $alat) {
-            $dataAlat = explode(',', $alat);
-            $dataInputAlat = [
-                'detail_id' => $idDetail,
-                'kd_alat' => $dataAlat[0],
-                'nama_alat' => $dataAlat[1],
-                'waktu_mulai' => $request->waktuAwal,
-                'waktu_selesai' => $request->waktuAkhir,
-                'rcn_no' => $request->rcnNo,
-            ];
-            $this->RBaru->insertRcnAlat($dataInputAlat);
-        }
 
         $data = [
             'menus' => $this->MenuModel->getMenus(),
             'submenus' => $this->MenuModel->getSubmenus(),
             'rencana' => $this->RBaru->get_rencanaById($id_rencana),
             'alat' => $this->AlatModel->getDataAlat(),
-            'detail_rcn' => $this->RBaru->getDetailByRcn($rcn_no),
-            'detail_alat' => $this->RBaru->getAlatlByRcn($rcn_no),
             'alat_ccr'    => $this->AlatModel->getDataCraine(),
-            'alat_artg'    => $this->AlatModel->getDataArtg(),
+            'detail_alat' => $this->RBaru->getAlatlByRcn($rcn_no),
+
         ];
 
-//        return $request->edit_alat;
-//        return $dataDetail;
-        return redirect('/rencana-kapal/edit-rencana/'.$id_rencana.'/'.$rcn_no);
+        if($data) {
+            return redirect('/rencana-kapal/'.$id_rencana.'/'.$rcn_no);
+        } else {
+            return redirect('/rencana-baru')->with('toast_error', 'Gagal tambah alat!');
+        }
     }
 
-    function view_detail_rencana($id_rencana, $no_rcn)
+    function view_detail_rencana($id_rencana, $rcn_no)
     {
         $data = [
             'menus' => $this->MenuModel->getMenus(),
             'submenus' => $this->MenuModel->getSubmenus(),
-            'rencana' => $this->RBaru->get_rencanaById($id_rencana),
+            // 'rencana' => $this->RBaru->get_rencanaById($id_rencana),
             'rencana' => $this->RBaru->getRencanaBaruLimit(),
-            'detail_rcn' => $this->RBaru->getDetailByRcn($no_rcn),
-            'detail_alat' => $this->RBaru->getAlatlByRcn($no_rcn),
+            'detail_rcn' => $this->RBaru->getDetailByRcn($rcn_no),
+            // 'detail_rcn_toAlat' => $this->RBaru->getDetailByRcn_ToAlat($no_rcn, $id_rencana),
             'alat_ccr'    => $this->AlatModel->getDataCraine(),
             'alat_artg'    => $this->AlatModel->getDataArtg(),
+            // 'detail_alat' => $this->RBaru->getAlatlByRcn($rcn_no),
+            // 'detail_alat' => $this->RBaru->getAlatlByRcnJson(),
         ];
 
         return view('admin.perencanaan.edit_detail_rencana', $data);
+    }
+
+    function get_jason_detail($rcn_no, $detail_id) {
+        $data = [
+            'menus' => $this->MenuModel->getMenus(),
+            'submenus' => $this->MenuModel->getSubmenus(),
+            'rencana' => $this->RBaru->getRencanaBaruLimit(),
+            'detail_rcn' => $this->RBaru->getDetailByRcn($rcn_no),
+
+            'detail_alat' => $this->RBaru->getAlatlByRcnJson($rcn_no, $detail_id),
+        ];
+
+        return view('admin.perencanaan.edit_detail_rencana', $data);
+    }
+
+    public function delete_rcnalat($rcn_no, $seq_id)
+    {
+        $this->RBaru->delete_RcnAlat($rcn_no, $seq_id);
+        return redirect('rencana-kapal/'.$rcn_no. '/1' )->withSuccess('Berhasil Hapus Alat');
     }
 }

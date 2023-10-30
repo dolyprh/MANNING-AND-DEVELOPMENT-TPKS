@@ -51,7 +51,7 @@
         </div>
         <div class="card-body p-6 mb-4 p-4">
             <div class="mb-4">
-                <form action="/rencana-baru/update/detail/{{ $item->rcn_no }}/{{ $item->ves_id }}" method="POST" enctype="multipart/form-data">
+                <form action="/rencana-baru/update-alat/{{ $item->rcn_no }}/1" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
                         <div class="mb-2">
@@ -62,12 +62,12 @@
                             <input type="text" name="vesId" value="{{$rencana[0]->ves_id}}" hidden>
                             <div class="container">
                                 <div class="row text-center">
-                                    <div class="card-body p-6 mb-4 col-4">
+                                    <div class="card-body mb-2 col-4">
                                         <div class="card-header py-3">
                                             <h6 class="font-weight-bold text-dark">Porttainer or Quay Crane</h6>
                                         </div>
                                         <div class="text-center mb-2">
-                                            <img src="{{ asset('templates/img/craine_Images/craine_ImgID1.png') }}" width="144px" class="rounded" alt="...">
+                                            <img src="{{ asset('templates/img/craine_Images/cc.png') }}" width="220px" class="rounded" alt="...">
                                         </div>
                                         <select class="js-example-basic-multiple-ccr" name="edit_alat_ccr[]" multiple="multiple">
                                         </select>
@@ -75,7 +75,7 @@
                                         <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                    <div class="card-body p-6 mb-4 col-4">
+                                    <div class="card-body mb-2 col-4">
                                         <div class="card-header py-3">
                                             <h6 class="font-weight-bold text-dark">ARTG & RTG</h6>
                                         </div>
@@ -88,10 +88,23 @@
                                         <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
+                                    <div class="card-body mb-2 col-4">
+                                        <div class="card-header py-3">
+                                            <h6 class="font-weight-bold text-dark">Reach Stacker</h6>
+                                        </div>
+                                        <div class="text-center mb-2">
+                                            <img src="{{ asset('templates/img/sr_images/sr.png') }}" width="280px" class="rounded" alt="...">
+                                        </div>
+                                        <select class="js-example-basic-multiple-artg" name="[]" multiple="multiple">
+                                        </select>
+                                        @error('edit_alat')
+                                        <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
                                 </div>  
                             </div>
                             @foreach ($rencana as $item)
-                            <button type="submit" name="submit" class="btn bg-success text-white">
+                            <button type="submit" name="submit" class="btn bg-success float-right mr-5 text-white">
                                 Selanjutnya
                             </button>
                             @endforeach

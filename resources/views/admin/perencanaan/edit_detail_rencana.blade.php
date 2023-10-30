@@ -43,7 +43,7 @@
     </div>
 
     <div class="row mx-auto">
-        <div class="card border-left-dark mb-4 mr-2 col-6">
+        <div class="card mb-4 mr-5 col-6">
             <div class="card-header">
                 <h6 class="text-dark">Detail Rencana Baru</h6>
             </div>
@@ -67,7 +67,9 @@
                                     sampai: {{ date('d/m/Y', strtotime  ($detail->waktu_selesai)) }} {{date('H:i', strtotime ($detail->waktu_selesai))}} 
                                 </td>
                                 <td class="text-center">
-                                    <button class="show-detail btn-sm btn-info" data-id="{{ $detail->detail_id }}"><i class="fas fa-arrow-right"></i> </button>
+                                    <a href="/rencana-kapal/{{ $detail->rcn_no }}/{{ $detail->detail_id }}" >
+                                        <button class="show-alat btn-sm btn-info" ><i class="fas fa-arrow-right"></i> </button>
+                                    </a>
                                 </td>
                             </tr>
                             @endforeach
@@ -77,49 +79,61 @@
             </div>
         </div>
     
-        <div class="card border-left-dark ml-4 mb-4 col-5">
+        <div class="card px-4 ml-5 mb-4 col-5" >
             <div class="card-header mb-4">
                 <h6 class="text-dark">Detail Alat</h6>
             </div>
             <table class="table table-bordered detail-table">
                 <thead class="table-secondary text-center text-dark">
                     <tr>
+                        <th>No</th>
                         <th>Alat</th>
-                        <th>Deskripsi</th>
+                        <th>Kode alat</th>
+                        <th>Aksi</th>
                     </tr>
                 </thead>
-                <tbody>
-                    @foreach ($detail_alat as $alat)
-                        <tr>
-                            <td>{{ $detail->nama_alat }} </td>
-                            <td>{{ $detail->kd_alat }} </td>
-                        </tr>
-                    @endforeach
+                @foreach ($detail_alat as $alat)
+                <tbody id="alat-table-{{ $detail->detail_id }}">
+                    <tr>
+                        <td>{{ $alat->detail_id }}</td>
+                        <td>{{$alat->nama_alat}}</td>
+                        <td>{{$alat->kd_alat}}</td>
+                        <td class="text-center">
+                            <button class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target='#deleteRcnAlat{{ $alat->seq_id }}' >
+                                <i class="fas fa-window-close"></i> 
+                            </button>
+                        </td>
+                    </tr>
                 </tbody>
+                @endforeach
             </table>
         </div>
     </div>
     
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const showDetailButtons = document.querySelectorAll('.show-detail');
-        const detailTable = document.querySelector('.detail-table');
 
-        showDetailButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                const id = button.getAttribute('data-id');
-                const detailRows = detailTable.querySelectorAll('tbody tr');
-                // Sembunyikan semua baris detail sebelum menampilkan yang sesuai
-                detailRows.forEach(row => {
-                    row.style.display = 'none';
-                });
-                // Tampilkan baris detail yang sesuai
-                detailTable.querySelector(`[data-id="${id}"]`).style.display = 'table-row';
-                // Tampilkan tabel detail
-                detailTable.style.display = 'table';
+        $(document).ready(function() {
+            $('.show-alat').click(function() {
+                var detailId = $(this).data('detail-id');
+                var alatTable = $('#alat-table-' + detailId);
+
+                // Toggle tabel alat berdasarkan detail_id yang sesuai
+                alatTable.toggle();
             });
         });
-    });
-</script>
 
+        // function myFunction() {
+        // var x = document.getElementById("myAlat");
+        //     if (x.style.display === "none") {
+        //         x.style.display = "block";
+        //     } else {
+        //         x.style.display = "none";
+        //     }
+        // }
+        
+    </script>
+
+
+    @include('admin.modal.m_rcnalat_delete')
+    @include('sweetalert::alert')
     @endsection

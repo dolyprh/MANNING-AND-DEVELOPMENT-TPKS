@@ -54,7 +54,5 @@ class AlatModel extends Model
         DB::table('spk_m_alat')->where('id', $id_alat)->delete();
     }
 
-    // function get_alatByRTG($rtg) {
-    //     DB::table('spk_m_alat')->where('nama_alat')
-    // }
+    
 }

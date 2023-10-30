@@ -65,40 +65,68 @@ class RBaru extends Model
         return DB::table('spk_t_rcn_detail')->select('detail_id')->where('rcn_no', $rcnNo)->limit(1)->orderBy('detail_id', 'desc')->get();
     }
 
-    function getDetailByRcn($no_rcn) {
-        return DB::table('spk_t_rcn_detail')->where('ves_id', $no_rcn)->get();
+    function getDetailByRcn($rcn_no) {
+        return DB::table('spk_t_rcn_detail')
+            ->where('rcn_no', $rcn_no)
+            ->get();
+    }
+
+    function getDetailByRcn_ToAlat($rcn_no, $id_rencana) {
+        return DB::table('spk_t_rcn_detail')
+            ->leftjoin('spk_t_rcn_alat', 'spk_t_rcn_alat.rcn_no', '=', 'spk_t_rcn_detail.rcn_no' )
+            ->where('spk_t_rcn_detail.rcn_no', $rcn_no)
+            ->where('spk_t_rcn_detail.detail_id', $id_rencana)
+            ->get();
     }
     
-    function getAlatlByRcn($no_rcn) {
-        return DB::table('spk_t_rcn_alat')->where('detail_id', $no_rcn)->get();
+    function getAlatlByRcn($rcn_no) {
+        return DB::table('spk_t_rcn_alat')
+            ->where('rcn_no', $rcn_no)
+            ->get();
     }
+
+    function getAlatlByRcnJson($rcn_no, $detail_id) {
+        return DB::table('spk_t_rcn_alat')
+            ->leftjoin('spk_t_rcn_detail', 'spk_t_rcn_detail.rcn_no', '=', 'spk_t_rcn_alat.rcn_no')
+            ->where('spk_t_rcn_detail.rcn_no', $rcn_no)
+            ->where('spk_t_rcn_detail.detail_id', $detail_id)
+            ->where('spk_t_rcn_alat.detail_id', $detail_id)
+            ->get();
+    }
+
+    // function getAlatlByRcnJson() {
+    //     return DB::table('spk_t_rcn_alat')
+    //         ->leftjoin('spk_t_rcn_detail', 'spk_t_rcn_detail.rcn_no', '=', 'spk_t_rcn_alat.rcn_no')
+    //         ->where('spk_t_rcn_detail.rcn_no', 'RCN-SIUR01930102023')
+    //         ->where('spk_t_rcn_detail.detail_id', 9)
+    //         ->where('spk_t_rcn_alat.detail_id', 9)
+    //         ->get();
+    // }
 
     function insert_shift_temp($data) {
         return DB::table('spk_shift_temp')->insert($data);
     }
 
-    function get_rcnAwalKerja($xves_id) {
-        return DB::table('spk_v_rcn_kapal')
-            ->where('ves_id', $xves_id)
-            ->value('rcn_awal_kerja');
-    }
-
-    function get_rcnAkhirKerja($xves_id) {
-        return DB::table('spk_v_rcn_kapal')
-            ->where('ves_id', $xves_id)
-            ->value('rcn_akhir_kerja');
-    }
-
-    function get_rcn_xvesid($xves_id) {
-        DB::table('spk_v_rcn_kapal')
-            ->where('ves_id', $xves_id)
-            ->selectRaw('DATEDIFF(rcn_akhir_kerja, rcn_awal_kerja) + 1 as xdays')
-            ->value('xdays');
-    }
-
     public static function executeStoredProc($xves_id, $vrcnno)
     {
         DB::statement("CALL spk_gen_rencana_ops(?, ?)", [$xves_id, $vrcnno]);
+    }
+
+    function getDetail($id_rcn)
+    {
+        return DB::table('spk_t_rcn_detail')->where('rcn_no', $id_rcn)->get();
+    }
+
+    function get_detailAlat() : Returntype {
+        
+    }
+
+    function delete_RcnAlat($rcn_no, $seq_id) {
+        DB::table('spk_t_rcn_alat')
+            ->leftjoin('spk_t_rcn_detail', 'spk_t_rcn_detail.rcn_no', '=', 'spk_t_rcn_alat.rcn_no')
+            ->where('spk_t_rcn_alat.rcn_no', $rcn_no)
+            ->where('spk_t_rcn_alat.seq_id', $seq_id)
+            ->delete();
     }
 
 }
