@@ -8,7 +8,7 @@ use App\Http\Controllers\Admin\Master\MenuController;
 use App\Http\Controllers\Admin\perencanaan\JadwalGroupController;
 use App\Http\Controllers\Admin\perencanaan\JGroupController;
 use App\Http\Controllers\Admin\perencanaan\RBaruController;
-use App\Http\Controllers\Admin\spk\SpkBaruController;
+use App\Http\Controllers\Admin\spk\SpkController;
 use App\Http\Controllers\Admin\spk\RiwayatSpkController;
 use App\Http\Controllers\Admin\fooding\JTanpaMakanController;
 use App\Http\Controllers\Admin\fooding\JKateringController;
@@ -52,7 +52,7 @@ Route::get('notifikasi', [MasterController::class, 'notifikasi']);
 //Route::get('rencana-baru', [RencanaController::class, 'rencana_baru']);
 // Route::get('jadwal-group', [JGroupController::class, 'jadwal_group']);
 
-Route::get('spk-baru', [SpkBaruController::class, 'spk_baru']);
+// Route::get('spk-baru', [SpkBaruController::class, 'spk_baru']);
 Route::get('riwayat-spk', [RiwayatSpkController::class, 'riwayat_spk']);
 
 Route::get('jadwal-tanpa-makan', [JTanpaMakanController::class, 'jadwal_tanpa_makan']);
@@ -72,24 +72,26 @@ Route::resource('/group', GroupController::class);
 Route::resource('/jenis-absen', AbsenController::class);
 Route::resource('/mitra-kerja', MitraController::class);
 Route::resource('/rencana-baru', RBaruController::class);
+Route::resource('/spk-baru', SpkController::class);
+// Route::post('/search-spk', [SpkController::class, 'search-spk'])->name('spk-baru');
 
 //Untuk CRUD Perencanaan Setup
 Route::resource('/jadwal-group', JadwalGroupController::class);
 Route::post('/search-data', [JadwalGroupController::class, 'search'])->name('search-data');
 Route::post('/search-year', [JadwalGroupController::class, 'search_year'])->name('search-year');
 
-//Untuk Import Perencanaan Jadwal Group
-// Route::get('/jadwal-group', [JGroupController::class, 'importExcel']);
+
 Route::post('/import-excel', [JGroupController::class, 'import'])->name('import-excel');
 
-Route::post('/rencana-baru/update-alat/{id}/{ves_id}', [RBaruController::class, 'detail_rencana']);
+Route::post('/rencana-baru/update-alat/{id}/{ves_id}', [RBaruController::class, 'update_alat_rcn']);
 Route::post('/rencana-baru/tambah-alat/{id}/{ves_id}', [RBaruController::class, 'insert_alat_rcn']);
 Route::get('/rencana-baru/update/{id}', [RBaruController::class, 'edit_rencana']);
 Route::get('/rencana-kapal/{id}/{id2}', [RBaruController::class, 'view_detail_rencana']);
 Route::delete('/rencana-kapal/{id}/{id2}', [RBaruController::class, 'delete_rcnalat']);
 
-// Route::get('/insert-header', [RcnHeaderController::class, 'insert_header'])->name('insert-header');
 Route::get("run-prosedure/{xves_id}/{vrcnno}", [RBaruController::class, 'runProcedure']);
 
-Route::get("rencana-kapal/{id}/{id2}", [RBaruController::class, 'get_jason_detail']);
+// Route::get('/spk-baru/{id}', [SpkController::class, 'view_detail']);
+
+// Route::get("rencana-kapal/{id}/{id2}", [RBaruController::class, 'get_jason_detail']);
 

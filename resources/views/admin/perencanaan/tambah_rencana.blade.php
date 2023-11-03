@@ -7,7 +7,7 @@
         <div class="card-body">
             <div class="table-responsive text-dark">
                 <table class="table table-bordered table-align-center" width="100%" cellspacing="0">
-                    <thead class="table-dark text-center">
+                    <thead class="table-secondary text-center">
                     <tr>
                         <th>Kapal</th>
                         <th>Voyage</th>
@@ -50,7 +50,7 @@
         </div>
         <div class="p-6 mb-4 p-4">
             <div class="mb-2">
-                <form action="/rencana-baru/tambah-alat/{{ $item->rcn_no }}/1" method="POST" enctype="multipart/form-data">
+                <form action="/rencana-baru/tambah-alat/{{ $item->rcn_no }}/{{ $item->ves_id }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
                         <div class="mb-2">
@@ -75,6 +75,9 @@
                                         </div>
                                         <select class="js-example-basic-multiple-ccr" name="tambah_alat_ccr[]" multiple="multiple">
                                         </select>
+                                        @error('tambah_alat_ccr')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                     <div class="card-body mb-2 col-4 ">
                                         <div class="card-header py-3">
@@ -85,6 +88,9 @@
                                         </div>
                                         <select class="js-example-basic-multiple-artg" name="tambah_alat_artg[]" multiple="multiple">
                                         </select>
+                                        @error('tambah_alat_artg')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                     <div class="card-body mb-2 col-4 ">
                                         <div class="card-header py-3">
@@ -93,10 +99,10 @@
                                         <div class="text-center mb-2">
                                             <img src="{{ asset('templates/img/sr_images/sr.png') }}" width="280px" class="rounded" alt="...">
                                         </div>
-                                        <select class="js-example-basic-multiple-artg" name="edit_alat_artg[]" multiple="multiple">
+                                        <select class="js-example-basic-multiple-artg" name="tambah_alat_rs[]" multiple="multiple">
                                         </select>
-                                        @error('edit_alat')
-                                        <div class="text-danger">{{ $message }}</div>
+                                        @error('tambah_alat_rs')
+                                            <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>   
@@ -148,3 +154,4 @@
         }
     </script>
 @endsection
+@include('sweetalert::alert')

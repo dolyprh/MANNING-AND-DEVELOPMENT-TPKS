@@ -39,12 +39,12 @@ class JGroupModel extends Model
         if($bulan) {
             return DB::table('spk_t_jadwal_group')
                 ->whereMonth('tanggal', '=' , $bulan)
-                ->leftjoin('spk_m_group', 'spk_m_group.id', '=' , 'spk_t_jadwal_group.id_group')
+                ->leftjoin('spk_m_group', 'spk_m_group.id_group', '=' , 'spk_t_jadwal_group.id_group')
                 ->leftjoin('spk_m_shift', 'spk_m_shift.id_shift', '=', 'spk_t_jadwal_group.id_shift')
                 ->get();
         } else {
             return DB::table('spk_t_jadwal_group')
-                ->leftjoin('spk_m_group', 'spk_m_group.id', '=' , 'spk_t_jadwal_group.id_group')
+                ->leftjoin('spk_m_group', 'spk_m_group.id_group', '=' , 'spk_t_jadwal_group.id_group')
                 ->leftjoin('spk_m_shift', 'spk_m_shift.id_shift', '=', 'spk_t_jadwal_group.id_shift')
                 ->get();
         }
@@ -54,19 +54,15 @@ class JGroupModel extends Model
         if($year) {
             return DB::table('spk_t_jadwal_group')
                 ->whereYear('tanggal', '=' , $year)
-                ->leftjoin('spk_m_group', 'spk_m_group.id', '=' , 'spk_t_jadwal_group.id_group')
+                ->leftjoin('spk_m_group', 'spk_m_group.id_group', '=' , 'spk_t_jadwal_group.id_group')
                 ->leftjoin('spk_m_shift', 'spk_m_shift.id_shift', '=', 'spk_t_jadwal_group.id_shift')
                 ->get();
         } else {
             return DB::table('spk_t_jadwal_group')
-                ->leftjoin('spk_m_group', 'spk_m_group.id', '=' , 'spk_t_jadwal_group.id_group')
+                ->leftjoin('spk_m_group', 'spk_m_group.id_group', '=' , 'spk_t_jadwal_group.id_group')
                 ->leftjoin('spk_m_shift', 'spk_m_shift.id_shift', '=', 'spk_t_jadwal_group.id_shift')
                 ->get();
         }
-    }
-
-    function FunctionName() : Returntype {
-        
     }
 
     function delete_jgroup($id_jgroup)

@@ -51,6 +51,7 @@
         </div>
     </div>
     @include('layouts.script')
+    @include('sweetalert::alert')
 
 </body>
 

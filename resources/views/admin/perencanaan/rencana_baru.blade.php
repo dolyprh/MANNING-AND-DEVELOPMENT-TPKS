@@ -33,16 +33,17 @@
             <h5 class="m-0 font-weight-bold text-dark">Data Rencana Baru</h5>
         </div>
         <div class="card-body">
-            <div class="table-responsive text-dark">
+            <div class="table-responsive">
                 <table class="table table-bordered table-align-center" width="100%" cellspacing="0">
-                    <thead class="table-dark text-center">
+                    <thead class="table-secondary text-dark text-center">
                         <tr>
-                            <th >Kapal</th>
-                            <th class="col-2">Voyage</th>
-                            <th class="col-sm-2">Kode</th>
+                            <th class="col-sm-2">Kapal</th>
+                            <th >Voyage</th>
+                            <th >Kode</th>
                             <th class="col-sm-2">Rencana Sandar</th>
                             <th class="col-sm-2">Rencana Kerja</th>
-                            <th class="col-sm-2"></th>
+                            <th class="col-sm-2">NO-RCN</th>
+                            <th >Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -59,10 +60,15 @@
                                 <br/>
                                  sampai: {{ date('d/m/Y', strtotime  ($item->rcn_akhir_kerja)) }} {{date('H:i', strtotime ($item->rcn_akhir_kerja))}} </td>
                             <td class="text-center">
-                                    {{$item->rcn_no}} <br/>
-                                    <a href="/rencana-baru/update/{{ $item->rcn_no }}" class="btn btn-sm bg-primary text-white">
-                                        edit
-                                    </a>
+                                    {{$item->rcn_no}}
+                            </td>
+                            <td class="text-center">
+                                <a href="/rencana-baru/update/{{ $item->rcn_no }}" class="btn btn-sm bg-primary text-white">
+                                    <i class="fas fa-edit" aria-hidden="true"></i>
+                                </a>
+                                <a href="/rencana-kapal/{{ $item->rcn_no }}/{{ $item->ves_id }}" class="btn btn-sm bg-info text-white">
+                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                </a>
                             </td>
                         </tr>
                         @endforeach
@@ -71,5 +77,6 @@
             </div>
         </div>
     </div>
+
+    @endsection
     @include('sweetalert::alert')
-@endsection

@@ -59,103 +59,6 @@ class RBaruController extends Controller
      */
     public function store(Request $request)
     {
-        // DB::beginTransaction();
-
-        // INSERT data ke spk_t_rcn_header
-        // $xves_id = $request->valey;
-        // $xrcn_no = 'RCN-' . $xves_id . date('dmY');
-        // $kapal = $this->RBaru->get_kapalById($xves_id);
-
-        // $data = [
-        //     'ves_id' => $xves_id,
-        //     'ves_code' => $kapal[0]->ves_code,
-        //     'nama_kapal' => $kapal[0]->ves_name,
-        //     'pelayaran' => $kapal[0]->pelayaran,
-        //     'in_voyage' => $kapal[0]->in_voyage,
-        //     'out_voyage' => $kapal[0]->out_voyage,
-        //     'kd_awal' => $kapal[0]->kd_awal,
-        //     'kd_akhir' => $kapal[0]->kd_akhir,
-        //     'rcn_sandar' => $kapal[0]->rcn_sandar,
-        //     'rcn_berangkat' => $kapal[0]->rcn_berangkat,
-        //     'rcn_awal_kerja' => $kapal[0]->rcn_awal_kerja,
-        //     'rcn_akhir_kerja' => $kapal[0]->rcn_akhir_kerja,
-        //     'kd_regional' => 9,
-        //     'kd_cabang' => 40,
-        //     'kd_terminal' => 40,
-        //     'status' => 0,
-        //     'created_at' => \Carbon\Carbon::now(),
-        //     'rcn_no' => $xrcn_no
-        // ];
-        
-        // $result = DB::table('spk_v_rcn_kapal')
-        //     ->selectRaw('DATEDIFF(rcn_akhir_kerja, rcn_awal_kerja) + 1 as xdays, rcn_akhir_kerja, rcn_awal_kerja')
-        //     ->where('ves_id', $xves_id)
-        //     ->first();
-
-        // $xdays = $result->xdays;
-        // $xrcn_awal_kerja = $result->rcn_awal_kerja;
-        // $xrcn_akhir_kerja = $result->rcn_akhir_kerja;
-    
-        // $shift = $this->ShiftModel->get_shift();
-        // $idShift = 0;
-
-        // foreach($shift as $item) {
-        //     if(date('H') >= $item->waktu_mulai && date('H') <= $item->waktu_selesai) {
-        //         $idShift = $item->id_shift;
-        //         break;
-        //     }
-        // }
-
-        // $idDetail = 1;
-        // $dataIdDetail = $this->RBaru->checkRcnNoInDetail($request->rcnNo);
-        // if (count($dataIdDetail) != 0) {
-        //     $idDetail = $dataIdDetail[0]->detail_id + 1;
-        // }
-
-        // for ($x = 0; $x < $xdays; $x++) {
-        //     $awal = new DateTime($xrcn_awal_kerja);
-        //     $date = $awal->format('Y-m-d');
-            
-        //     foreach ($shift as $item) {
-        //         // $waktuMulai = $date . ' ' . $item->waktu_mulai; 
-        //         // $waktuSelesai = $date . ' ' . $item->waktu_selesai;
-                
-        //         // if ($item->id_shift == 3) {
-        //         //     $awal->modify('+1 day');
-        //         //     $tanggal = $awal->format('Y-m-d');
-        //         //     $waktuMulai = $tanggal . ' ' . $item->waktu_mulai;
-        //         //     $waktuSelesai = $tanggal . ' ' . $item->waktu_selesai;
-        //         // }
-                
-        //         if ($item->id_shift == 3) {
-        //             $awal->modify('+1 day');
-        //             $date = $awal->format('Y-m-d');
-        //         }
-                
-        //         DB::table('spk_t_rcn_detail')->insert([
-        //             'detail_id' => $idDetail,
-        //             'rcn_no' => $xrcn_no,
-        //             'id_shift' => $item->id_shift,
-        //             'waktu_mulai' =>  $date . ' ' . $item->waktu_mulai,
-        //             'waktu_selesai' => $date . ' ' . $item->waktu_selesai,
-        //             'nama_shift' => $item->nama_shift,
-        //             'ves_id' => $xves_id,
-        //         ]);
-        //     }
-
-
-        //     $awal->modify('+1 day');
-        // }
-
-        // if ($this->RBaru->insert_rcn_header($data)) {
-        //     return redirect('/rencana-baru/detail')->withSuccess('Jadwal Group Berhasil ditambahkan');
-        // } else {
-        //     return redirect('/rencana-baru')->with('toast_error', 'Gagal Tambah Jadwal Group!');
-            
-        // }
-
-        // DB::commit();
-
         $xves_id = $request->valey;
         $vrcnno = 'RCN-' . $xves_id . date('dmY');
         
@@ -216,8 +119,8 @@ class RBaruController extends Controller
                 "tambah_alat_artg" => "required",
             ],
             [
-                "tambah_alat_ccr.required" => "Isi Alat!",
-                "tambah_alat_artg.required" => "Isi Alat!",
+                "tambah_alat_ccr.required" => "Alat CCR Wajib diisi!",
+                "tambah_alat_artg.required" => "Alat ARTG Wajib diisi!",
             ]
         );
 
@@ -294,22 +197,24 @@ class RBaruController extends Controller
         return view('admin.perencanaan.edit_rencana', $data);
     }
 
-    function detail_rencana(Request $request, $id_rencana, $rcn_no)
+    function update_alat_rcn(Request $request, $id_rencana, $rcn_no)
     {
         $request->validate(
             [
                 "edit_alat_ccr" => "required",
-                "edit_alat_artg" => "required"
+                "edit_alat_artg" => "required",
             ],
             [
-                "edit_alat_ccr.required" => "Isi Alat!",
-                "edit_alat_artg.required" => "Isi Alat!"
+                "edit_alat_ccr.required" => "Alat CCR Wajib diisi!",
+                "edit_alat_artg.required" => "Alat ARTG Wajib diisi!",
             ]
         );
 
         $update_alat = array_merge($request->edit_alat_ccr, $request->edit_alat_artg);
         
         $detail_id = 0;
+        $last_rcn_no = null; // Menyimpan rcn_no terakhir
+        $seq_id = 1; // Inisialisasi seq_id
 
         $id_rcn = $request->rcnNo;
         $get_rcn_detail = $this->RBaru->getDetail($id_rcn);
@@ -318,7 +223,11 @@ class RBaruController extends Controller
             
             foreach ($update_alat as $alat) {
                 $dataAlat = explode(',', $alat);
-                $seq_id = $detail_id + 1;
+
+                if ($item->rcn_no != $last_rcn_no) {
+                    $seq_id = 1; // Reset seq_id ke 1 jika rcn_no berbeda
+                }
+                // $seq_id = $detail_id + 1;
                 $dataInputAlat = [
                     'seq_id'    => $seq_id,
                     'detail_id' => $item->detail_id,
@@ -329,8 +238,11 @@ class RBaruController extends Controller
                     'rcn_no' => $request->rcnNo,
                 ];
 
-                $detail_id++;
                 $this->RBaru->insertRcnAlat($dataInputAlat);
+    
+                $last_rcn_no = $item->rcn_no;
+    
+                $seq_id++;
             }
         }
         
@@ -348,7 +260,7 @@ class RBaruController extends Controller
         if($data) {
             return redirect('/rencana-kapal/'.$id_rencana.'/'.$rcn_no);
         } else {
-            return redirect('/rencana-baru')->with('toast_error', 'Gagal tambah alat!');
+            return redirect('/rencana-kapal')->with('toast_error', 'Gagal tambah alat!');
         }
     }
 
@@ -357,13 +269,13 @@ class RBaruController extends Controller
         $data = [
             'menus' => $this->MenuModel->getMenus(),
             'submenus' => $this->MenuModel->getSubmenus(),
-            // 'rencana' => $this->RBaru->get_rencanaById($id_rencana),
-            'rencana' => $this->RBaru->getRencanaBaruLimit(),
+            'rencana' => $this->RBaru->get_rencanaById($id_rencana),
+            // 'rencana' => $this->RBaru->getRencanaBaruLimit(),
             'detail_rcn' => $this->RBaru->getDetailByRcn($rcn_no),
             // 'detail_rcn_toAlat' => $this->RBaru->getDetailByRcn_ToAlat($no_rcn, $id_rencana),
             'alat_ccr'    => $this->AlatModel->getDataCraine(),
             'alat_artg'    => $this->AlatModel->getDataArtg(),
-            // 'detail_alat' => $this->RBaru->getAlatlByRcn($rcn_no),
+            'detail_alat' => $this->RBaru->getAlatlByRcn($rcn_no),
             // 'detail_alat' => $this->RBaru->getAlatlByRcnJson(),
         ];
 
@@ -388,4 +300,16 @@ class RBaruController extends Controller
         $this->RBaru->delete_RcnAlat($rcn_no, $seq_id);
         return redirect('rencana-kapal/'.$rcn_no. '/1' )->withSuccess('Berhasil Hapus Alat');
     }
+
+    // function view_detail($id_rencana)
+    // {
+    //     $data = [
+    //         'menus' => $this->MenuModel->getMenus(),
+    //         'submenus' => $this->MenuModel->getSubmenus(),
+    //         'rencana' => $this->RBaru->get_rencanaById($id_rencana),
+
+    //     ];
+
+    //     return view('admin.perencanaan.jason_detail', $data);
+    // }
 }

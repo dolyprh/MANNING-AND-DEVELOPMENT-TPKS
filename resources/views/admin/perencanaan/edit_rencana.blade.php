@@ -1,7 +1,7 @@
 @extends('layouts.main')
 @section('content')
-    <a href="/rencana-baru" class="btn bg-dark text-white mb-4">
-        Kembali
+    <a href="/rencana-baru" class="btn text-primary mb-4"> 
+        <i class="pr-2 fas fa-arrow-left"></i> Kembali
     </a>
 
     <div class="card border-left-dark mb-4">
@@ -71,7 +71,7 @@
                                         </div>
                                         <select class="js-example-basic-multiple-ccr" name="edit_alat_ccr[]" multiple="multiple">
                                         </select>
-                                        @error('edit_alat')
+                                        @error('edit_alat_ccr')
                                         <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
@@ -84,7 +84,7 @@
                                         </div>
                                         <select class="js-example-basic-multiple-artg" name="edit_alat_artg[]" multiple="multiple">
                                         </select>
-                                        @error('edit_alat')
+                                        @error('edit_alat_artg')
                                         <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
@@ -97,17 +97,13 @@
                                         </div>
                                         <select class="js-example-basic-multiple-artg" name="[]" multiple="multiple">
                                         </select>
-                                        @error('edit_alat')
-                                        <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+                                        
                                     </div>
                                 </div>  
+                                <button type="submit" name="submit" class="btn bg-success float-right mr-2 mb-4 text-white">
+                                    Selanjutnya
+                                </button>
                             </div>
-                            @foreach ($rencana as $item)
-                            <button type="submit" name="submit" class="btn bg-success float-right mr-5 text-white">
-                                Selanjutnya
-                            </button>
-                            @endforeach
                         </div>
                     </div>
                 </form>
@@ -133,3 +129,5 @@
         }
     </script>
     @endsection
+    @include('sweetalert::alert')
+

@@ -77,9 +77,14 @@
                     </table>
                 </div>
             </div>
+            <a href="/rencana-baru" class="mb-4">
+                <button type="submit" name="submit" class="btn bg-success float-left ml-3 text-white">
+                    Selanjutnya
+                </button>
+            </a>
         </div>
     
-        <div class="card px-4 ml-5 mb-4 col-5" >
+        <div class="card px-4 ml-2 mb-4 col-5 w-100" >
             <div class="card-header mb-4">
                 <h6 class="text-dark">Detail Alat</h6>
             </div>

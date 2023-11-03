@@ -11,12 +11,12 @@ class RBaru extends Model
 
     function get_rencanaBaru()
     {
-        return DB::table('spk_t_rcn_header')->where('status', 0)->get();
+        return DB::table('spk_t_rcn_header')->get();
     }
 
     function getRencanaBaruLimit()
     {
-        return DB::table('spk_t_rcn_header')->where('status', 0)->limit(1)->orderBy('created_at', 'desc')->get();
+        return DB::table('spk_t_rcn_header')->limit(1)->orderBy('created_at', 'desc')->get();
     }
 
     function get_rencanaBaruByStatus()

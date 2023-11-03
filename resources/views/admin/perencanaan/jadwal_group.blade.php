@@ -38,7 +38,7 @@
                         <select class="form-control form-control" aria-label="Default select example" name="jadwal_group" id="jadwal_group">
                             <option selected>Pilih Group</option>
                             @foreach ($group as $item)
-                            <option value="{{ $item->id }}">{{ $item->nama_group }}</option>
+                            <option value="{{ $item->id_group }}">{{ $item->nama_group }}</option>
                             @endforeach
                         </select>
                         @error('jadwal_group')
@@ -47,7 +47,7 @@
                     </div>
                 </div>
             </div>
-            <button type="submit" class="btn btn-success px-4 tombol-aksi">Tambah</button>
+            <button type="submit" class="btn btn-success px-4 tombol-aksi float-right">Tambah</button>
         </form>
 
         <form action="{{ route('import-excel')}}" method="post" enctype="multipart/form-data" class="mt-4">
@@ -106,7 +106,7 @@
 
             <div class="table-responsive text-dark">
                 <table class="table table-bordered table-align-center" width="100%" cellspacing="0">
-                    <thead class="table-dark text-center">
+                    <thead class="table-secondary text-dark text-center">
                         <tr>
                             <th class="col-sm-3">Tanggal</th>
                             <th class="col-sm-3">Shift</th>
