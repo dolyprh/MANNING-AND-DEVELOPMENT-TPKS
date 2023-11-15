@@ -20,12 +20,17 @@ class AlatModel extends Model
 
     function getDataCraine()
     {
-        return DB::table('spk_m_alat')->select(DB::raw("CONCAT(id, ',', nama_alat) as id"), 'nama_alat as text')->where('jenis_alat', 'CCR')->get();
+        return DB::table('spk_m_alat')->select(DB::raw("CONCAT(id, ',', kode_alat, ',', nama_alat) as id"), 'nama_alat as text')->where('jenis_alat', 'CCR')->get();
     }
-
+    
     function getDataArtg()
     {
-        return DB::table('spk_m_alat')->select(DB::raw("CONCAT(id, ',', nama_alat) as id"), 'nama_alat as text')->where('jenis_alat', 'ARTG')->orWhere('jenis_alat', 'RTG')->get();
+        return DB::table('spk_m_alat')->select(DB::raw("CONCAT(id, ',', kode_alat, ',', nama_alat) as id"), 'nama_alat as text')->where('jenis_alat', 'ARTG')->orWhere('jenis_alat', 'RTG')->get();
+    }
+
+    function getDataRS()
+    {
+        return DB::table('spk_m_alat')->select(DB::raw("CONCAT(id, ',', kode_alat, ',', nama_alat) as id"), 'nama_alat as text')->where('jenis_alat', 'RS')->get();
     }
     
     function insert_alat($data)

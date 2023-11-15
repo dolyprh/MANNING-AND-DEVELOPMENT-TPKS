@@ -15,8 +15,11 @@
         <div id="{{$menu->data_parent}}" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 @foreach ($submenus->where('parent_id', $menu->id) as $submenu)
-                    <a class="collapse-item" href="{{$submenu->url_submenu}}">{{$submenu->nama_submenu}}</a>
-                    @endforeach
+                    <a class="collapse-item" href="{{$submenu->url_submenu}}">
+                        <i class="fas fa-fw fa-square fa-xs"></i>
+                        {{$submenu->nama_submenu}}
+                    </a>
+                @endforeach
             </div>
         </div>
     </li>

@@ -81,6 +81,7 @@ class RBaruController extends Controller
             'rcn_detail' => $this->RBaru->getDetail($id_rcn),
             'alat_ccr'    => $this->AlatModel->getDataCraine(),
             'alat_artg'    => $this->AlatModel->getDataArtg(),
+            'alat_rs'    => $this->AlatModel->getDataRS(),
         ];
 
         return view('admin.perencanaan.tambah_rencana', $data);
@@ -124,7 +125,7 @@ class RBaruController extends Controller
             ]
         );
 
-        $tambah_alat = array_merge($request->tambah_alat_ccr, $request->tambah_alat_artg);
+        $tambah_alat = array_merge($request->tambah_alat_ccr, $request->tambah_alat_artg, $request->tambah_alat_rs);
         
         $detail_id = 0;
 
@@ -139,8 +140,8 @@ class RBaruController extends Controller
                 $dataInputAlat = [
                     'seq_id'    => $seq_id,
                     'detail_id' => $item->detail_id,
-                    'kd_alat' => $dataAlat[0],
-                    'nama_alat' => $dataAlat[1],
+                    'kd_alat' => $dataAlat[1],
+                    'nama_alat' => $dataAlat[2],
                     'waktu_mulai' => $item->waktu_mulai,
                     'waktu_selesai' => $item->waktu_selesai,
                     'rcn_no' => $request->rcnNo,
@@ -158,6 +159,8 @@ class RBaruController extends Controller
             'rencana' => $this->RBaru->get_rencanaById($id_rencana),
             'alat' => $this->AlatModel->getDataAlat(),
             'alat_ccr'    => $this->AlatModel->getDataCraine(),
+            'alat_artg'    => $this->AlatModel->getDataCraine(),
+            'alat_rs'    => $this->AlatModel->getDataRS(),
             'detail_alat' => $this->RBaru->getAlatlByRcn($rcn_no),
 
         ];
@@ -192,6 +195,7 @@ class RBaruController extends Controller
             'alat' => $this->AlatModel->getDataAlat(),
             'alat_ccr'    => $this->AlatModel->getDataCraine(),
             'alat_artg'    => $this->AlatModel->getDataArtg(),
+            'alat_rs'    => $this->AlatModel->getDataRS(),
         ];
 
         return view('admin.perencanaan.edit_rencana', $data);
@@ -210,7 +214,7 @@ class RBaruController extends Controller
             ]
         );
 
-        $update_alat = array_merge($request->edit_alat_ccr, $request->edit_alat_artg);
+        $update_alat = array_merge($request->edit_alat_ccr, $request->edit_alat_artg, $request->edit_alat_rs);
         
         $detail_id = 0;
         $last_rcn_no = null; // Menyimpan rcn_no terakhir
@@ -231,8 +235,8 @@ class RBaruController extends Controller
                 $dataInputAlat = [
                     'seq_id'    => $seq_id,
                     'detail_id' => $item->detail_id,
-                    'kd_alat' => $dataAlat[0],
-                    'nama_alat' => $dataAlat[1],
+                    'kd_alat' => $dataAlat[1],
+                    'nama_alat' => $dataAlat[2],
                     'waktu_mulai' => $item->waktu_mulai,
                     'waktu_selesai' => $item->waktu_selesai,
                     'rcn_no' => $request->rcnNo,
@@ -271,25 +275,12 @@ class RBaruController extends Controller
             'submenus' => $this->MenuModel->getSubmenus(),
             'rencana' => $this->RBaru->get_rencanaById($id_rencana),
             // 'rencana' => $this->RBaru->getRencanaBaruLimit(),
-            'detail_rcn' => $this->RBaru->getDetailByRcn($rcn_no),
-            // 'detail_rcn_toAlat' => $this->RBaru->getDetailByRcn_ToAlat($no_rcn, $id_rencana),
-            'alat_ccr'    => $this->AlatModel->getDataCraine(),
-            'alat_artg'    => $this->AlatModel->getDataArtg(),
-            'detail_alat' => $this->RBaru->getAlatlByRcn($rcn_no),
+            'detail_rcn' => $this->RBaru->getDetailByRcn($id_rencana),
+            // 'alat_ccr'    => $this->AlatModel->getDataCraine(),
+            // 'alat_artg'    => $this->AlatModel->getDataArtg(),
+            // 'alat_rs'    => $this->AlatModel->getDataRS(),
+            'detail_alat' => $this->RBaru->getAlatlByRcn($id_rencana),
             // 'detail_alat' => $this->RBaru->getAlatlByRcnJson(),
-        ];
-
-        return view('admin.perencanaan.edit_detail_rencana', $data);
-    }
-
-    function get_jason_detail($rcn_no, $detail_id) {
-        $data = [
-            'menus' => $this->MenuModel->getMenus(),
-            'submenus' => $this->MenuModel->getSubmenus(),
-            'rencana' => $this->RBaru->getRencanaBaruLimit(),
-            'detail_rcn' => $this->RBaru->getDetailByRcn($rcn_no),
-
-            'detail_alat' => $this->RBaru->getAlatlByRcnJson($rcn_no, $detail_id),
         ];
 
         return view('admin.perencanaan.edit_detail_rencana', $data);
@@ -300,16 +291,4 @@ class RBaruController extends Controller
         $this->RBaru->delete_RcnAlat($rcn_no, $seq_id);
         return redirect('rencana-kapal/'.$rcn_no. '/1' )->withSuccess('Berhasil Hapus Alat');
     }
-
-    // function view_detail($id_rencana)
-    // {
-    //     $data = [
-    //         'menus' => $this->MenuModel->getMenus(),
-    //         'submenus' => $this->MenuModel->getSubmenus(),
-    //         'rencana' => $this->RBaru->get_rencanaById($id_rencana),
-
-    //     ];
-
-    //     return view('admin.perencanaan.jason_detail', $data);
-    // }
 }

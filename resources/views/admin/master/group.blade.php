@@ -50,10 +50,10 @@
                                 <td>{{ $item->nama_group }}</td>
                                 <td>{{ $item->kode }}</td>
                                 <td class="text-center">
-                                    <a href="{{ url('/group/'.$item->id.'/edit') }}" class="btn btn-sm bg-warning text-white">
+                                    <a href="{{ url('/group/'.$item->id_group.'/edit') }}" class="btn btn-sm bg-warning text-white">
                                         <i class="fas fa-edit fa-primary"></i>
                                     </a>
-                                    <button class="btn btn-sm btn-danger" data-toggle="modal" data-target='#deleteGroup{{ $item->id }}'>
+                                    <button class="btn btn-sm btn-danger" data-toggle="modal" data-target='#deleteGroup{{ $item->id_group }}'>
                                         <i class="fas fa-trash fa-danger"></i> 
                                     </button>
                                 </td>

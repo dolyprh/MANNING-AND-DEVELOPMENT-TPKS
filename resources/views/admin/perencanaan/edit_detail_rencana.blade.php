@@ -100,7 +100,7 @@
                 @foreach ($detail_alat as $alat)
                 <tbody id="alat-table-{{ $detail->detail_id }}">
                     <tr>
-                        <td>{{ $alat->detail_id }}</td>
+                        <td>{{$alat->detail_id }}</td>
                         <td>{{$alat->nama_alat}}</td>
                         <td>{{$alat->kd_alat}}</td>
                         <td class="text-center">

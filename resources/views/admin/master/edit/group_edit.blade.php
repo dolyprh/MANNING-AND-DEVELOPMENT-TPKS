@@ -8,7 +8,7 @@
 
     <div class="card p-6 mb-4 p-4">
         @foreach ($group as $item)
-        <form action="{{ url ('group/' .$item->id) }}" method="post" enctype="multipart/form-data">
+        <form action="{{ url ('group/' .$item->id_group) }}" method="post" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="mb-2">

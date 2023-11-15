@@ -12,7 +12,7 @@
                 <div class="modal-body">
                         Yakin Ingin Menghapus shift {{ $item->nama_alat}} ?
                 </div>
-                <form action="/rencana-kapal/{{ $item->rcn_no }}/{{$item->seq_id}}" method="POST">
+                <form action="/rencana-kapal/delete/{{ $item->rcn_no }}/{{$item->seq_id}}" method="POST">
                     @csrf
                     @method('DELETE')
                     <div class="modal-footer">

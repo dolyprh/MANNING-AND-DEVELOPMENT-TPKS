@@ -87,11 +87,13 @@ Route::post('/rencana-baru/update-alat/{id}/{ves_id}', [RBaruController::class, 
 Route::post('/rencana-baru/tambah-alat/{id}/{ves_id}', [RBaruController::class, 'insert_alat_rcn']);
 Route::get('/rencana-baru/update/{id}', [RBaruController::class, 'edit_rencana']);
 Route::get('/rencana-kapal/{id}/{id2}', [RBaruController::class, 'view_detail_rencana']);
-Route::delete('/rencana-kapal/{id}/{id2}', [RBaruController::class, 'delete_rcnalat']);
+Route::delete('/rencana-kapal/delete/{id}/{id2}', [RBaruController::class, 'delete_rcnalat']);
+
+Route::post('/spk-baru/insert-alat-operator/{id}', [SpkController::class, 'insert_alat_operator']);
 
 Route::get("run-prosedure/{xves_id}/{vrcnno}", [RBaruController::class, 'runProcedure']);
 
-// Route::get('/spk-baru/{id}', [SpkController::class, 'view_detail']);
+Route::get('spk-report', [SpkController::class, 'get_report']);
 
 // Route::get("rencana-kapal/{id}/{id2}", [RBaruController::class, 'get_jason_detail']);
 

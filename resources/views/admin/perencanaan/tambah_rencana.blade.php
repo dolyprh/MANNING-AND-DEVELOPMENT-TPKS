@@ -50,7 +50,7 @@
         </div>
         <div class="p-6 mb-4 p-4">
             <div class="mb-2">
-                <form action="/rencana-baru/tambah-alat/{{ $item->rcn_no }}/{{ $item->ves_id }}" method="POST" enctype="multipart/form-data">
+                <form action="/rencana-baru/tambah-alat/{{ $item->rcn_no }}/1" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group">
                         <div class="mb-2">
@@ -99,18 +99,18 @@
                                         <div class="text-center mb-2">
                                             <img src="{{ asset('templates/img/sr_images/sr.png') }}" width="280px" class="rounded" alt="...">
                                         </div>
-                                        <select class="js-example-basic-multiple-artg" name="tambah_alat_rs[]" multiple="multiple">
+                                        <select class="js-example-basic-multiple-rs" name="tambah_alat_rs[]" multiple="multiple">
                                         </select>
                                         @error('tambah_alat_rs')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>   
-                                @foreach ($rencana as $item)
-                                    <button type="submit" class="btn btn-success tombol-aksi float-right btn-block">Selanjutnya</button>
-                                @endforeach
                             </div>
                         </div>
+                        @foreach ($rencana as $item)
+                            <button type="submit" class="btn btn-success tombol-aksi float-right btn-block">Selanjutnya</button>
+                        @endforeach
                     </div>
                 </form>
             </div>
@@ -125,15 +125,6 @@
     <script>
         window.onload = function() {
             $(document).ready(function() {
-                $('.js-example-basic-multiple').select2({
-                    data: <?= json_encode($alat) ?>,
-                    theme: "bootstrap-5",
-                    placeholder: "Pilih Alat",
-                    width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style'
-                });
-            });
-
-            $(document).ready(function() {
                 $('.js-example-basic-multiple-ccr').select2({
                     data: <?= json_encode($alat_ccr) ?>,
                     theme: "bootstrap-5",
@@ -145,6 +136,15 @@
             $(document).ready(function() {
                 $('.js-example-basic-multiple-artg').select2({
                     data: <?= json_encode($alat_artg) ?>,
+                    theme: "bootstrap-5",
+                    placeholder: "Pilih Alat",
+                    width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style'
+                });
+            });
+
+            $(document).ready(function() {
+                $('.js-example-basic-multiple-rs').select2({
+                    data: <?= json_encode($alat_rs) ?>,
                     theme: "bootstrap-5",
                     placeholder: "Pilih Alat",
                     width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style'

@@ -81,14 +81,29 @@
                             <td>{{ $item->nama_shift }}</td>
                             <td>{{ $item->nama_group }}</td>
                             <td class="text-center">
-                            <a href="/spk-baru/{{ $item->id }}">
-                                <form action="" method="POST" enctype="multipart/form-data">
-                                    <input type="text" name="kode_group" value="{{$item->kode}}" hidden> 
-                                </form>
-                                <button class="btn btn-sm btn-primary">
-                                    <i class="fa fa-plus mr-2" aria-hidden="true"></i> Buat SPK 
-                                </button>
-                            </a>
+                                <!-- <a href="/spk-baru/{{ $item->id }}">
+                                    <form action="" method="POST" enctype="multipart/form-data">
+                                        <input type="text" name="kode_group" value="{{$item->kode}}" hidden>
+                                    </form>
+                                    <button class="btn btn-sm btn-primary">
+                                        <i class="fa fa-plus mr-2" aria-hidden="true"></i> Buat SPK 
+                                    </button>
+                                </a> -->
+
+                                @if($item->spk_no)
+                                    <a href="spk-report" class="text-bold">
+                                        <button type="button" class="btn btn-sm btn-outline-primary">{{ $item->spk_no }}</button>
+                                    </a>
+                                @else
+                                <a href="/spk-baru/{{ $item->id }}" class="text-bold">
+                                    <form action="" method="POST" enctype="multipart/form-data">
+                                        <input type="text" name="kode_group" value="{{ $item->kode }}" hidden>
+                                    </form>
+                                    <button class="btn btn-sm btn-sm btn-primary">
+                                        <i class="fa fa-plus mr-2" aria-hidden="true"></i> Buat SPK
+                                    </button>
+                                </a>
+                                @endif
                             </td>
                         </tr>
                         @endforeach

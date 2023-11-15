@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('id_shift')->nullable();
             $table->timestamps();
 
-            $table->foreign('id_group')->references('id')->on('spk_m_group')->onDelete('cascade');
+            $table->foreign('id_group')->references('id_group')->on('spk_m_group')->onDelete('cascade');
             $table->foreign('id_shift')->references('id_shift')->on('spk_m_shift')->onDelete('cascade');
 
         });

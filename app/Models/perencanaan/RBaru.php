@@ -70,17 +70,10 @@ class RBaru extends Model
             ->where('rcn_no', $rcn_no)
             ->get();
     }
-
-    function getDetailByRcn_ToAlat($rcn_no, $id_rencana) {
-        return DB::table('spk_t_rcn_detail')
-            ->leftjoin('spk_t_rcn_alat', 'spk_t_rcn_alat.rcn_no', '=', 'spk_t_rcn_detail.rcn_no' )
-            ->where('spk_t_rcn_detail.rcn_no', $rcn_no)
-            ->where('spk_t_rcn_detail.detail_id', $id_rencana)
-            ->get();
-    }
     
     function getAlatlByRcn($rcn_no) {
         return DB::table('spk_t_rcn_alat')
+            // ->where('detail_id', $id_rencana)
             ->where('rcn_no', $rcn_no)
             ->get();
     }

@@ -24,7 +24,7 @@
                         <select class="form-control form-control" aria-label="Default select example" name="jadwal_shift" id="jadwal_shift">
                             <option selected>Pilih Shift</option>
                             @foreach ($shift as $item)
-                            <option value="{{ $item->id_shift }}">{{ $item->nama_shift }}</option>
+                            <option value="{{ $item->no_shift }}">{{ $item->nama_shift }}</option>
                             @endforeach
                         </select>
                         @error('jadwal_shift')
@@ -103,9 +103,8 @@
                 </form>
             </div>
 
-
             <div class="table-responsive text-dark">
-                <table class="table table-bordered table-align-center" width="100%" cellspacing="0">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead class="table-secondary text-dark text-center">
                         <tr>
                             <th class="col-sm-3">Tanggal</th>

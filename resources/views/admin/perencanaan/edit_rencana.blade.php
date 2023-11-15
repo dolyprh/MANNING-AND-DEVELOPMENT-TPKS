@@ -95,7 +95,7 @@
                                         <div class="text-center mb-2">
                                             <img src="{{ asset('templates/img/sr_images/sr.png') }}" width="280px" class="rounded" alt="...">
                                         </div>
-                                        <select class="js-example-basic-multiple-artg" name="[]" multiple="multiple">
+                                        <select class="js-example-basic-multiple-rs" name="edit_alat_rs[]" multiple="multiple">
                                         </select>
                                         
                                     </div>
@@ -121,6 +121,12 @@
                 });
                 $('.js-example-basic-multiple-artg').select2({
                     data: <?= json_encode($alat_artg) ?>,
+                    theme: "bootstrap-5",
+                    placeholder: "Pilih Alat",
+                    width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style'
+                });
+                $('.js-example-basic-multiple-rs').select2({
+                    data: <?= json_encode($alat_rs) ?>,
                     theme: "bootstrap-5",
                     placeholder: "Pilih Alat",
                     width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style'

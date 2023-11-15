@@ -21,12 +21,6 @@ class JGroupController extends Controller
         $this->importer = $importer;
     }
 
-    function importExcel(Request $request) 
-    {
-        Excel::import(new JGroupImport,request()->file('file_import'));
-        
-        return back();
-    }
 
     public function import(Request $request) 
     {

@@ -1,6 +1,6 @@
 <!-- Modal Hapus -->
 @foreach ($group as $item)
-    <div class="modal fade" id="deleteGroup{{ $item->id }}" tabindex="-1" role="dialog"
+    <div class="modal fade" id="deleteGroup{{ $item->id_group }}" tabindex="-1" role="dialog"
         aria-labelledby="deleteGroup" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable" role="document">
             <div class="modal-content">
@@ -12,7 +12,7 @@
                 <div class="modal-body">
                     Yakin Ingin Menghapus Group <b> {{ $item->nama_group }} </b>?
                 </div>
-                <form action="/group/{{ $item->id }}" method="POST">
+                <form action="/group/{{ $item->id_group }}" method="POST">
                     @csrf
                     @method('DELETE')
                     <div class="modal-footer">
