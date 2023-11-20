@@ -94,6 +94,7 @@ Route::post('/spk-baru/insert-alat-operator/{id}', [SpkController::class, 'inser
 Route::get("run-prosedure/{xves_id}/{vrcnno}", [RBaruController::class, 'runProcedure']);
 
 Route::get('spk-report', [SpkController::class, 'get_report']);
+Route::get('spk-download/{id1}/{id2}', [SpkController::class, 'download_pdf']);
 
 // Route::get("rencana-kapal/{id}/{id2}", [RBaruController::class, 'get_jason_detail']);
 

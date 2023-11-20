@@ -173,7 +173,7 @@ return [
 
         RealRashid\SweetAlert\SweetAlertServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
-
+        Barryvdh\DomPDF\ServiceProvider::class,
         Maatwebsite\Excel\ExcelServiceProvider::class,
 
 
@@ -194,6 +194,7 @@ return [
         // 'Example' => App\Facades\Example::class,
         'Alert' => RealRashid\SweetAlert\Facades\Alert::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
 
     ])->toArray(),
 

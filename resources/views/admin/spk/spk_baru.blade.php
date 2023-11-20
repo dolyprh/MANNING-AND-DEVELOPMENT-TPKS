@@ -92,7 +92,10 @@
 
                                 @if($item->spk_no)
                                     <a href="spk-report" class="text-bold">
-                                        <button type="button" class="btn btn-sm btn-outline-primary">{{ $item->spk_no }}</button>
+                                        <button type="button" class="btn btn-sm btn-outline-success">{{ $item->spk_no }}</button>
+                                    </a>
+                                    <a href="spk-download/{{ $item->id }}/{{ $item->spk_no }}" target="_blank" class="text-bold">
+                                        <button type="button" class="btn btn-sm btn-success"><i class="fa fa-download" aria-hidden="true"></i></button>
                                     </a>
                                 @else
                                 <a href="/spk-baru/{{ $item->id }}" class="text-bold">

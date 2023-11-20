@@ -8,6 +8,7 @@ use App\Models\MenuModel;
 use App\Models\spk\spk_baru;
 use App\Models\AlatModel;
 use App\Models\AbsenModel;
+use PDF;
 
 class SpkController extends Controller
 {
@@ -226,6 +227,28 @@ class SpkController extends Controller
         ];
 
         return view('admin/spk/spk_report', $data);
+    }
+
+    function download_pdf($id) {
+
+        $tspk_header = $this->SpkModel->getJGroup_ById($id);
+
+        if ($tspk_header && $tspk_header->isNotEmpty()) {
+            $firstItem = $tspk_header->first();
+            if ($firstItem && property_exists($firstItem, 'tanggal')) {
+                $tanggal = date('Y-m-d', strtotime($firstItem->tanggal));
+            }
+        }
+
+        $data = [
+            'group_shift' => $this->SpkModel->getJGroup_ById($id),
+            'shift'     => $this->SpkModel->getJGroup($tanggal),
+
+        ];
+
+        $pdf = PDF::loadView('admin.spk.spk_download', $data);
+        $pdf->setPaper('A4', 'potrait');
+        return $pdf->stream('spk.pdf');
     }
 
 }
