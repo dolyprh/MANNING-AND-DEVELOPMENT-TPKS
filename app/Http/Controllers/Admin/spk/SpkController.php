@@ -249,6 +249,7 @@ class SpkController extends Controller
         $pdf = PDF::loadView('admin.spk.spk_download', $data);
         $pdf->setPaper('A4', 'potrait');
         return $pdf->stream('spk.pdf');
+        // dd($data);
     }
 
 }

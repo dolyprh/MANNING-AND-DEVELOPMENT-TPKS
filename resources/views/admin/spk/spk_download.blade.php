@@ -10,50 +10,49 @@
         }
 
         .container {
-            align-items: center;
             text-align: center;
-            justify-content: space-between;
         }
+
         .header-title {
             padding: 4px 0;
-            font-size: 10px;
+            font-size: 8px;
             font-weight: bold;
             color:#000;
-
+            text-align:center;
         }
-        /* .card {
-            margin-bottom: 20px;
-        } */
+
         .card-berth-01 {
-            margin-top: 50px;
+            margin-top: 60px;
         }
         .card-berth-02 {
             margin-top: 220px;
         }
+
+        .card-yard-operation{
+            margin-top:230px;
+        }
+
+        .card-gate-operation{
+            margin-top:10px;
+        }
+
+        .card-leave-standby{
+            margin-top:40px;
+        }
+        .card-ketidaksiapan-alat{
+            margin-top:20px;
+        }
+
         .card-header {
             background-color: #c8f6c8;
             text-align: center;
-            color: #fff;
-        }
-        .card-header-berth1{
-            background-color: #c8f6c8;
-            text-align: center;
-            color: #000;
             margin-right: -10px;
             margin-left: -10px;
         }
 
-        .card-header-berth2{
+        .card-header-berth1{
             background-color: #c8f6c8;
             text-align: center;
-            color: #000;
-            margin-right: -10px;
-            margin-left: -10px;
-        }
-        .card-header-berth3{
-            background-color: #c8f6c8;
-            text-align: center;
-            color: #000;
             margin-right: -10px;
             margin-left: -10px;
         }
@@ -72,13 +71,7 @@
             vertical-align: top;
             font-size: 6px;
             text-align: center;
-            border-top: 1px solid #000;
-        }
-
-        th {
-            /* background-color: #87CEFA; */
             border: 1px solid #000;
-
         }
 
         .head-truck{
@@ -111,6 +104,10 @@
             background-color: #ffd426;
         }
 
+        .header-table{
+            background-color: #87CEFA;
+        }
+
         .flex-container {
             justify-content: space-between;
             width:100%;
@@ -119,25 +116,49 @@
 
         }
 
+        .content-container{
+            justify-content: space-between;
+            width:100%;
+            margin-top:-20px;
+            margin-right: -10px;
+            margin-left: -10px;
+        }
+
         .flex-item{
             max-width: 100%;
             min-width: 25%;
             float: left;
             margin-left: 4px ;
         }
+
+        .content-item{
+            max-width: 100%;
+            min-width: 51%;
+            float: left;
+            margin-left: 4px ;
+        }
+        .gate-item{
+            max-width: 100%;
+            min-width: 33.5%;
+            float: left;
+            margin-left: 4px ;
+        }
+
     </style>
 </head>
 
 <body>
     @foreach($group_shift as $item)
-    <div class="container">
-        <h5 > {{ \Carbon\Carbon::parse($item->tanggal)->locale('id')->format('l - d F Y') }} {{ $item->waktu_mulai }} - {{ $item->waktu_selesai }} <br>
-            <u>MANNING & DEPLOYMENT TERMINAL PETIKEMAS NILAM</u> <br>
-            {{ $item->nama_group }} - SHIFT {{ $item->no_shift }}
-        </h5>
-    </div>
+        <div class="container">
+            <h6> {{ \Carbon\Carbon::parse($item->tanggal)->locale('id')->format('l - d F Y') }} {{ $item->waktu_mulai }} - {{ $item->waktu_selesai }} <br>
+                <u>MANNING & DEPLOYMENT TERMINAL PETIKEMAS NILAM</u> <br>
+                {{ $item->nama_group }} - SHIFT {{ $item->no_shift }}
+            </h6>
+        </div>
     @endforeach
-    <div class="card">
+
+    <!-- P&C ON DUTY -->
+    <div class="card-duty">
         <div class="card-header">
             <h5 class="header-title">P&C ON DUTY</h5>
         </div>
@@ -146,19 +167,19 @@
                 <table class="table">
                     <tbody>
                         <tr>
-                            <th>ASMAN OPERASI</th>
+                            <th class="header-table">ASMAN OPERASI</th>
                             <td>-</td>
                         </tr>
                         <tr>
-                            <th>DUTY OPERASI</th>
+                            <th class="header-table">DUTY OPERASI</th>
                             <td>ARDIKA. P</td>
                         </tr>
                         <tr>
-                            <th>SUPERVISI GRUP</th>
+                            <th class="header-table">SUPERVISI GRUP</th>
                             <td>-</td>
                         </tr>
                         <tr>
-                            <th>DUTY PLANNER</th>
+                            <th class="header-table">DUTY PLANNER</th>
                             <td>ARDIKA. P</td>
                         </tr>
                     </tbody>
@@ -169,7 +190,7 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th rowspan="2">SHIP PLANNER</th>
+                            <th rowspan="2" class="header-table">SHIP PLANNER</th>
                             <td colspan="1">KRISHNA</td>
                         </tr>
                         <tr>
@@ -177,7 +198,7 @@
                         </tr>
 
                         <tr>
-                            <th rowspan="2">YARD PLANNER</th>
+                            <th rowspan="2" class="header-table">YARD PLANNER</th>
                             <td colspan="1">ARDIKA. P</td>
                         </tr>
                         <tr>
@@ -191,19 +212,19 @@
                 <table class="table">
                     <tbody>
                         <tr>
-                            <th>BERTH ALLOCATION (BA)</th>
+                            <th class="header-table">BERTH ALLOCATION (BA)</th>
                             <td>BALYA EL ANAM</td>
                         </tr>
                         <tr>
-                            <th>MANNING & DEPLOYMENT</th>
+                            <th class="header-table">MANNING & DEPLOYMENT</th>
                             <td>ARDIKA. P</td>
                         </tr>
                         <tr>
-                            <th>REPORTING</th>
+                            <th class="header-table">REPORTING</th>
                             <td>DIKA</td>
                         </tr>
                         <tr>
-                            <th>HSSE OFFICER</th>
+                            <th class="header-table">HSSE OFFICER</th>
                             <td>PIPIT</td>
                         </tr>
                     </tbody>
@@ -214,7 +235,7 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>APPROVAL</th>
+                            <th class="header-table">APPROVAL</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -230,8 +251,9 @@
         </div>
     </div>
 
+    <!-- BERTH 01 -->
     <div class="card-berth-01">
-        <div class="card-header-berth1">
+        <div class="card-header">
             <h5 class="header-title">BERTH 01</h5>
         </div>
 
@@ -588,8 +610,9 @@
         </div>
     </div>
 
+    <!-- BERTH 02 -->
     <div class="card-berth-02">
-        <div class="card-header-berth2">
+        <div class="card-header">
             <h5 class="header-title">BERTH 02</h5>
         </div>
 
@@ -934,8 +957,9 @@
         </div>
     </div>
 
+    <!-- BERTH 03 -->
     <div class="card-berth-02">
-        <div class="card-header-berth3">
+        <div class="card-header">
             <h5 class="header-title">BERTH 03</h5>
         </div>
 
@@ -1275,6 +1299,327 @@
                             <td>-</td>
                         </tr>
                     </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div></div>
+    <!-- YARD OPERATION -->
+    <div class="card-yard-operation">
+        <div class="card-header">
+            <h5 class="header-title">YARD OPERATION</h5>
+        </div>
+        <div class="flex-container">
+            <div class="flex-item">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="header-table" rowspan="2">YARD TALKER</th>
+                            <td colspan="1">DANI</td>
+                        </tr>
+                        <tr>
+                            <td>-</td>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="flex-item">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="header-table" rowspan="2">REEFER MAN</th>
+                            <td>DANI</td>
+
+                        </tr>
+                        <tr>
+                            <td>-</td>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="flex-item">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="header-table">BILLING SUPPORT</th>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <th class="header-table">EQUIPMENT SUPPORT</th>
+                            <td>-</td>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="flex-item">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="header-table">RADIO OFFICER</th>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <th class="header-table">IT SUPPORT</th>
+                            <td>YUSUF / RIDWAN</td>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div> 
+        <br><br><br>
+
+        <div class="content-container">
+            <div class="content-item">
+                <table class="table">
+                    <thead>
+                        <tr class="header-table">
+                            <th>RTG / RMGC/RS</th>
+                            <th>OPERATOR</td>
+                            <th>YOA</td>
+                            <th>TIME</td>
+                            <th>REMARK</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>RTG 01</td>
+                            <td>SULASONO</td>
+                            <td>-</td>
+                            <td>08:00-16:00</td>
+                            <td>-</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="content-item">
+                <table class="table">
+                    <thead>
+                        <tr class="header-table">
+                            <th>STANDBY EQUIPMENT</th>
+                            <th>REASON</td>
+                            <th>STATUS</td>
+                            <th>REMARK</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- GATE OPERATION -->
+    <div class="card-gate-operation">
+        <div class="card-header">
+            <h5 class="header-title">GATE OPERATION</h5>
+        </div>
+        <div class="flex-container">
+            <div class="gate-item">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="header-table" rowspan="3">GATE IN OFFICER</th>
+                            <td>DANI</td>
+                        </tr>
+                        <tr>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>-</td>
+                        </tr>
+                    </thead>
+                    <!-- <thead>
+                        <tr>
+                            <td rowspan="3">DANI</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                    </thead> -->
+                </table>
+            </div>
+            <div class="gate-item">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="header-table" rowspan="3">GATE OUT OFFICER</th>
+                            <td>DANI</td>
+                        </tr>
+                        <tr>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>-</td>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="gate-item">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="header-table" rowspan="2">GATE INSPECTOR</th>
+                            <td>NORMAN</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>-</td>
+                        </tr>
+                    </tbody>
+
+                    <thead>
+                        <tr>
+                            <th class="header-table" rowspan="1">POST GATE OFFICER</th>
+                            <td>DWI ASRA</td>
+
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div> 
+    </div>
+    <!-- LEAVE & STANDBY PERSONIL -->
+    <div class="card-leave-standby">
+        <div class="card-header">
+            <h5 class="header-title">LEAVE & STANDBY PERSONIL</h5>
+        </div><br>
+        <div class="content-container">
+            <div class="content-item">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th colspan="5">EMPLOYEES PLAN TO PERMIT/LEAVE</th>
+                        </tr>
+                    </thead>
+                    <thead>
+                        <tr class="header-table">
+                            <th>NAME</th>
+                            <th>POSITION</td>
+                            <th>START</td>
+                            <th>END</td>
+                            <th>REMARK</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>M. IIN SAMPURNO</td>
+                            <td>SHIIP PLANNER</td>
+                            <td>5/7/2023</td>
+                            <td>06/07/202</td>
+                            <td>CUTI TAHUNAN</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="content-item">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th colspan="4">STANDBY EMPLOYEES</th>
+                        </tr>
+                    </thead>
+                    <thead>
+                        <tr class="header-table">
+                            <th>NAME</th>
+                            <th>POSITION</td>
+                            <th>NOTE</td>
+                            <th>CONTACT</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- KETIDAKSIAPAN ALAT -->
+    <div class="card-ketidaksiapan-alat">
+        <div class="card-header">
+            <h5 class="header-title">KETIDAKSIAPAN ALAT</h5>
+        </div><br>
+        <div class="content-container">
+            <div class="content-item">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th colspan="5">EQUIPMENT READINESS</th>
+                        </tr>
+                    </thead>
+                    <thead>
+                        <tr class="header-table">
+                            <th>EQUIPMENT</th>
+                            <th>STATUS</td>
+                            <th>START</td>
+                            <th>END</td>
+                            <th>KERUSAKAN</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="content-item">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th colspan="3">EQUIPORT / BIMA / JPPI / PMP SUPPORT</th>
+                        </tr>
+                    </thead>
+                    <thead>
+                        <tr class="header-table">
+                            <th>ENGINEER</th>
+                            <th>POSITION</td>
+                            <th>REMARK</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOTAL EMPLOYE ON DUTY -->
+    <br><br>
+    <div class="card-ketidaksiapan-alat">
+        <div class="content-container">
+            <div class="content-item">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="header-table">TOTAL EMPLOYEE ON DUTY</th>
+                            <td>-</td>
+                        </tr>
+                    </thead>
                 </table>
             </div>
         </div>

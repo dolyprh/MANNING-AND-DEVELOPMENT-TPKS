@@ -29,7 +29,6 @@
                                 <label>Username</label>
                                 <input type="text" name="username" class="form-control"
                                     placeholder="Masukkan Username" value="{{ old('username') }}" >
-                                {{-- value="{{ Session::get('username') }}" --}}
                                 @error('username')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror

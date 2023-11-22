@@ -17,6 +17,12 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+    // protected $table = 'spk_m_pegawai';
+    // protected $fillable = [
+    //     'email_address',
+    //     'jobdesk',
+    // ];
+
     protected $fillable = [
         'name',
         'email',
