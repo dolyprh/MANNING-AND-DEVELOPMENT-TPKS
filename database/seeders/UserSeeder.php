@@ -17,15 +17,17 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
             [
                 'name' => 'admin',
+                'nipp' => '32131',
                 'username' => 'admin',
                 'password' => Hash::make('123'),
                 'role'     => 'admin'
             ],
             [
                 'name' => 'pegawai',
+                'nipp'  => '34231',
                 'username' => 'pegawai',
                 'password' => Hash::make('321'),
-                'role'     => 'pegawai'
+                'role'     => 'superintendent'
             ],
         ]);
     }

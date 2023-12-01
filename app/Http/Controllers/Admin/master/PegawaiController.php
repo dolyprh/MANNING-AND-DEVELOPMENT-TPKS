@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin\Master;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use App\Models\MenuModel;
 use App\Models\PegawaiModel;
+use App\Models\User;
 
 class PegawaiController extends Controller
 {
@@ -17,6 +19,7 @@ class PegawaiController extends Controller
     {
         $this->MenuModel = new MenuModel();
         $this->PegawaiModel = new PegawaiModel();   
+        $this->User = new User();   
     }
 
     public function index()
@@ -37,7 +40,7 @@ class PegawaiController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -181,5 +184,35 @@ class PegawaiController extends Controller
     {
         $this->PegawaiModel->delete_pegawai($id_pegawai);
         return redirect('/pegawai')->withSuccess('Berhasil Hapus Pegawai');
+    }
+
+    function view_akses($id_pegawai) {
+        $data = [
+            'menus'    => $this->MenuModel->getMenus(),
+            'submenus' => $this->MenuModel->getSubmenus(),
+            'akses'     => $this->PegawaiModel->get_pegawaiById($id_pegawai),  
+        ];
+
+        return view('admin.master.edit.tambah_akses', $data);
+    }
+
+    function create_akses(Request $request, $id_pegawai) {
+        $data = [
+            'name'     => $request->input('nama'),
+            'nipp'     => $request->input('nipp'),
+            'username' => $request->input('username'),
+            'password' => Hash::make($request->input('password')),
+            'role'     => $request->input('role')
+        ];
+
+        if ($this->User->insert_akses($data, $id_pegawai)) {
+            // return redirect('/menu')->with('toast_success', 'Berhasil Tambah Menu!');
+            return redirect('/hak-akses')->with('toast_success','Berhasil Tambah Hak Akses');
+        } else {
+            return redirect('/hak-akses')->with('toast_error', 'Tambah Hak Akses!');
+
+        }
+
+        return view('admin.master.hak_akses', $data);
     }
 }

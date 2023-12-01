@@ -69,7 +69,7 @@ class SubmenuSeeder extends Seeder
             [
                 'parent_id' => '1',
                 'nama_submenu' => 'Menu-Hak Akses',
-                'url_submenu' => '/menu',
+                'url_submenu' => '/hak-akses',
             ],
             [
                 'parent_id' => '2',

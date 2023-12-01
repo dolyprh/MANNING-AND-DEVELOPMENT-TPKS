@@ -6,10 +6,20 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
+    public function get_user()
+    {
+        return DB::table('users')->get();
+    }
+
+    function insert_akses($data) {
+        return DB::table('users')->insert($data);
+    }
+
     use HasApiTokens, HasFactory, Notifiable;
 
     /**

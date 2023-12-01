@@ -102,11 +102,11 @@
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead class="table-dark">
                     <tr>
-                        <th class="col-sm-2">Nama</th>
+                        <th class="col-sm-3">Nama</th>
                         <th>NIPP</th>
-                        <th class="col-sm-2">Email</th>
+                        <th class="col-sm-3">Email</th>
                         <th >Status</th>
-                        <th class="col-sm-4">Type</th>
+                        <th class="col-sm-2">Type</th>
                         <th class="col-sm-4">Aksi</th>
                     </tr>
                 </thead>
@@ -119,6 +119,9 @@
                         <td>{{ $item->status }}</td>
                         <td>{{ $item->type }}</td>
                         <td class="text-center" >
+                            <a href="{{ url('/buat-akses/' .$item->id) }}" class="btn btn-sm btn-info">
+                                <i class="fas fa-plus fa-info"></i> 
+                            </a>
                             <a href="{{ url('/pegawai/' .$item->id) }}" class="btn btn-sm btn-success">
                                 <i class="fas fa-eye fa-success"></i> 
                             </a>

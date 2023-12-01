@@ -22,6 +22,7 @@ use App\Http\Controllers\Admin\Master\PegawaiController;
 use App\Http\Controllers\Admin\Master\GroupController;
 use App\Http\Controllers\Admin\Master\AbsenController;
 use App\Http\Controllers\Admin\Master\MitraController;
+use App\Http\Controllers\Admin\Master\AksesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -73,7 +74,9 @@ Route::resource('/jenis-absen', AbsenController::class);
 Route::resource('/mitra-kerja', MitraController::class);
 Route::resource('/rencana-baru', RBaruController::class);
 Route::resource('/spk-baru', SpkController::class);
-// Route::post('/search-spk', [SpkController::class, 'search-spk'])->name('spk-baru');
+Route::resource('/hak-akses', AksesController::class);
+Route::get('/buat-akses/{id}', [PegawaiController::class, 'view_akses'])->name('view_akses');
+Route::post('/tambah-akses/{id}', [PegawaiController::class, 'create_akses'])->name('create_akses');
 
 //Untuk CRUD Perencanaan Setup
 Route::resource('/jadwal-group', JadwalGroupController::class);

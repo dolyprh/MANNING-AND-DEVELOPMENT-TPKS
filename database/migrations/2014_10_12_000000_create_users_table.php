@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('nipp');
             $table->string('username')->unique();
             $table->string('password');
-            $table->enum('role', ['admin', 'pegawai'])->default('admin');
+            $table->enum('role', ['admin', 'superintendent'])->default('admin');
             $table->rememberToken();
             $table->timestamps();
         });
