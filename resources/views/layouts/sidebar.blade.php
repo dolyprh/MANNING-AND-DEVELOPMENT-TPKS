@@ -4,7 +4,8 @@
     </a>
 
     <hr class="sidebar-divider my-0">
-@if(Auth::check())
+
+    @if (auth()->user()->role == 'admin')
     @foreach ($menus as $menu)
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#{{$menu->data_target}}"
@@ -25,7 +26,37 @@
     </li>
     <hr class="sidebar-divider my-0">
     @endforeach
-@endif
+    @endif
+
+    @if (auth()->user()->role == 'superintendent')
+    <li class="nav-item {{ request()->is('dashboard') ? 'active' : '' }}">
+        <a class="nav-link" href="/dashboard">
+            <i class="fas fa-fw fa-home"></i>
+            <span>Dashboard</span></a>
+    </li>
+    <li
+        class="nav-item {{ request()->is('perencanaan') | request()->is('surat-perintah-kerja') ? 'active' : '' }}">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseSuperadmin"
+            aria-controls="collapseTwo">
+            <i class="fas fa-fw fa-file-alt"></i>
+            <span>Approval</span>
+        </a>
+        <div id="collapseSuperadmin" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item {{ request()->is('perencanaan') ? 'active' : '' }}"
+                    href="/perencanaan">
+                    <i class="fas fa-fw fa-square fa-xs"></i>
+                    <span>Perencanaan</span>
+                </a>
+                <a class="collapse-item {{ request()->is('surat-perintah-kerja') ? 'active' : '' }}"
+                    href="/surat-perintah-kerja">
+                    <i class="fas fa-fw fa-square fa-xs"></i>
+                    <span>Surat Perintah Kerja</span>
+                </a>
+            </div>
+        </div>
+    </li>
+    @endif
 
     <div class="text-center mt-4 d-none d-md-inline">
         <button class="rounded-circle border-0" id="sidebarToggle"></button>
