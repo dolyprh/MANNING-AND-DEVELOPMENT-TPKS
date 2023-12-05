@@ -23,6 +23,7 @@ class AksesController extends Controller
 
     public function index()
     {
+
         $data = [
             'menus' => $this->MenuModel->getMenus(),
             'submenus'    => $this->MenuModel->getSubmenus(),

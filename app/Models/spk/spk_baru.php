@@ -113,4 +113,7 @@ class spk_baru extends Model
             ->get();
     }
 
+    function get_tspk_header(){
+        return DB::table('spk_tspk_header')->get();
+    }
 }
