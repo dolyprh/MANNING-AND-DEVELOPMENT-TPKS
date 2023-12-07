@@ -151,7 +151,7 @@
     @foreach($group_shift as $item)
         <div class="container">
             <h6> {{ \Carbon\Carbon::parse($item->tanggal)->locale('id')->format('l - d F Y') }} {{ $item->waktu_mulai }} - {{ $item->waktu_selesai }} <br>
-                <u>MANNING & DEPLOYMENT TERMINAL PETIKEMAS NILAM</u> <br>
+                <u>MANNING & DEPLOYMENT TERMINAL PETIKEMAS SEMARANG</u> <br>
                 {{ $item->nama_group }} - SHIFT {{ $item->no_shift }}
             </h6>
         </div>
@@ -172,7 +172,7 @@
                         </tr>
                         <tr>
                             <th class="header-table">DUTY OPERASI</th>
-                            <td>ARDIKA. P</td>
+                            <td>-</td>
                         </tr>
                         <tr>
                             <th class="header-table">SUPERVISI GRUP</th>
@@ -180,7 +180,7 @@
                         </tr>
                         <tr>
                             <th class="header-table">DUTY PLANNER</th>
-                            <td>ARDIKA. P</td>
+                            <td>-</td>
                         </tr>
                     </tbody>
                 </table>
@@ -191,7 +191,13 @@
                     <thead>
                         <tr>
                             <th rowspan="2" class="header-table">SHIP PLANNER</th>
-                            <td colspan="1">KRISHNA</td>
+                            
+                            <td colspan="1">
+                                @foreach($ship_planner as $item)
+                                    {{ $item->nama }}
+                                @endforeach  
+                            </td>
+                                                  
                         </tr>
                         <tr>
                             <td>-</td>
@@ -199,7 +205,9 @@
 
                         <tr>
                             <th rowspan="2" class="header-table">YARD PLANNER</th>
-                            <td colspan="1">ARDIKA. P</td>
+                            @foreach($group_shift as $item)
+                            <td colspan="1">{{ $item->nama }}</td>
+                            @endforeach
                         </tr>
                         <tr>
                             <td>-</td>
@@ -213,19 +221,19 @@
                     <tbody>
                         <tr>
                             <th class="header-table">BERTH ALLOCATION (BA)</th>
-                            <td>BALYA EL ANAM</td>
+                            <td>-</td>
                         </tr>
                         <tr>
                             <th class="header-table">MANNING & DEPLOYMENT</th>
-                            <td>ARDIKA. P</td>
+                            <td>-</td>
                         </tr>
                         <tr>
                             <th class="header-table">REPORTING</th>
-                            <td>DIKA</td>
+                            <td>-</td>
                         </tr>
                         <tr>
                             <th class="header-table">HSSE OFFICER</th>
-                            <td>PIPIT</td>
+                            <td>-</td>
                         </tr>
                     </tbody>
                 </table>
@@ -242,7 +250,7 @@
                         <tr>
                             <td>
                                 <strong>MANAGER PERENCANAAN OPERASI</strong><br><br>
-                                <span>LASIARA</span>
+                                <span>{{ Auth::user()->name }}</span>
                             </td>
                         </tr>
                     </tbody>

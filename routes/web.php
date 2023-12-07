@@ -39,10 +39,6 @@ use App\Http\Controllers\Super_Intendent\Approve_SPKController;
 |
 */
 
-// Route::get('/', function () {
-//     return view('pengguna/pegawai');
-// });
-
 Route::get('/pengguna', [PenggunaController::class, 'pengguna']);
 
 // Route::get('/', [AdminController::class, 'index'])->middleware('isLogin');
@@ -54,19 +50,11 @@ Route::get('/logout', [LoginController::class, 'logout']);
 Route::get('pegawai-mitra', [MasterController::class, 'pegawai_mitra']);
 Route::get('notifikasi', [MasterController::class, 'notifikasi']);
 
-//Route::get('rencana-baru', [RencanaController::class, 'rencana_baru']);
-// Route::get('jadwal-group', [JGroupController::class, 'jadwal_group']);
-
-// Route::get('spk-baru', [SpkBaruController::class, 'spk_baru']);
-
 Route::group(['middleware' => ['auth', 'cekrole:admin']], function () {
-    Route::get('/', [AdminController::class, 'index']);
-    Route::get('riwayat-spk', [RiwayatSpkController::class, 'riwayat_spk']);
-    
+    Route::get('/', [AdminController::class, 'index']);    
     Route::get('jadwal-tanpa-makan', [JTanpaMakanController::class, 'jadwal_tanpa_makan']);
     Route::get('jadwal-katering', [JKateringController::class, 'jadwal_katering']);
     Route::get('pesanan', [PesananController::class, 'pesanan']);
-    
     Route::get('laporan', [LaporanController::class, 'laporan']);
     
     //Untuk CRUD Master Setup
@@ -85,32 +73,28 @@ Route::group(['middleware' => ['auth', 'cekrole:admin']], function () {
     Route::get('/buat-akses/{id}', [PegawaiController::class, 'view_akses'])->name('view_akses');
     Route::post('/tambah-akses/{id}', [PegawaiController::class, 'create_akses'])->name('create_akses');
     
-    //Untuk CRUD Perencanaan Setup
+    //Untuk Fitur Perencanaan
     Route::resource('/jadwal-group', JadwalGroupController::class);
     Route::post('/search-data', [JadwalGroupController::class, 'search'])->name('search-data');
     Route::post('/search-year', [JadwalGroupController::class, 'search_year'])->name('search-year');
-    
-    
     Route::post('/import-excel', [JGroupController::class, 'import'])->name('import-excel');
-    
     Route::post('/rencana-baru/update-alat/{id}/{ves_id}', [RBaruController::class, 'update_alat_rcn']);
     Route::post('/rencana-baru/tambah-alat/{id}/{ves_id}', [RBaruController::class, 'insert_alat_rcn']);
     Route::get('/rencana-baru/update/{id}', [RBaruController::class, 'edit_rencana']);
     Route::get('/rencana-kapal/{id}/{id2}', [RBaruController::class, 'view_detail_rencana']);
+    Route::get("run-prosedure/{xves_id}/{vrcnno}", [RBaruController::class, 'runProcedure']);
     Route::delete('/rencana-kapal/delete/{id}/{id2}', [RBaruController::class, 'delete_rcnalat']);
     
+    //Untuk Fitur SPK
+    Route::resource('riwayat-spk', RiwayatSpkController::class);
+    Route::get('riwayat-spk/update/{id}/{id2}', [RiwayatSpkController::class, 'show']);
     Route::post('/spk-baru/insert-alat-operator/{id}', [SpkController::class, 'insert_alat_operator']);
-    
-    Route::get("run-prosedure/{xves_id}/{vrcnno}", [RBaruController::class, 'runProcedure']);
-    
-    Route::get('spk-report', [SpkController::class, 'get_report']);
+    Route::get('spk-report/{id}/{id2}', [SpkController::class, 'get_report']);
     Route::get('spk-download/{id1}/{id2}', [SpkController::class, 'download_pdf']);
     
 });
 
-// Route::middleware(['auth'])->group(function() {
 Route::group(['middleware' => ['auth', 'cekrole:superintendent']], function () {
-    // Route::get('/', [AdminController::class, 'index'])->middleware('isLogin');
     Route::resource('/perencanaan', Approve_PerencanaanController::class);
     Route::resource('/surat-perintah-kerja', Approve_SPKController::class);
     Route::get('/dashboard', [DashboardController::class, 'dashboard']);

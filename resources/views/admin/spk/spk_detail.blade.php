@@ -24,8 +24,8 @@
         <div class="tab-pane fade show active" id="custom-tabs-two-cc" role="tabpanel" aria-labelledby="custom-tabs-two-cc-tab">
             <form action="/spk-baru/insert-alat-operator/{{ $item->id }}" method="POST" enctype="multipart/form-data">
                 @csrf
-                <div class="table-responsive">
-                <table class="table table-bordered table-align-center" cellspacing="0">
+                <div class="table-responsive table-sm ">
+                <table class="table table-sm table-bordered table-align-center" cellspacing="0">
                     <thead class="table-secondary text-center text-dark">
                         <tr>
                             <th>ID</th>
@@ -49,14 +49,14 @@
                             <td> <input type="text" name="nama{{$item->id}}" value="{{ $item->nama }}" hidden> {{ $item->nama }}</td>
                             <td> <input type="text" name="jobdesk{{$item->id}}" value="{{ $item->jobdesk }}" hidden > {{ $item->jobdesk }}</td>
                             <td> 
-                                <select class="js-example-basic-multiple-cc" name="tambah_alat_cc_{{$item->id}}[]" multiple="multiple">
+                                <select class="form-select form-select-sm js-example-basic-multiple-cc" name="tambah_alat_cc_{{$item->id}}[]" multiple="multiple">
                                     @foreach ($alat_cc as $alat)    
                                         <option <?php if($item->jobdesk == $alat->text) { echo 'selected'; } ?> value="{{ $alat->id }}" >{{ $alat->text }}</option>
                                     @endforeach
                                 </select>
                             </td>
                             <td>
-                                <select class="form-control form-control" aria-label="Default select example" name="status_absen{{$item->id}}" id="jenis_absen">
+                                <select class="form-control form-control-sm" aria-label="Default select example" name="status_absen{{$item->id}}" id="jenis_absen">
                                     @foreach ($jenis_absen as $item)
                                     <option value="{{ $item->nama }}">{{ $item->nama }}</option>
                                     @endforeach
@@ -71,7 +71,7 @@
 
         <div class="tab-pane fade" id="custom-tabs-two-rtg" role="tabpanel" aria-labelledby="custom-tabs-two-rtg-tab">
             <div class="table-responsive">
-                <table class="table table-bordered table-align-center" cellspacing="0">
+                <table class="table table-sm table-bordered table-align-center" cellspacing="0">
                     <thead class="table-secondary text-center text-dark">
                         <tr>
                             <th>ID</th>
@@ -95,14 +95,14 @@
                             <td> <input type="text" name="nama{{ $item->id}}" value="{{ $item->jobdesk }}" hidden > {{ $item->nama }}</td>
                             <td> <input type="text" name="jobdesk{{ $item->id}}" value="{{ $item->jobdesk }}" hidden > {{ $item->jobdesk }}</td>
                             <td> 
-                                <select class="js-example-basic-multiple-rtg" name="tambah_alat_rtg_{{$item->id}}[]" multiple="multiple">
+                                <select class="form-select form-select-sm js-example-basic-multiple-rtg" name="tambah_alat_rtg_{{$item->id}}[]" multiple="multiple">
                                     @foreach ($alat_rtg as $rtg)    
                                         <option <?php if($item->jobdesk == $rtg->text) { echo 'selected'; } ?> value="{{ $rtg->id }}" >{{ $rtg->text }}</option>
                                     @endforeach
                                 </select>
                             </td>
                             <td>
-                                <select class="form-control form-control" aria-label="Default select example" name="status_absen{{$item->id}}" id="jenis_absen">
+                                <select class="form-control form-control-sm" aria-label="Default select example" name="status_absen{{$item->id}}" id="jenis_absen">
                                     @foreach ($jenis_absen as $item)
                                     <option value="{{ $item->nama }}">{{ $item->nama }}</option>
                                     @endforeach
@@ -113,13 +113,12 @@
                     </tbody>
                 </table>
             </div> 
-            <button type="submit" class="btn btn-success float-right mb-4">Submit</button>
-            </form>               
+                        
         </div>
 
         <div class="tab-pane fade" id="custom-tabs-two-rs" role="tabpanel" aria-labelledby="custom-tabs-two-rs-tab">
             <div class="table-responsive">
-                <table class="table table-bordered table-align-center" cellspacing="0">
+                <table class="table table-sm table-bordered table-align-center" cellspacing="0">
                     <thead class="table-secondary text-center text-dark">
                         <tr>
                             <th>ID</th>
@@ -130,13 +129,39 @@
                         </tr>
                     </thead>
                     <tbody id="table-body-spk">
+                        @foreach ($operator_rs as $item)
                         <tr>
-                            <td></td>
-                            <td></td>
+                            @foreach ($detail_rcn as $waktu)
+                                <input type="text" name="waktu_mulai{{$item->id}}" value="{{ $waktu->waktu_mulai }}" hidden>                            
+                                <input type="text" name="waktu_selesai{{$item->id}}" value="{{ $waktu->waktu_selesai }}" hidden>                            
+                                <input type="text" name="vesid{{$item->id}}" value="{{ $waktu->ves_id }}" hidden>                            
+                            @endforeach
+                            <input type="text" name="id_group" value="{{ $id_group }}" hidden>                            
+                            <input type="text" name="nipp" value="{{ $item->nipp }}" hidden>
+                            <td> {{ $item->id }} </td>
+                            <td> <input type="text" name="nama{{ $item->id}}" value="{{ $item->jobdesk }}" hidden > {{ $item->nama }}</td>
+                            <td> <input type="text" name="jobdesk{{ $item->id}}" value="{{ $item->jobdesk }}" hidden > {{ $item->jobdesk }}</td>
+                            <td> 
+                                <select class="form-select form-select-sm js-example-basic-multiple-rtg" name="tambah_alat_rs_{{$item->id}}[]" multiple="multiple">
+                                    @foreach ($alat_rs as $rs)    
+                                        <option <?php if($item->jobdesk == $rs->text) { echo 'selected'; } ?> value="{{ $rs->id }}" >{{ $rs->text }}</option>
+                                    @endforeach
+                                </select>
+                            </td>
+                            <td>
+                                <select class="form-control form-control-sm" aria-label="Default select example" name="status_absen{{$item->id}}" id="jenis_absen">
+                                    @foreach ($jenis_absen as $item)
+                                    <option value="{{ $item->nama }}">{{ $item->nama }}</option>
+                                    @endforeach
+                                </select>
+                            </td>
                         </tr>
+                        @endforeach
                     </tbody>
                 </table>
-            </div>        
+            </div>  
+            <button type="submit" class="btn btn-success float-right mb-4">Submit</button>
+            </form>         
         </div>
     </div>
     <button type="submit" class="btn btn-outline-primary mb-4" id="btnSelanjutnya">

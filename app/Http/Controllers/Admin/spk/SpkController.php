@@ -95,8 +95,12 @@ class SpkController extends Controller
                 'nama_group'   => $item->kode,
                 'created_date' => \Carbon\Carbon::now() 
             ];
-
+ 
             $this->SpkModel->insert_tspk_header($data_header);
+            
+            // if(count($this->SpkModel->cek_tspk_header($spkno)) >! 0) {
+            //     $this->SpkModel->insert_tspk_header($data_header);
+            // }
         }
 
         $data = [
@@ -106,15 +110,15 @@ class SpkController extends Controller
             // 'pegawai_alat'   => $this->SpkModel->getOperatorCC_ByAlat($jobdesk),
             'operator_cc'   => $this->SpkModel->getOperatorCC_ByGroup($id),
             'operator_rtg'  => $this->SpkModel->getOperatorRTG_ByGroup($id),
+            'operator_rs'  => $this->SpkModel->getOperatorRS_ByGroup($id),
             'alat_cc'       => $this->AlatModel->getDataCraine(),
             'alat_rtg'       => $this->AlatModel->getDataArtg(),
+            'alat_rs'       => $this->AlatModel->getDataRS(),
             'jenis_absen'   => $this->AbsenModel->get_absen(),
             'detail_rcn'    => $this->SpkModel->getTanggal_ByRcnDetail($tanggal, $id_shift),
             'id_group'      => $id,
         ];
         
-
-        // dd($data);
         return view('admin.spk.spk_detail', $data);
     }
 
@@ -123,7 +127,7 @@ class SpkController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        
     }
 
     /**
@@ -151,6 +155,7 @@ class SpkController extends Controller
         $id_operator = $request->id_group;
         $get_operator_cc = $this->SpkModel->getOperatorCC_ByGroup($id_operator);
         $get_operator_rtg = $this->SpkModel->getOperatorRTG_ByGroup($id_operator);
+        $get_operator_rs = $this->SpkModel->getOperatorRS_ByGroup($id_operator);
         // $get_operator_byId = $this->SpkModel->getOperator_ByShiftGroup($id_operator);
 
         foreach ($get_operator_cc as $operator) {
@@ -217,16 +222,61 @@ class SpkController extends Controller
             $detail_id = 0;
         }
 
-        return redirect('spk-baru');
+        foreach ($get_operator_rs as $operator) {
+            foreach ($request['tambah_alat_rs_'. $operator->id] as $alat ) {
+                $dataAlat = explode(',', $alat);
+                $seq_id = $detail_id + 1;
+                $dataOperator = [
+                    'id_h'      => $id_header[0]->id_h,
+                    'seq_id'    => $seq_id,
+                    'nipp'    => $operator->nipp,
+                    'nama'    => $operator->nama,
+                    'kode_alat' => $dataAlat[1],
+                    'nama_alat' => $dataAlat[2],
+                    'waktu_mulai' => $request['waktu_mulai'. $operator->id],
+                    'waktu_selesai' => $request['waktu_selesai'. $operator->id],
+                    'nama_kapal' => $request['vesid'. $operator->id],
+                ];
+                
+                $dataAbsen = [
+                    'id_h'      => $id_header[0]->id_h,
+                    'seq_id'    => $seq_id,
+                    'nipp'    => $operator->nipp,
+                    'nama'    => $operator->nama,
+                    'jobdesk'    => $operator->jobdesk,
+                    'status' => $request['status_absen'. $operator->id],
+                ];
+
+                $detail_id++;
+                $this->SpkModel->insert_tpsk_operatorcc($dataOperator);
+                $this->SpkModel->insert_tpsk_operatorabsen($dataAbsen);
+            } 
+            $detail_id = 0;
+        }
+
+        return redirect('riwayat-spk')->withSuccess('SPK Berhasil dibuat');
     }
 
-    public function get_report() {
+    public function get_report($id) {
+        
+        $tspk_header = $this->SpkModel->getJGroup_ById($id);
+
+        if ($tspk_header && $tspk_header->isNotEmpty()) {
+            $firstItem = $tspk_header->first();
+            if ($firstItem && property_exists($firstItem, 'tanggal')) {
+                $tanggal = date('Y-m-d', strtotime($firstItem->tanggal));
+            }
+        }
+
         $data = [
             'menus' => $this->MenuModel->getMenus(),
             'submenus'    => $this->MenuModel->getSubmenus(),
+            'group_shift' => $this->SpkModel->getJGroup_ById($id),
+            'shift'     => $this->SpkModel->getJGroup($tanggal),
+            'ship_planner'     => $this->SpkModel->get_ship_planner($id),
         ];
 
-        return view('admin/spk/spk_report', $data);
+        return view('admin.spk.spk_report', $data);
     }
 
     function download_pdf($id) {
@@ -243,6 +293,7 @@ class SpkController extends Controller
         $data = [
             'group_shift' => $this->SpkModel->getJGroup_ById($id),
             'shift'     => $this->SpkModel->getJGroup($tanggal),
+            'ship_planner'     => $this->SpkModel->get_ship_planner($id),
 
         ];
 

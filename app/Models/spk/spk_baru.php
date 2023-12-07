@@ -28,6 +28,12 @@ class spk_baru extends Model
             ->get();
     }
 
+    function cek_tspk_header($spk_no) {
+        return DB::table('spk_tspk_header')
+            ->where('spk_no', $spk_no)
+            ->get();
+    }
+
     // function get_tspk_header($tanggal) {
     //     return DB::table('spk_t_jadwal_group')
     //         ->where(DB::raw('DATE_FORMAT(spk_t_jadwal_group.tanggal, "%Y-%m-%d")'), $tanggal)
@@ -40,10 +46,23 @@ class spk_baru extends Model
 
     function getJGroup_ById($id) {
         return DB::table('spk_t_jadwal_group')
-            ->where('id', $id)
+            ->where('spk_t_jadwal_group.id', $id)
             ->leftjoin('spk_m_group', 'spk_m_group.id_group', '=' , 'spk_t_jadwal_group.id_group')
             ->leftjoin('spk_m_shift', 'spk_m_shift.no_shift', '=', 'spk_t_jadwal_group.id_shift')
-            ->get();  
+            ->leftjoin('spk_m_pegawai', 'spk_m_pegawai.group_id', '=', 'spk_m_group.kode')
+            ->where('spk_m_pegawai.jobdesk', 'Vessel Planner')
+            // ->where('spk_m_pegawai.jobdesk', 'Vessel Planner')
+            ->get();
+    }
+
+    function get_ship_planner($id) {
+        return DB::table('spk_t_jadwal_group')
+            ->where('spk_t_jadwal_group.id', $id)
+            ->leftjoin('spk_m_group', 'spk_m_group.id_group', '=' , 'spk_t_jadwal_group.id_group')
+            ->leftjoin('spk_m_shift', 'spk_m_shift.no_shift', '=', 'spk_t_jadwal_group.id_shift')
+            ->leftjoin('spk_m_pegawai', 'spk_m_pegawai.group_id', '=', 'spk_m_group.kode')
+            ->where('spk_m_pegawai.jobdesk', 'Ship Planner')
+            ->get();
     }
 
     function insert_tspk_header($data) {
@@ -70,6 +89,16 @@ class spk_baru extends Model
             ->leftjoin('spk_m_shift', 'spk_m_shift.no_shift', '=', 'spk_t_jadwal_group.id_shift')
             ->leftjoin('spk_m_pegawai', 'spk_m_pegawai.group_id', '=', 'spk_m_group.kode')
             ->where('spk_m_pegawai.jobdesk', 'LIKE', '%RTG%')
+            ->where('spk_t_jadwal_group.id', $id)
+            ->get();  
+    }
+
+    function getOperatorRS_ByGroup($id) {
+        return DB::table('spk_t_jadwal_group')
+            ->leftjoin('spk_m_group', 'spk_m_group.id_group', '=' , 'spk_t_jadwal_group.id_group')
+            ->leftjoin('spk_m_shift', 'spk_m_shift.no_shift', '=', 'spk_t_jadwal_group.id_shift')
+            ->leftjoin('spk_m_pegawai', 'spk_m_pegawai.group_id', '=', 'spk_m_group.kode')
+            ->where('spk_m_pegawai.jobdesk', 'LIKE', '%RS%')
             ->where('spk_t_jadwal_group.id', $id)
             ->get();  
     }

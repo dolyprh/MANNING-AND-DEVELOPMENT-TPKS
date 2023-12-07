@@ -8,7 +8,7 @@
     <div class="card border-left-dark mb-4">
         <div class="card-body">
             <div class="table-responsive card-left-dark text-dark">
-                <table class="table table-bordered table-align-center" width="100%" cellspacing="0">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead class="table-secondary text-dark">
                         <tr>
                             <th class="col-sm-3">NO SPK</th>
@@ -41,5 +41,5 @@
         </div>
     </div>
     
-
+    @include('sweetalert::alert')
 @endsection
