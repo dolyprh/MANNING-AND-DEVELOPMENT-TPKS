@@ -145,4 +145,15 @@ class spk_baru extends Model
     function get_tspk_header(){
         return DB::table('spk_tspk_header')->get();
     }
+
+    function get_alat_tspk($detail_id, $rcn_no) {
+        return DB::table('spk_t_rcn_alat')
+            ->where('detail_id', $detail_id)
+            ->where('rcn_no', $rcn_no)
+            ->get()->toArray();
+    }
+
+    function update_tspk_header($data, $id_tspk){
+        return DB::table('spk_tspk_header')->where('id_h', $id_tspk)->update($data);
+    }
 }

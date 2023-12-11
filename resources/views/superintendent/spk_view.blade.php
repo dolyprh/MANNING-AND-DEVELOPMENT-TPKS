@@ -250,11 +250,7 @@
                         <tr>
                             <td>
                                 <strong>MANAGER PERENCANAAN OPERASI</strong><br><br>
-                                <span>
-                                    @foreach($shift as $value) 
-                                        <b>{{ $value->approve_nama}}</b>
-                                    @endforeach
-                                </span>
+                                <span>{{ Auth::user()->name }}</span>
                             </td>
                         </tr>
                     </tbody>

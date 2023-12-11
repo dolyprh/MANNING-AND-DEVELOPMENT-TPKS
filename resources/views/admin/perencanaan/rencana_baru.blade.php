@@ -66,7 +66,7 @@
                                 <a href="/rencana-baru/update/{{ $item->rcn_no }}" class="btn btn-sm bg-primary text-white">
                                     <i class="fas fa-edit" aria-hidden="true"></i>
                                 </a>
-                                <a href="/rencana-kapal/{{ $item->rcn_no }}/1" class="btn btn-sm bg-info text-white">
+                                <a href="/rencana-kapal/{{ $item->rcn_no }}/{{ $item->ves_id }}" class="btn btn-sm bg-info text-white">
                                     <i class="fa fa-eye" aria-hidden="true"></i>
                                 </a>
                             </td>

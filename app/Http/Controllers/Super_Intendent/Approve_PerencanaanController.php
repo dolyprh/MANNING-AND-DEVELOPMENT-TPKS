@@ -4,15 +4,23 @@ namespace App\Http\Controllers\Super_Intendent;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\spk\spk_baru;
 
 class Approve_PerencanaanController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+    public function __construct()
+    {
+        $this->SpkModel = new spk_baru();
+    }
+
     public function index()
     {
-        return view('superintendent.approval_perencanaan'); 
+        
+        return view('superintendent.approval_spk'); 
+
     }
 
     /**

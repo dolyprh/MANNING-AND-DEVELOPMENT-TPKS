@@ -71,10 +71,11 @@ class RBaru extends Model
             ->get();
     }
     
-    function getAlatlByRcn($rcn_no) {
+    function getAlatlByRcn($rcn_no, $detail_id) {
         return DB::table('spk_t_rcn_alat')
             // ->where('detail_id', $id_rencana)
             ->where('rcn_no', $rcn_no)
+            ->where('detail_id', $detail_id)
             ->get();
     }
 
@@ -116,7 +117,7 @@ class RBaru extends Model
 
     function delete_RcnAlat($rcn_no, $seq_id) {
         DB::table('spk_t_rcn_alat')
-            ->leftjoin('spk_t_rcn_detail', 'spk_t_rcn_detail.rcn_no', '=', 'spk_t_rcn_alat.rcn_no')
+            // ->leftjoin('spk_t_rcn_detail', 'spk_t_rcn_detail.rcn_no', '=', 'spk_t_rcn_alat.rcn_no')
             ->where('spk_t_rcn_alat.rcn_no', $rcn_no)
             ->where('spk_t_rcn_alat.seq_id', $seq_id)
             ->delete();

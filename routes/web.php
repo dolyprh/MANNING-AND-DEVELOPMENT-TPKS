@@ -98,4 +98,6 @@ Route::group(['middleware' => ['auth', 'cekrole:superintendent']], function () {
     Route::resource('/perencanaan', Approve_PerencanaanController::class);
     Route::resource('/surat-perintah-kerja', Approve_SPKController::class);
     Route::get('/dashboard', [DashboardController::class, 'dashboard']);
+    Route::get('spk-view/{id}/{id2}', [Approve_SPKController::class, 'show']);
+
 });

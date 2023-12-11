@@ -35,7 +35,14 @@
                             <th class="col-sm-2">Status</th>
                         </tr>
                     </thead>
-                    <tbody id="table-body-spk">
+                    <tbody id="table-body-spk" class="align-middle">
+                        <?php $temp_alat = [] ;
+                            foreach($detail_alat_spk as $das) {
+                                if(explode('-', $das->kd_alat)[0]=='CC') {
+                                    array_push($temp_alat, $das->nama_alat) ;
+                                } 
+                            }
+                        ?>
                         @foreach ($operator_cc as $item)
                         <tr>
                             @foreach ($detail_rcn as $waktu)
@@ -45,21 +52,43 @@
                             @endforeach
                             <input type="text" name="id_group" value="{{ $id_group }}" hidden>                            
                             <input type="text" name="nipp{{$item->id}}" value="{{ $item->nipp }}" hidden>
-                            <td> {{ $item->id }} </td>
-                            <td> <input type="text" name="nama{{$item->id}}" value="{{ $item->nama }}" hidden> {{ $item->nama }}</td>
-                            <td> <input type="text" name="jobdesk{{$item->id}}" value="{{ $item->jobdesk }}" hidden > {{ $item->jobdesk }}</td>
-                            <td> 
+                            <td class="align-middle"> {{ $item->id }} </td>
+                            <td class="align-middle"> <input type="text" name="nama{{$item->id}}" value="{{ $item->nama }}" hidden> {{ $item->nama }}</td>
+                            <td class="align-middle"> <input type="text" name="jobdesk{{$item->id}}" value="{{ $item->jobdesk }}" hidden > {{ $item->jobdesk }}</td>
+                            <td class="align-middle"> 
                                 <select class="form-select form-select-sm js-example-basic-multiple-cc" name="tambah_alat_cc_{{$item->id}}[]" multiple="multiple">
-                                    @foreach ($alat_cc as $alat)    
-                                        <option <?php if($item->jobdesk == $alat->text) { echo 'selected'; } ?> value="{{ $alat->id }}" >{{ $alat->text }}</option>
-                                    @endforeach
+                                    @if(count($temp_alat) > 0)
+                                        @foreach ($temp_alat as $value)    
+                                            @foreach ($alat_cc as $alat)  
+                                                @if($value == $item->jobdesk)    
+                                                <option <?php if($value == $alat->text) { echo 'selected'; } ?> value="{{ $alat->id }}" >{{ $alat->text }}</option>
+                                                    @else
+                                                        <option value="{{ $alat->id }}" >{{ $alat->text }}</option>
+                                                    @endif  
+                                            @endforeach
+                                        @endforeach
+                                    @else 
+                                        @foreach ($alat_cc as $alat)    
+                                            <option <?php if($item->jobdesk == $alat->text) { echo 'selected'; } ?> value="{{ $alat->id }}" >{{ $alat->text }}</option>
+                                        @endforeach
+                                    @endif                                  
                                 </select>
                             </td>
-                            <td>
+                            <td class="align-middle">
                                 <select class="form-control form-control-sm" aria-label="Default select example" name="status_absen{{$item->id}}" id="jenis_absen">
-                                    @foreach ($jenis_absen as $item)
-                                    <option value="{{ $item->nama }}">{{ $item->nama }}</option>
-                                    @endforeach
+                                    @if(in_array($item->jobdesk, $temp_alat))    
+                                        @foreach ($jenis_absen as $item)
+                                            <option value="{{ $item->nama }}" {{ $item->nama === 'Masuk' ? 'selected' : '' }}>
+                                                {{ $item->nama }}
+                                            </option>
+                                        @endforeach
+                                    @else
+                                        @foreach ($jenis_absen as $item)
+                                            <option value="{{ $item->nama }}" {{ $item->nama === 'Stand by' ? 'selected' : '' }}>
+                                                {{ $item->nama }}
+                                            </option>
+                                        @endforeach
+                                    @endif
                                 </select>
                             </td>
                         </tr>
@@ -82,6 +111,13 @@
                         </tr>
                     </thead>
                     <tbody id="table-body-spk">
+                        <?php $temp_alat = [] ;
+                            foreach($detail_alat_spk as $das) {
+                                if(explode('-', $das->kd_alat)[0]=='A') {
+                                    array_push($temp_alat, $das->nama_alat);
+                                } 
+                            }
+                        ?>
                         @foreach ($operator_rtg as $item)
                         <tr>
                             @foreach ($detail_rcn as $waktu)
@@ -96,15 +132,26 @@
                             <td> <input type="text" name="jobdesk{{ $item->id}}" value="{{ $item->jobdesk }}" hidden > {{ $item->jobdesk }}</td>
                             <td> 
                                 <select class="form-select form-select-sm js-example-basic-multiple-rtg" name="tambah_alat_rtg_{{$item->id}}[]" multiple="multiple">
-                                    @foreach ($alat_rtg as $rtg)    
-                                        <option <?php if($item->jobdesk == $rtg->text) { echo 'selected'; } ?> value="{{ $rtg->id }}" >{{ $rtg->text }}</option>
-                                    @endforeach
+                                    @if(count($temp_alat) > 0)
+                                        @foreach ($temp_alat as $value)    
+                                            @foreach ($alat_rtg as $alat)    
+                                                <option <?php if($value == $alat->text) { echo 'selected'; } ?> value="{{ $alat->id }}" >{{ $alat->text }}</option>
+                                            @endforeach
+                                        @endforeach
+                                    @else 
+                                        @foreach ($alat_rtg as $alat) 
+                                            <option <?php if($item->jobdesk == $alat->text) { echo 'selected'; } ?> value="{{ $alat->id }}" >{{ $alat->text }}</option>
+                                        @endforeach
+                                    @endif 
                                 </select>
                             </td>
                             <td>
                                 <select class="form-control form-control-sm" aria-label="Default select example" name="status_absen{{$item->id}}" id="jenis_absen">
                                     @foreach ($jenis_absen as $item)
-                                    <option value="{{ $item->nama }}">{{ $item->nama }}</option>
+                                    <!-- <option value="{{ $item->nama }}">{{ $item->nama }}</option> -->
+                                        <option value="{{ $item->nama }}" {{ $item->nama === 'Stand by' ? 'selected' : '' }}>
+                                            {{ $item->nama }}
+                                        </option>   
                                     @endforeach
                                 </select>
                             </td>
@@ -129,6 +176,13 @@
                         </tr>
                     </thead>
                     <tbody id="table-body-spk">
+                        <?php $temp_alat = [] ;
+                            foreach($detail_alat_spk as $das) {
+                                if(explode('-', $das->kd_alat)[0]=='RS') {
+                                    array_push($temp_alat, $das->nama_alat) ;
+                                } 
+                            }
+                        ?>
                         @foreach ($operator_rs as $item)
                         <tr>
                             @foreach ($detail_rcn as $waktu)
@@ -143,15 +197,26 @@
                             <td> <input type="text" name="jobdesk{{ $item->id}}" value="{{ $item->jobdesk }}" hidden > {{ $item->jobdesk }}</td>
                             <td> 
                                 <select class="form-select form-select-sm js-example-basic-multiple-rtg" name="tambah_alat_rs_{{$item->id}}[]" multiple="multiple">
-                                    @foreach ($alat_rs as $rs)    
-                                        <option <?php if($item->jobdesk == $rs->text) { echo 'selected'; } ?> value="{{ $rs->id }}" >{{ $rs->text }}</option>
-                                    @endforeach
+                                    
+                                    @if(count($temp_alat) > 0)
+                                        @foreach ($temp_alat as $value)    
+                                            @foreach ($alat_rs as $alat)    
+                                                <option <?php if($value == $alat->text) { echo 'selected'; } ?> value="{{ $alat->id }}" >{{ $alat->text }}</option>
+                                            @endforeach
+                                        @endforeach
+                                    @else 
+                                        @foreach ($alat_rtg as $alat)    
+                                            <option <?php if($item->jobdesk == $alat->text) { echo 'selected'; } ?> value="{{ $alat->id }}" >{{ $alat->text }}</option>
+                                        @endforeach
+                                    @endif 
                                 </select>
                             </td>
                             <td>
                                 <select class="form-control form-control-sm" aria-label="Default select example" name="status_absen{{$item->id}}" id="jenis_absen">
                                     @foreach ($jenis_absen as $item)
-                                    <option value="{{ $item->nama }}">{{ $item->nama }}</option>
+                                        <option value="{{ $item->nama }}" {{ $item->nama === 'Stand by' ? 'selected' : '' }}>
+                                            {{ $item->nama }}
+                                        </option>                                       
                                     @endforeach
                                 </select>
                             </td>
