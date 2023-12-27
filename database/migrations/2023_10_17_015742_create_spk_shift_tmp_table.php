@@ -19,6 +19,7 @@ return new class extends Migration
             $table->dateTime('waktu_selesai');
             $table->string('nama_shift');
             $table->string('ves_id');
+            $table->char('berth_no')->nullable();
         });
     }
 

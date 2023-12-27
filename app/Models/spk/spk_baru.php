@@ -34,24 +34,21 @@ class spk_baru extends Model
             ->get();
     }
 
-    // function get_tspk_header($tanggal) {
-    //     return DB::table('spk_t_jadwal_group')
-    //         ->where(DB::raw('DATE_FORMAT(spk_t_jadwal_group.tanggal, "%Y-%m-%d")'), $tanggal)
-    //         ->leftjoin('spk_m_shift', 'spk_m_shift.no_shift', '=', 'spk_t_jadwal_group.id_shift')
-    //         ->leftjoin('spk_m_group', 'spk_m_group.id_group', '=' , 'spk_t_jadwal_group.id_group')
-    //         ->leftjoin('spk_tspk_header', 'spk_tspk_header.id', '=' , 'spk_t_jadwal_group.id')
-    //         ->where('spk_tspk_header.id', '1')
-    //         ->get();
-    // }
+    function getJGroup_ByShift($tanggal, $id) {
+        return DB::table('spk_t_jadwal_group')
+            ->where('id', $id)
+            ->where(DB::raw('DATE_FORMAT(tanggal, "%Y-%m-%d")'), $tanggal)
+            ->leftjoin('spk_tspk_header', 'spk_tspk_header.id_h', '=' , 'spk_t_jadwal_group.id')
+            ->leftjoin('spk_m_shift', 'spk_m_shift.no_shift', '=', 'spk_t_jadwal_group.id_shift')
+            ->leftjoin('spk_m_group', 'spk_m_group.id_group', '=' , 'spk_t_jadwal_group.id_group')
+            ->get();
+    }
 
     function getJGroup_ById($id) {
         return DB::table('spk_t_jadwal_group')
             ->where('spk_t_jadwal_group.id', $id)
             ->leftjoin('spk_m_group', 'spk_m_group.id_group', '=' , 'spk_t_jadwal_group.id_group')
             ->leftjoin('spk_m_shift', 'spk_m_shift.no_shift', '=', 'spk_t_jadwal_group.id_shift')
-            ->leftjoin('spk_m_pegawai', 'spk_m_pegawai.group_id', '=', 'spk_m_group.kode')
-            ->where('spk_m_pegawai.jobdesk', 'Vessel Planner')
-            // ->where('spk_m_pegawai.jobdesk', 'Vessel Planner')
             ->get();
     }
 
@@ -62,6 +59,26 @@ class spk_baru extends Model
             ->leftjoin('spk_m_shift', 'spk_m_shift.no_shift', '=', 'spk_t_jadwal_group.id_shift')
             ->leftjoin('spk_m_pegawai', 'spk_m_pegawai.group_id', '=', 'spk_m_group.kode')
             ->where('spk_m_pegawai.jobdesk', 'Ship Planner')
+            ->get();
+    }
+
+    function get_yard_planner($id) {
+        return DB::table('spk_t_jadwal_group')
+            ->where('spk_t_jadwal_group.id', $id)
+            ->leftjoin('spk_m_group', 'spk_m_group.id_group', '=' , 'spk_t_jadwal_group.id_group')
+            ->leftjoin('spk_m_shift', 'spk_m_shift.no_shift', '=', 'spk_t_jadwal_group.id_shift')
+            ->leftjoin('spk_m_pegawai', 'spk_m_pegawai.group_id', '=', 'spk_m_group.kode')
+            ->where('spk_m_pegawai.jobdesk', 'Yard Planner')
+            ->get();
+    }
+
+    function get_vessel_planner($id) {
+        return DB::table('spk_t_jadwal_group')
+            ->where('spk_t_jadwal_group.id', $id)
+            ->leftjoin('spk_m_group', 'spk_m_group.id_group', '=' , 'spk_t_jadwal_group.id_group')
+            ->leftjoin('spk_m_shift', 'spk_m_shift.no_shift', '=', 'spk_t_jadwal_group.id_shift')
+            ->leftjoin('spk_m_pegawai', 'spk_m_pegawai.group_id', '=', 'spk_m_group.kode')
+            ->where('spk_m_pegawai.jobdesk', 'Yard Planner')
             ->get();
     }
 
@@ -155,5 +172,20 @@ class spk_baru extends Model
 
     function update_tspk_header($data, $id_tspk){
         return DB::table('spk_tspk_header')->where('id_h', $id_tspk)->update($data);
+    }
+
+    function get_operator_cc_ByGroup($id) {
+        return DB::table('spk_tspk_operatorcc')
+            ->where('spk_tspk_operatorcc.id_h', $id)
+            // ->where('spk_tspk_operatorcc.berth_no', 'I1')
+            ->get();
+    }
+
+    function detail_rcn_array($tanggal, $id_shift) {
+        return DB::table('spk_t_rcn_detail')
+            ->select("berth_no")
+            ->where(DB::raw('DATE_FORMAT(waktu_mulai, "%Y-%m-%d")'), $tanggal)
+            ->Where('id_shift', $id_shift)
+            ->get()->flatten()->pluck('berth_no')->toArray();
     }
 }

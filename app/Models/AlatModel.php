@@ -28,6 +28,16 @@ class AlatModel extends Model
         return DB::table('spk_m_alat')->select(DB::raw("CONCAT(id, ',', kode_alat, ',', nama_alat) as id"), 'nama_alat as text')->where('jenis_alat', 'ARTG')->orWhere('jenis_alat', 'RTG')->get();
     }
 
+    function getDataRTG()
+    {
+        return DB::table('spk_m_alat')->select(DB::raw("CONCAT(id, ',', kode_alat, ',', nama_alat) as id"), 'nama_alat as text')->where('jenis_alat', 'RTG')->get();
+    }
+
+    // function getDataArtg_spk()
+    // {
+    //     return DB::table('spk_m_alat')->where('jenis_alat', 'ARTG')->orWhere('jenis_alat', 'RTG')->get();
+    // }
+
     function getDataRS()
     {
         return DB::table('spk_m_alat')->select(DB::raw("CONCAT(id, ',', kode_alat, ',', nama_alat) as id"), 'nama_alat as text')->where('jenis_alat', 'RS')->get();
@@ -59,5 +69,4 @@ class AlatModel extends Model
         DB::table('spk_m_alat')->where('id', $id_alat)->delete();
     }
 
-    
 }

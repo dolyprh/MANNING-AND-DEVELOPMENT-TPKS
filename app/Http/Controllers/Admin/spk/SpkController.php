@@ -8,6 +8,7 @@ use App\Models\MenuModel;
 use App\Models\spk\spk_baru;
 use App\Models\AlatModel;
 use App\Models\AbsenModel;
+use App\Models\Dermaga;
 use PDF;
 
 class SpkController extends Controller
@@ -22,6 +23,7 @@ class SpkController extends Controller
         $this->SpkModel = new spk_baru();
         $this->AlatModel = new AlatModel();
         $this->AbsenModel = new AbsenModel();
+        $this->Dermaga = new Dermaga();
     }
 
     public function index(Request $request)
@@ -121,20 +123,18 @@ class SpkController extends Controller
             'operator_rtg'  => $this->SpkModel->getOperatorRTG_ByGroup($id),
             'operator_rs'  => $this->SpkModel->getOperatorRS_ByGroup($id),
             'alat_cc'       => $this->AlatModel->getDataCraine(),
-            'alat_rtg'       => $this->AlatModel->getDataArtg(),
+            'alat_rtg'       => $this->AlatModel->getDataRTG(),
             'alat_rs'       => $this->AlatModel->getDataRS(),
+            'dermaga'       => $this->Dermaga->get_dermaga(),
             'jenis_absen'   => $this->AbsenModel->get_absen(),
             'detail_rcn'    => $detail_rcn,
+            'detail_rcn_array'   => $this->SpkModel->detail_rcn_array($tanggal, $id_shift),
             // 'detail_alat_spk'  => $this->SpkModel->get_alat_tspk($detail_rcn[0]->detail_id, $detail_rcn[0]->rcn_no),
             'detail_alat_spk'  => $alat_spk,
             'id_group'      => $id,
         ];
 
-        // echo($data['detail_rcn'][0]->detail_id);
-        // echo($data['detail_rcn'][0]->rcn_no);
-        // echo($this->SpkModel->get_alat_tspk($detail_rcn[0]->detail_id, $detail_rcn[0]->rcn_no));
-        
-        // dd($data);
+        //dd($data);
         return view('admin.spk.spk_detail', $data);
     }
 
@@ -172,12 +172,49 @@ class SpkController extends Controller
         $get_operator_cc = $this->SpkModel->getOperatorCC_ByGroup($id_operator);
         $get_operator_rtg = $this->SpkModel->getOperatorRTG_ByGroup($id_operator);
         $get_operator_rs = $this->SpkModel->getOperatorRS_ByGroup($id_operator);
-        // $get_operator_byId = $this->SpkModel->getOperator_ByShiftGroup($id_operator);
 
         foreach ($get_operator_cc as $operator) {
             if($request['tambah_alat_cc_'. $operator->id]) {
                 foreach ($request['tambah_alat_cc_'. $operator->id] as $alat ) {
-                    $dataAlat = explode(',', $alat);
+                    foreach ($request['tambah_dermaga_cc'. $operator->id] as $dermaga ) {
+                        $dataAlat = explode(',', $alat);
+                        $seq_id = $detail_id + 1;
+                        $dataOperator = [
+                            'id_h'      => $id_header[0]->id_h,
+                            'seq_id'    => $seq_id,
+                            'nipp'    => $operator->nipp,
+                            'nama'    => $operator->nama,
+                            'kode_alat' => $dataAlat[1],
+                            'nama_alat' => $dataAlat[2],
+                            'waktu_mulai' => $request['waktu_mulai'. $operator->id],
+                            'waktu_selesai' => $request['waktu_selesai'. $operator->id],
+                            'nama_kapal' => $request['vesid'. $operator->id],
+                            'berth_no' => $dermaga,
+                        ];
+                        
+                        $dataAbsen = [
+                            'id_h'      => $id_header[0]->id_h,
+                            'seq_id'    => $seq_id,
+                            'nipp'    => $operator->nipp,
+                            'nama'    => $operator->nama,
+                            'jobdesk'    => $operator->jobdesk,
+                            'status' => $request['status_absen'. $operator->id],
+                        ];
+        
+                        $detail_id++;
+                        $this->SpkModel->insert_tpsk_operatorcc($dataOperator);
+                        $this->SpkModel->insert_tpsk_operatorabsen($dataAbsen);
+                    } 
+                }
+            }
+            $detail_id = 0;
+        }
+
+        foreach ($get_operator_rtg as $operator) {
+            if($request['tambah_alat_rtg_'. $operator->id]) {
+                foreach ($request['tambah_dermaga'. $operator->id] as $dataDermaga ) {
+                    $dataAlat = explode(',', $request['tambah_alat_rtg_'. $operator->id]);
+                    $dermaga = explode(',', $dataDermaga);
                     $seq_id = $detail_id + 1;
                     $dataOperator = [
                         'id_h'      => $id_header[0]->id_h,
@@ -189,6 +226,7 @@ class SpkController extends Controller
                         'waktu_mulai' => $request['waktu_mulai'. $operator->id],
                         'waktu_selesai' => $request['waktu_selesai'. $operator->id],
                         'nama_kapal' => $request['vesid'. $operator->id],
+                        'berth_no'   => $dermaga[1]
                     ];
                     
                     $dataAbsen = [
@@ -199,76 +237,48 @@ class SpkController extends Controller
                         'jobdesk'    => $operator->jobdesk,
                         'status' => $request['status_absen'. $operator->id],
                     ];
-    
+
                     $detail_id++;
                     $this->SpkModel->insert_tpsk_operatorcc($dataOperator);
                     $this->SpkModel->insert_tpsk_operatorabsen($dataAbsen);
-                } 
-            }
-            $detail_id = 0;
-        }
-
-        foreach ($get_operator_rtg as $operator) {
-            foreach ($request['tambah_alat_rtg_'. $operator->id] as $alat_rtg ) {
-                $dataAlat = explode(',', $alat_rtg);
-                $seq_id = $detail_id + 1;
-                $dataOperator = [
-                    'id_h'      => $id_header[0]->id_h,
-                    'seq_id'    => $seq_id,
-                    'nipp'    => $operator->nipp,
-                    'nama'    => $operator->nama,
-                    'kode_alat' => $dataAlat[1],
-                    'nama_alat' => $dataAlat[2],
-                    'waktu_mulai' => $request['waktu_mulai'. $operator->id],
-                    'waktu_selesai' => $request['waktu_selesai'. $operator->id],
-                    'nama_kapal' => $request['vesid'. $operator->id],
-                ];
-                
-                $dataAbsen = [
-                    'id_h'      => $id_header[0]->id_h,
-                    'seq_id'    => $seq_id,
-                    'nipp'    => $operator->nipp,
-                    'nama'    => $operator->nama,
-                    'jobdesk'    => $operator->jobdesk,
-                    'status' => $request['status_absen'. $operator->id],
-                ];
-
-                $detail_id++;
-                $this->SpkModel->insert_tpsk_operatorcc($dataOperator);
-                $this->SpkModel->insert_tpsk_operatorabsen($dataAbsen);
+                }
             } 
             $detail_id = 0;
         }
 
         foreach ($get_operator_rs as $operator) {
-            foreach ($request['tambah_alat_rs_'. $operator->id] as $alat ) {
-                $dataAlat = explode(',', $alat);
-                $seq_id = $detail_id + 1;
-                $dataOperator = [
-                    'id_h'      => $id_header[0]->id_h,
-                    'seq_id'    => $seq_id,
-                    'nipp'    => $operator->nipp,
-                    'nama'    => $operator->nama,
-                    'kode_alat' => $dataAlat[1],
-                    'nama_alat' => $dataAlat[2],
-                    'waktu_mulai' => $request['waktu_mulai'. $operator->id],
-                    'waktu_selesai' => $request['waktu_selesai'. $operator->id],
-                    'nama_kapal' => $request['vesid'. $operator->id],
-                ];
-                
-                $dataAbsen = [
-                    'id_h'      => $id_header[0]->id_h,
-                    'seq_id'    => $seq_id,
-                    'nipp'    => $operator->nipp,
-                    'nama'    => $operator->nama,
-                    'jobdesk'    => $operator->jobdesk,
-                    'status' => $request['status_absen'. $operator->id],
-                ];
+            if($request['tambah_alat_rs_'. $operator->id]) {
+                foreach ($request['tambah_dermaga_rs'. $operator->id] as $dermaga ) {
+                    $dataAlat = explode(',', $request['tambah_alat_rs_'. $operator->id]);
+                    // $dermaga_rs = explode(',', $dermaga);
+                    $seq_id = $detail_id + 1;
+                    $dataOperator = [
+                        'id_h'      => $id_header[0]->id_h,
+                        'seq_id'    => $seq_id,
+                        'nipp'    => $operator->nipp,
+                        'nama'    => $operator->nama,
+                        'kode_alat' => $dataAlat[1],
+                        'nama_alat' => $dataAlat[2],
+                        'waktu_mulai' => $request['waktu_mulai'. $operator->id],
+                        'waktu_selesai' => $request['waktu_selesai'. $operator->id],
+                        'nama_kapal' => $request['vesid'. $operator->id],
+                        'berth_no' => $dermaga,
+                    ];
+                    
+                    $dataAbsen = [
+                        'id_h'      => $id_header[0]->id_h,
+                        'seq_id'    => $seq_id,
+                        'nipp'    => $operator->nipp,
+                        'nama'    => $operator->nama,
+                        'jobdesk'    => $operator->jobdesk,
+                        'status' => $request['status_absen'. $operator->id],
+                    ];
 
-                $detail_id++;
-                $this->SpkModel->insert_tpsk_operatorcc($dataOperator);
-                $this->SpkModel->insert_tpsk_operatorabsen($dataAbsen);
-            } 
+                    $detail_id++;
+                    $this->SpkModel->insert_tpsk_operatorcc($dataOperator);
+                    $this->SpkModel->insert_tpsk_operatorabsen($dataAbsen);
+                } 
+            }
             $detail_id = 0;
         }
 
@@ -291,7 +301,10 @@ class SpkController extends Controller
             'submenus'    => $this->MenuModel->getSubmenus(),
             'group_shift' => $this->SpkModel->getJGroup_ById($id),
             'shift'     => $this->SpkModel->getJGroup($tanggal),
-            'ship_planner'     => $this->SpkModel->get_ship_planner($id),
+            'yard_planner'     => $this->SpkModel->get_ship_planner($id),
+            'ship_planner'     => $this->SpkModel->get_yard_planner($id),
+            'vessel_planner'     => $this->SpkModel->get_vessel_planner($id),
+            'operator_alat'     => $this->SpkModel->get_operator_cc_ByGroup($id),
         ];
 
         return view('admin.spk.spk_report', $data);
@@ -308,15 +321,82 @@ class SpkController extends Controller
             }
         }
 
+        $operator_alat = $this->SpkModel->get_operator_cc_ByGroup($id);
+
+        $groupedOperators = [];
+
+        foreach ($operator_alat as $operator) {
+            $berthNo = $operator->berth_no;
+            $namaAlat = $operator->nama_alat;
+        
+            // Cek apakah $berthNo sudah ada di dalam $groupedData
+            $berthKey = array_search($berthNo, array_column($groupedOperators, 'berth_no'));
+        
+            // Jika belum ada, tambahkan dengan struktur baru
+            if ($berthKey === false) {
+                $groupedOperators[] = [
+                    'berth_no' => $berthNo,
+                    'detail' => [
+                        [
+                            'nama_alat' => $namaAlat,
+                            'operators' => [
+                                [
+                                    'id_h' => $operator->id_h,
+                                    'seq_id' => $operator->seq_id,
+                                    'nipp' => $operator->nipp,
+                                    'nama' => $operator->nama,
+                                    'waktu_mulai' => $operator->waktu_mulai,
+                                    'waktu_selesai' => $operator->waktu_selesai,
+                                ]
+                            ]
+                        ]
+                    ]
+                ];
+            } else {
+                // Jika sudah ada, cek apakah $namaAlat sudah ada di dalam 'detail'
+                $detailKey = array_search($namaAlat, array_column($groupedOperators[$berthKey]['detail'], 'nama_alat'));
+        
+                // Jika belum ada, tambahkan dengan struktur baru
+                if ($detailKey === false) {
+                    $groupedOperators[$berthKey]['detail'][] = [
+                        'nama_alat' => $namaAlat,
+                        'operators' => [
+                            [
+                                'id_h' => $operator->id_h,
+                                'seq_id' => $operator->seq_id,
+                                'nipp' => $operator->nipp,
+                                'nama' => $operator->nama,
+                                'waktu_mulai' => $operator->waktu_mulai,
+                                'waktu_selesai' => $operator->waktu_selesai,
+                            ]
+                        ]
+                    ];
+                } else {
+                    // Jika sudah ada, tambahkan operator ke dalam array 'operators'
+                    $groupedOperators[$berthKey]['detail'][$detailKey]['operators'][] = [
+                        'id_h' => $operator->id_h,
+                        'seq_id' => $operator->seq_id,
+                        'nipp' => $operator->nipp,
+                        'nama' => $operator->nama,
+                        'waktu_mulai' => $operator->waktu_mulai,
+                        'waktu_selesai' => $operator->waktu_selesai,
+                    ];
+                }
+            }
+        }
+
         $data = [
             'group_shift' => $this->SpkModel->getJGroup_ById($id),
-            'shift'     => $this->SpkModel->getJGroup($tanggal),
-            'ship_planner'     => $this->SpkModel->get_ship_planner($id),
+            'shift'     => $this->SpkModel->getJGroup_ByShift($tanggal, $id),
+            'yard_planner'     => $this->SpkModel->get_ship_planner($id),
+            'ship_planner'     => $this->SpkModel->get_yard_planner($id),
+            'vessel_planner'     => $this->SpkModel->get_vessel_planner($id),
+            'operator_alat'     => $groupedOperators,
 
         ];
 
         $pdf = PDF::loadView('admin.spk.spk_download', $data);
-        $pdf->setPaper('A4', 'potrait');
+        $pdf->setPaper('A3', 'potrait');
         return $pdf->stream('spk.pdf');
         // dd($data);
     }

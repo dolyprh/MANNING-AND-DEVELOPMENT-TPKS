@@ -58,8 +58,8 @@ class SubmenuSeeder extends Seeder
             ],
             [
                 'parent_id' => '1',
-                'nama_submenu' => 'Parameter',
-                'url_submenu' => '/parameter',
+                'nama_submenu' => 'Dermaga',
+                'url_submenu' => '/dermaga',
             ],
             [
                 'parent_id' => '1',

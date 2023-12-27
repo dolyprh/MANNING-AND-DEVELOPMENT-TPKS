@@ -35,6 +35,7 @@ return new class extends Migration
                 pelayaran,
                 in_voyage,
                 out_voyage,
+                berth_no,
                 kd_awal,
                 kd_akhir,
                 rcn_sandar,
@@ -70,7 +71,8 @@ return new class extends Migration
                     CONCAT(DATE_FORMAT(DATE_ADD(rcn_awal_kerja, INTERVAL x DAY), '%Y/%m/%d'), ' ', waktu_mulai) AS mulai,
                     CONCAT(DATE_FORMAT(DATE_ADD(rcn_awal_kerja, INTERVAL x DAY), '%Y/%m/%d'), ' ', waktu_selesai) AS selesai,
                     nama_shift,
-                    ves_id
+                    ves_id,
+                    berth_no
                 FROM spk_v_rcn_kapal a
                 JOIN spk_m_shift b ON a.ves_id = xves_id;
                 
@@ -91,7 +93,8 @@ return new class extends Migration
                 waktu_mulai,
                 waktu_selesai,
                 nama_shift,
-                xves_id
+                xves_id,
+                berth_no
             FROM spk_shift_tmp
             WHERE rcn_no = vrcnno;
         

@@ -23,6 +23,7 @@ use App\Http\Controllers\Admin\Master\GroupController;
 use App\Http\Controllers\Admin\Master\AbsenController;
 use App\Http\Controllers\Admin\Master\MitraController;
 use App\Http\Controllers\Admin\Master\AksesController;
+use App\Http\Controllers\Admin\Master\DermagaController;
 
 use App\Http\Controllers\Super_Intendent\DashboardController;
 use App\Http\Controllers\Super_Intendent\Approve_PerencanaanController;
@@ -60,7 +61,8 @@ Route::group(['middleware' => ['auth', 'cekrole:admin']], function () {
     //Untuk CRUD Master Setup
     Route::resource('/menu', MenuController::class);
     Route::resource('/alat', AlatController::class);
-    Route::resource('/parameter', ParamController::class);
+    // Route::resource('/parameter', ParamController::class);
+    Route::resource('/dermaga', DermagaController::class);
     Route::resource('/katering', KateringController::class);
     Route::resource('/shift', ShiftController::class);
     Route::resource('/pegawai', PegawaiController::class);
@@ -91,7 +93,6 @@ Route::group(['middleware' => ['auth', 'cekrole:admin']], function () {
     Route::post('/spk-baru/insert-alat-operator/{id}', [SpkController::class, 'insert_alat_operator']);
     Route::get('spk-report/{id}/{id2}', [SpkController::class, 'get_report']);
     Route::get('spk-download/{id1}/{id2}', [SpkController::class, 'download_pdf']);
-    
 });
 
 Route::group(['middleware' => ['auth', 'cekrole:superintendent']], function () {

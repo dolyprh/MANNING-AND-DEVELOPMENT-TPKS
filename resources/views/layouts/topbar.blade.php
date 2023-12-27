@@ -7,7 +7,7 @@
 
 <!-- Topbar Search -->
 <div class="d-sm-flex align-items-center justify-content-between ">
-    <h4 class=" mb-0 text-gray-8000 ml-2 mx-3">Aplikasi Surat Perintah Kerja</h4>
+    <h4 class=" mb-0 text-gray-8000 ml-2 mx-3">Aplikasi Manning & Development</h4>
 </div>
 
 <ul class="navbar-nav ml-auto">

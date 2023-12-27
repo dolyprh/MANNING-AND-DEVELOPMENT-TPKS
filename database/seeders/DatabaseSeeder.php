@@ -20,5 +20,6 @@ class DatabaseSeeder extends Seeder
         $this->call(PegawaiSeeder::class);
         $this->call(GroupSeeder::class);
         $this->call(AbsenSeeder::class);
+        $this->call(DermagaSeeder::class);
     }
 }

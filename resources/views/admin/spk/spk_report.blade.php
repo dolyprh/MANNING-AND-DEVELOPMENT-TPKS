@@ -11,13 +11,21 @@
 <div class="container-fluid">
 
 <!-- Page Heading -->
-@foreach($group_shift as $item)
-<div class="align-items-center text-center justify-content-between mb-4">
-    <h1 class="h5 mb-2 text-gray-800"><strong>{{ \Carbon\Carbon::parse($item->tanggal)->locale('id')->format('l - d F Y') }} {{ $item->waktu_mulai }} - {{ $item->waktu_selesai }}</strong></h1>
-    <h1 class="h5 mb-2 text-gray-800"><strong><u>MANNING & DEPLOYMENT TERMINAL PETIKEMAS SEMARANG</u></strong></h1>
-    <h1 class="h5 mb-2 text-gray-800"><strong>{{ $item->nama_group }} - SHIFT {{ $item->no_shift }}</strong></h1>
+<div class="row align-items-center text-center">
+    <div class="col-xl-10">
+        @foreach($group_shift as $item)
+        <div class="align-items-center text-center justify-content-between mb-4">
+            <h1 class="h5 mb-2 text-gray-800"><strong>{{ \Carbon\Carbon::parse($item->tanggal)->locale('id')->format('l - d F Y') }} {{ $item->waktu_mulai }} - {{ $item->waktu_selesai }}</strong></h1>
+            <h1 class="h5 mb-2 text-gray-800"><strong><u>MANNING & DEPLOYMENT TERMINAL PETIKEMAS SEMARANG</u></strong></h1>
+            <h1 class="h5 mb-2 text-gray-800"><strong>{{ $item->nama_group }} - SHIFT {{ $item->no_shift }}</strong></h1>
+        </div>
+        @endforeach
+    </div>
+    <div class="col-xl-2">
+        <img src="{{ asset('templates/img/qrcode.svg') }}" width="100px">
+    </div>
+   
 </div>
-@endforeach
 
 <div class="card mb-4">
     <div class="card-header bg-info text-center text-light py-2" style="height: 2rem;">
@@ -58,7 +66,7 @@
                     <table class="table table-sm table-bordered p table-align-center" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th rowspan="2">SHIP PLANNER</th>
+                                <th rowspan="2" class="align-middle">SHIP PLANNER</th>
                                 <td colspan="2">
                                     @foreach($ship_planner as $item)
                                         {{ $item->nama }}
@@ -70,9 +78,9 @@
                             </tr>
 
                             <tr>
-                                <th rowspan="2">YARD PLANNER</th>
+                                <th rowspan="2" class="align-middle">YARD PLANNER</th>
                                 <td colspan="2">
-                                    @foreach($group_shift as $item)
+                                    @foreach($yard_planner as $item)
                                         {{ $item->nama }}
                                     @endforeach
                                 </td>
@@ -151,7 +159,7 @@
                     <table class="table table-sm table-bordered table-align-center" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th colspan="2" class="vesel-info">VESSEL INFO</th>
+                                <th colspan="2" class="text-center">VESSEL INFO</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -162,13 +170,17 @@
                         </tbody>
                         <thead>
                             <tr>
-                                <th colspan="2" class="vesel-info-1">VESSEL 1(VESSEL TARGET)</th>
+                                <th colspan="2" class="text-center">VESSEL 1(VESSEL TARGET)</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <th class='name-ht'>VESSEL NAME</th>
-                                <th class='name-ht'>-</th>
+                                <th class='name-ht'>
+                                    @foreach($vessel_planner as $item)
+                                        {{ $item->nama}}
+                                    @endforeach
+                                </th>
                             </tr>
                             <tr>
                                 <th class='name-ht'>CLOSSING TIME</th>
@@ -193,13 +205,17 @@
                         </tbody>
                         <thead>
                             <tr>
-                                <th colspan="2" class="vesel-1">VESSEL 1</th>
+                                <th colspan="2" class="text-center">VESSEL 1</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <th class='name-ht'>VESSEL NAME</th>
-                                <th class='name-ht'>-</th>
+                                <th class='name-ht'>
+                                    @foreach($vessel_planner as $item)
+                                        {{ $item->nama}}
+                                    @endforeach
+                                </th>
                             </tr>
                             <tr>
                                 <th class='name-ht'>CLOSSING TIME</th>
@@ -231,17 +247,17 @@
         <div class="col-xl-3 mb-4">
             <div class="card-body border-bottom-info shadow">
                 <div class="table-responsive">
-                    <table class="table table-sm table-bordered table-align-center" width="100%" cellspacing="0">
+                    <table class="table table-sm text-center table-bordered table-align-center" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th colspan="4" class="qcc">QCC</th>
+                                <th colspan="4" class="text-center">QCC</th>
                             </tr>
                         </thead>
                         <!-- QCC 01 -->
-                        <thead>
+                        <thead >
                             <tr>
-                                <th rowspan="5">QCC 01</th>
-                                <th rowspan="2">OPERATOR</td>
+                                <th rowspan="5" class="align-middle">QCC 01</th>
+                                <th rowspan="2" class="align-middle">OPERATOR</td>
                                 <td >ARIF BUDIMAN</td>
                                 <th >08.00 - 16.00</th>
                             </tr>
@@ -272,8 +288,8 @@
                         <!-- QCC 02 -->
                         <thead>
                             <tr>
-                                <th rowspan="5">QCC 02</th>
-                                <th rowspan="2">OPERATOR</td>
+                                <th rowspan="5" class="align-middle">QCC 02</th>
+                                <th rowspan="2" class="align-middle">OPERATOR</td>
                                 <td >ARIFIN</td>
                                 <th >08.00 - 16.00</th>
                             </tr>
@@ -312,7 +328,7 @@
                     <table class="table table-sm table-bordered p table-align-center" width="100%" cellspacing="0">
                         <thead>
                             <tr>
-                                <th colspan="4" class="rtg">RTG / RMGC / RS / SL</th>
+                                <th colspan="4" class="text-center">RTG / RMGC / RS / SL</th>
                             </tr>
                         </thead>
                         <tbody>

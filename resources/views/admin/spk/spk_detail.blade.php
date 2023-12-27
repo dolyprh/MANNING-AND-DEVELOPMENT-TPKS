@@ -14,7 +14,7 @@
                 <a class="nav-link" id="custom-tabs-two-rtg-tab" data-toggle="pill" href="#custom-tabs-two-rtg" role="tab" aria-controls="custom-tabs-two-rtg" aria-selected="false">RTG & ARTG</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="custom-tabs-two-rs-tab" data-toggle="pill" href="#custom-tabs-two-rs" role="tab" aria-controls="custom-tabs-two-rs" aria-selected="false">RS/SS</a>
+                <a class="nav-link" id="custom-tabs-two-rs-tab" data-toggle="pill" href="#custom-tabs-two-rs" role="tab" aria-controls="custom-tabs-two-rs" aria-selected="false">RS/LS</a>
             </li>
         </ul>
     </div>
@@ -31,7 +31,7 @@
                             <th>ID</th>
                             <th class="col-sm-3">Nama Operator</th>
                             <th class="col-sm-2">Jobdesk</th>
-                            <th class="col-sm-5">Pilih Alat</th>
+                            <th class="col-sm-3">Pilih Alat</th>
                             <th class="col-sm-2">Status</th>
                         </tr>
                     </thead>
@@ -57,21 +57,24 @@
                             <td class="align-middle"> <input type="text" name="jobdesk{{$item->id}}" value="{{ $item->jobdesk }}" hidden > {{ $item->jobdesk }}</td>
                             <td class="align-middle"> 
                                 <select class="form-select form-select-sm js-example-basic-multiple-cc" name="tambah_alat_cc_{{$item->id}}[]" multiple="multiple">
-                                    @if(count($temp_alat) > 0)
-                                        @foreach ($temp_alat as $value)    
-                                            @foreach ($alat_cc as $alat)  
-                                                @if($value == $item->jobdesk)    
-                                                <option <?php if($value == $alat->text) { echo 'selected'; } ?> value="{{ $alat->id }}" >{{ $alat->text }}</option>
-                                                    @else
-                                                        <option value="{{ $alat->id }}" >{{ $alat->text }}</option>
-                                                    @endif  
-                                            @endforeach
+                                    @if(in_array($item->jobdesk, $temp_alat))
+                                        @foreach ($alat_cc as $alat)  
+                                                <option <?php if(in_array($alat->text, $temp_alat) && $item->jobdesk == $alat->text) { echo 'selected'; } ?> value="{{ $alat->id }}" >{{ $alat->text }}</option>
                                         @endforeach
                                     @else 
                                         @foreach ($alat_cc as $alat)    
-                                            <option <?php if($item->jobdesk == $alat->text) { echo 'selected'; } ?> value="{{ $alat->id }}" >{{ $alat->text }}</option>
+                                            <option value="{{ $alat->id }}" >{{ $alat->text }}</option>
                                         @endforeach
                                     @endif                                  
+                                </select>
+                            </td>
+                            <td class="align-middle text-center" style="display:none">
+                                <select name="tambah_dermaga_cc{{$item->id}}[]" multiple="multiple" hidden>
+                                @if(in_array($item->jobdesk, $temp_alat))
+                                    @foreach ($dermaga as $der)
+                                        <option <?php if(in_array($item->jobdesk, $temp_alat) && in_array($der->text, $detail_rcn_array)) { echo 'selected'; } ?> value="{{ $der->text }}">{{ $der->dermaga }}</option>
+                                    @endforeach
+                                @endif
                                 </select>
                             </td>
                             <td class="align-middle">
@@ -106,7 +109,8 @@
                             <th>ID</th>
                             <th class="col-sm-3">Nama Operator</th>
                             <th class="col-sm-2">Jobdesk</th>
-                            <th class="col-sm-5">Pilih Alat</th>
+                            <th class="col-sm-2">Pilih Alat</th>
+                            <th class="col-sm-3">Dermaga</th>
                             <th class="col-sm-2">Status</th>
                         </tr>
                     </thead>
@@ -127,28 +131,32 @@
                             @endforeach
                             <input type="text" name="id_group" value="{{ $id_group }}" hidden>                            
                             <input type="text" name="nipp" value="{{ $item->nipp }}" hidden>
-                            <td> {{ $item->id }} </td>
-                            <td> <input type="text" name="nama{{ $item->id}}" value="{{ $item->jobdesk }}" hidden > {{ $item->nama }}</td>
-                            <td> <input type="text" name="jobdesk{{ $item->id}}" value="{{ $item->jobdesk }}" hidden > {{ $item->jobdesk }}</td>
-                            <td> 
-                                <select class="form-select form-select-sm js-example-basic-multiple-rtg" name="tambah_alat_rtg_{{$item->id}}[]" multiple="multiple">
-                                    @if(count($temp_alat) > 0)
-                                        @foreach ($temp_alat as $value)    
-                                            @foreach ($alat_rtg as $alat)    
-                                                <option <?php if($value == $alat->text) { echo 'selected'; } ?> value="{{ $alat->id }}" >{{ $alat->text }}</option>
-                                            @endforeach
+                            <td class="align-middle text-center"> {{ $item->id }} </td>
+                            <td class="align-middle text-center"> <input type="text" name="nama{{ $item->id}}" value="{{ $item->jobdesk }}" hidden > {{ $item->nama }}</td>
+                            <td class="align-middle text-center"> <input type="text" name="jobdesk{{ $item->id}}" value="{{ $item->jobdesk }}" hidden > {{ $item->jobdesk }}</td>
+                            <td class="align-middle text-center"> 
+                                @if($item->jobdesk == 'RTG')
+                                    <select class="form-control form-control-sm" aria-label="Default select example" name="tambah_alat_rtg_{{$item->id}}">
+                                        @foreach ($alat_rtg as $alat)    
+                                            <option value="{{ $alat->id }}" >{{ $alat->text }}</option>
                                         @endforeach
-                                    @else 
-                                        @foreach ($alat_rtg as $alat) 
-                                            <option <?php if($item->jobdesk == $alat->text) { echo 'selected'; } ?> value="{{ $alat->id }}" >{{ $alat->text }}</option>
-                                        @endforeach
-                                    @endif 
+                                    </select>
+                                @else
+                                    <input class="form-control form-control-sm " type="text" value="ARTG" disabled> 
+                                    <input class="form-control " type="text" name="tambah_alat_rtg_{{$item->id}}" value="0,ARTG,ARTG" hidden> 
+                                @endif                           
+
+                            </td>
+                            <td class="align-middle text-center">
+                                <select class="form-select form-select-sm align-middle js-example-basic-multiple-berth" name="tambah_dermaga{{$item->id}}[]" multiple="multiple">
+                                    @foreach ($dermaga as $item)
+                                        <option value="{{ $item->id }}" >{{ $item->dermaga }}</option>
+                                    @endforeach
                                 </select>
                             </td>
-                            <td>
+                            <td class="align-middle text-center">
                                 <select class="form-control form-control-sm" aria-label="Default select example" name="status_absen{{$item->id}}" id="jenis_absen">
                                     @foreach ($jenis_absen as $item)
-                                    <!-- <option value="{{ $item->nama }}">{{ $item->nama }}</option> -->
                                         <option value="{{ $item->nama }}" {{ $item->nama === 'Stand by' ? 'selected' : '' }}>
                                             {{ $item->nama }}
                                         </option>   
@@ -171,7 +179,8 @@
                             <th>ID</th>
                             <th class="col-sm-3">Nama Operator</th>
                             <th class="col-sm-2">Jobdesk</th>
-                            <th class="col-sm-5">Pilih Alat</th>
+                            <th class="col-sm-2">Pilih Alat</th>
+                            <th class="col-sm-3">Dermaga</th>
                             <th class="col-sm-2">Status</th>
                         </tr>
                     </thead>
@@ -196,19 +205,17 @@
                             <td> <input type="text" name="nama{{ $item->id}}" value="{{ $item->jobdesk }}" hidden > {{ $item->nama }}</td>
                             <td> <input type="text" name="jobdesk{{ $item->id}}" value="{{ $item->jobdesk }}" hidden > {{ $item->jobdesk }}</td>
                             <td> 
-                                <select class="form-select form-select-sm js-example-basic-multiple-rtg" name="tambah_alat_rs_{{$item->id}}[]" multiple="multiple">
-                                    
-                                    @if(count($temp_alat) > 0)
-                                        @foreach ($temp_alat as $value)    
-                                            @foreach ($alat_rs as $alat)    
-                                                <option <?php if($value == $alat->text) { echo 'selected'; } ?> value="{{ $alat->id }}" >{{ $alat->text }}</option>
-                                            @endforeach
-                                        @endforeach
-                                    @else 
-                                        @foreach ($alat_rtg as $alat)    
-                                            <option <?php if($item->jobdesk == $alat->text) { echo 'selected'; } ?> value="{{ $alat->id }}" >{{ $alat->text }}</option>
-                                        @endforeach
-                                    @endif 
+                                <select class="form-control form-control-sm" name="tambah_alat_rs_{{$item->id}}">
+                                    @foreach ($alat_rs as $alat)    
+                                        <option value="{{ $alat->id }}" >{{ $alat->text }}</option>
+                                    @endforeach
+                                </select>
+                            </td>
+                            <td class="align-middle text-center">
+                                <select class="form-select form-select-sm align-middle js-example-basic-multiple-berth" name="tambah_dermaga_rs{{$item->id}}[]" multiple="multiple">
+                                    @foreach ($dermaga as $item)
+                                        <option value="{{ $item->text }}" >{{ $item->dermaga }}</option>
+                                    @endforeach
                                 </select>
                             </td>
                             <td>
@@ -253,6 +260,14 @@
             });
         });
 
+        $(document).ready(function() {
+            $('.js-example-basic-multiple-berth').select2({
+                theme: "bootstrap-5",
+                placeholder: "Pilih Dermaga",
+                width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style'
+            });
+        });
+
         
         // $(document).ready(function () {
             // Tambahkan event listener pada tombol "Selanjutnya"
@@ -278,7 +293,7 @@
             }
         });
     });
-    }
+}
 </script>
 
 @endsection

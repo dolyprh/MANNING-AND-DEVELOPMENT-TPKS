@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('pelayaran')->nullable();
             $table->string('in_voyage')->nullable();
             $table->string('out_voyage')->nullable();
+            $table->char('berth_no')->nullable();
             $table->integer('kd_awal')->nullable();
             $table->integer('kd_akhir')->nullable();
             $table->dateTime('rcn_sandar')->nullable();

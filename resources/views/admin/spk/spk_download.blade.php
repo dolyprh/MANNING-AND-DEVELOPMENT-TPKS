@@ -11,11 +11,12 @@
 
         .container {
             text-align: center;
+            margin-bottom: -20px;
         }
 
         .header-title {
             padding: 4px 0;
-            font-size: 8px;
+            font-size: 10px;
             font-weight: bold;
             color:#000;
             text-align:center;
@@ -25,7 +26,10 @@
             margin-top: 60px;
         }
         .card-berth-02 {
-            margin-top: 220px;
+            margin-top: 230px;
+        }
+        .card-berth-03 {
+            margin-top: 250px;
         }
 
         .card-yard-operation{
@@ -69,7 +73,7 @@
         td {
             padding: 0.15rem;
             vertical-align: top;
-            font-size: 6px;
+            font-size: 7px;
             text-align: center;
             border: 1px solid #000;
         }
@@ -150,10 +154,10 @@
 <body>
     @foreach($group_shift as $item)
         <div class="container">
-            <h6> {{ \Carbon\Carbon::parse($item->tanggal)->locale('id')->format('l - d F Y') }} {{ $item->waktu_mulai }} - {{ $item->waktu_selesai }} <br>
+            <h5> {{ \Carbon\Carbon::parse($item->tanggal)->locale('id')->format('l - d F Y') }} {{ $item->waktu_mulai }} - {{ $item->waktu_selesai }} <br>
                 <u>MANNING & DEPLOYMENT TERMINAL PETIKEMAS SEMARANG</u> <br>
                 {{ $item->nama_group }} - SHIFT {{ $item->no_shift }}
-            </h6>
+            </h5>
         </div>
     @endforeach
 
@@ -205,7 +209,7 @@
 
                         <tr>
                             <th rowspan="2" class="header-table">YARD PLANNER</th>
-                            @foreach($group_shift as $item)
+                            @foreach($yard_planner as $item)
                             <td colspan="1">{{ $item->nama }}</td>
                             @endforeach
                         </tr>
@@ -291,7 +295,11 @@
                     <tbody>
                         <tr>
                             <th class='name-ht'>VESSEL NAME</th>
-                            <th class='name-ht'>-</th>
+                            <th class='name-ht'>
+                                @foreach($vessel_planner as $item)
+                                    {{ $item->nama }}
+                                @endforeach 
+                            </th>
                         </tr>
                         <tr>
                             <th class='name-ht'>CLOSSING TIME</th>
@@ -322,7 +330,11 @@
                     <tbody>
                         <tr>
                             <th class='name-ht'>VESSEL NAME</th>
-                            <th class='name-ht'>-</th>
+                            <th class='name-ht'>
+                                @foreach($vessel_planner as $item)
+                                    {{ $item->nama }}
+                                @endforeach 
+                            </th>
                         </tr>
                         <tr>
                             <th class='name-ht'>CLOSSING TIME</th>
@@ -352,104 +364,152 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th colspan="4" class="qcc">QCC</th>
+                            <th colspan="4" class="qcc">QCC (Container Crane)</th>
                         </tr>
                     </thead>
-                    <!-- QCC 01 -->
-                    <thead>
-                        <tr>
-                            <th rowspan="5">QCC 01</th>
-                            <th rowspan="2">OPERATOR</td>
-                            <td >ARIF BUDIMAN</td>
-                            <th >08.00 - 16.00</th>
-                        </tr>
-                        <tr>
-                            <td>RACHMAD HIDAYAT</td>
-                            <th>08.00 - 16.00</th>
-                        </tr>
+                    @foreach ($operator_alat as $alat)
+                        @if ($alat['berth_no'] == 'I1')
+                        @php
+                            $ccFound = false;
+                        @endphp
 
-                        <tr>
-                            <th>SOA</th>
-                            <td>HASAN</td>
-                            <th rowspan="2">08.00 - 16.00</th>
+                        @foreach ($alat['detail'] as $d_alat)
+                        @if (strpos($d_alat['nama_alat'], 'CC') !== false)
+                            @php
+                                $ccFound = true;
+                            @endphp                         
+                            <thead>
+                                <tr>
+                                    <th rowspan="5">{{ $d_alat['nama_alat'] }}</th>
+                                    <th rowspan="2">OPERATOR</td>
+                                    <td >{{ $d_alat['operators'][0]['nama'] }}</td>
+                                    @foreach($group_shift as $item)
+                                    <th rowspan="2">{{ $item->waktu_mulai }} - {{ $item->waktu_selesai }}</th>
+                                    @endforeach
+                                </tr>
+                                <tr>
+                                    <td>{{ isset($d_alat['operators'][1]['nama']) ? $d_alat['operators'][1]['nama'] : '-' }}</td>
+                                </tr>
 
-                        </tr>
+                                <tr>
+                                    <th>SOA</th>
+                                    <td>HASAN</td>
+                                    @foreach($group_shift as $item)
+                                        <th rowspan="2">{{ $item->waktu_mulai }} - {{ $item->waktu_selesai }}</th>
+                                    @endforeach
 
-                        <tr>
-                            <th>WOA</th>
-                            <td>BAYU</td>
-                        </tr>
-                        <tr>
-                            <th>TKBM / LASHER</th>
-                            <td> - </td>
-                            <th>08.00 - 16.00</th>
+                                </tr>
 
-                        </tr>
-                    </thead>
+                                <tr>
+                                    <th>WOA</th>
+                                    <td>BAYU</td>
+                                </tr>
+                                <tr>
+                                    <th>TKBM / LASHER</th>
+                                    <td> - </td>
+                                    @foreach($group_shift as $item)
+                                        <th>{{ $item->waktu_mulai }} - {{ $item->waktu_selesai }}</th>
+                                    @endforeach
 
-                    <!-- QCC 02 -->
-                    <thead>
-                        <tr>
-                            <th rowspan="5">QCC 02</th>
-                            <th rowspan="2">OPERATOR</td>
-                            <td >ARIFIN</td>
-                            <th >08.00 - 16.00</th>
-                        </tr>
-                        <tr>
-                            <td>RACHMAD HIDAYAT</td>
-                            <th>08.00 - 16.00</th>
-                        </tr>
+                                </tr>
+                            </thead>
+                            @endif
+                            @endforeach
 
-                        <tr>
-                            <th>SOA</th>
-                            <td>HASAN</td>
-                            <th rowspan="2">08.00 - 16.00</th>
+                            @if (!$ccFound)
+                                <thead>
+                                    <tr>
+                                        <th rowspan="5">-</th>
+                                        <th rowspan="2">OPERATOR</td>
+                                        <td >-</td>
+                                        <th >-</th>
+                                    </tr>
+                                    <tr>
+                                        <td>-</td>
+                                        <th>-</th>
+                                    </tr>
 
-                        </tr>
+                                    <tr>
+                                        <th>SOA</th>
+                                        <td>-</td>
+                                        <th rowspan="2">-</th>
 
-                        <tr>
-                            <th>WOA</th>
-                            <td>JOKO</td>
-                        </tr>
-                        <tr>
-                            <th>TKBM / LASHER</th>
-                            <td> - </td>
-                            <th>-</th>
+                                    </tr>
 
-                        </tr>
-                    </thead>
+                                    <tr>
+                                        <th>WOA</th>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <th>TKBM / LASHER</th>
+                                        <td> - </td>
+                                        <th>-</th>
 
-                    <!-- QCC 03 -->
-                    <thead>
-                        <tr>
-                            <th rowspan="5">-</th>
-                            <th rowspan="2">-</td>
-                            <td >-</td>
-                            <th >-</th>
-                        </tr>
-                        <tr>
-                            <td>- -</td>
-                            <th>-</th>
-                        </tr>
+                                    </tr>
+                                </thead>
+                                <thead>
+                                    <tr>
+                                        <th rowspan="5">-</th>
+                                        <th rowspan="2">OPERATOR</td>
+                                        <td >-</td>
+                                        <th >-</th>
+                                    </tr>
+                                    <tr>
+                                        <td>-</td>
+                                        <th>-</th>
+                                    </tr>
 
-                        <tr>
-                            <th>-</th>
-                            <td>-</td>
-                            <th rowspan="2">-</th>
+                                    <tr>
+                                        <th>SOA</th>
+                                        <td>-</td>
+                                        <th rowspan="2">-</th>
 
-                        </tr>
+                                    </tr>
 
-                        <tr>
-                            <th>-</th>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <th>-</th>
-                            <td> -</td>
-                            <th>-</th>
+                                    <tr>
+                                        <th>WOA</th>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <th>TKBM / LASHER</th>
+                                        <td> - </td>
+                                        <th>-</th>
 
-                        </tr>
-                    </thead>
+                                    </tr>
+                                </thead>
+                                <thead>
+                                    <tr>
+                                        <th rowspan="5">-</th>
+                                        <th rowspan="2">OPERATOR</td>
+                                        <td >-</td>
+                                        <th >-</th>
+                                    </tr>
+                                    <tr>
+                                        <td>-</td>
+                                        <th>-</th>
+                                    </tr>
+
+                                    <tr>
+                                        <th>SOA</th>
+                                        <td>-</td>
+                                        <th rowspan="2">-</th>
+
+                                    </tr>
+
+                                    <tr>
+                                        <th>WOA</th>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <th>TKBM / LASHER</th>
+                                        <td> - </td>
+                                        <th>-</th>
+
+                                    </tr>
+                                </thead>
+                            @endif
+                        @endif
+                    @endforeach 
                 </table>
             </div>
 
@@ -460,90 +520,80 @@
                             <th colspan="4" class="rtg">RTG / RMGC / RS / SL</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <!-- RTG 05 -->
-                        <tr>
-                            <th rowspan="2">RTG 04</th>
-                            <th>OPERATOR</th>
-                            <td>BAIHAQI</td>
-                            <th rowspan="15">08:00 - 16:00</th>
-                        </tr>
-                        <tr>
-                            <th>YOA</th>
-                            <td>-</td>
-                        </tr>
+                    @foreach ($operator_alat as $alat)
+                        @if ($alat['berth_no'] == 'I1')
+                        @php
+                            $rtgFound = false;
+                        @endphp
 
-                        <!-- RTG 05 -->
-                        <tr>
-                            <th rowspan="2">RTG 07</th>
-                            <th>OPERATOR</th>
-                            <td>HUTOMO</td>
-                        </tr>
-                        <tr>
-                            <th>YOA</th>
-                            <td>-</td>
-                        </tr>
+                        @foreach ($alat['detail'] as $alat_r)
+                            @if(strpos($alat_r['nama_alat'], 'RTG') !== false || strpos($alat_r['nama_alat'], 'RS') !== false)
+                            @php
+                                $rtgFound = true;
+                            @endphp
+                            <tbody>
+                                <tr>
+                                    <th rowspan="2">{{ $alat_r['nama_alat'] }}</th>
+                                    <th>OPERATOR</th>
+                                    <td >{{ $alat_r['operators'][0]['nama'] }}</td>
+                                    @foreach($group_shift as $item)
+                                        <th rowspan="2">{{ $item->waktu_mulai }} - {{ $item->waktu_selesai }}</th>
+                                    @endforeach
+                                </tr>
+                                <tr>
+                                    <th>YOA</th>
+                                    <td>-</td>
+                                </tr>
+                            </tbody>
+                            @endif
+                            @endforeach
 
-                        <!-- RTG 09 -->
-                        <tr>
-                            <th rowspan="2">RTG 07</th>
-                            <th>OPERATOR</th>
-                            <td>PURNA</td>
-                        </tr>
-                        <tr>
-                            <th>YOA</th>
-                            <td>-</td>
-                        </tr>
-
-                        <!-- RTG 09 -->
-                        <tr>
-                            <th rowspan="2">-</th>
-                            <th>-</th>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <th>-</th>
-                            <td>-</td>
-                        </tr>
-
-                        <!-- RTG 09 -->
-                        <tr>
-                            <th rowspan="2">-</th>
-                            <th>-</th>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <th>-</th>
-                            <td>-</td>
-                        </tr>
-                        <!-- RTG - -->
-                        <tr>
-                            <th rowspan="2">-</th>
-                            <th>-</th>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <th>-</th>
-                            <td>-</td>
-                        </tr>
-                        
-                        <!-- RTG -->
-                        <tr>
-                            <th rowspan="2">-</th>
-                            <th>-</th>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <th>-</th>
-                            <td>-</td>
-                        </tr>
-                        <!-- RTG -->
-                        <tr>
-                            <th rowspan="1">-</th>
-                            <th>-</th>
-                            <td>-</td>
-                        </tr>
-                    </tbody>
+                            @if (!$rtgFound)
+                            <tbody>
+                                <tr>
+                                    <th rowspan="2">-</th>
+                                    <th>OPERATOR</th>
+                                    <td>-</td>
+                                    <th rowspan="2">-</th>
+                                </tr>
+                                <tr>
+                                    <th>YOA</th>
+                                    <td>-</td>
+                                </tr>
+                                <tr>
+                                    <th rowspan="2">-</th>
+                                    <th>OPERATOR</th>
+                                    <td>-</td>
+                                    <th rowspan="2">-</th>
+                                </tr>
+                                <tr>
+                                    <th>YOA</th>
+                                    <td>-</td>
+                                </tr>
+                                <tr>
+                                    <th rowspan="2">-</th>
+                                    <th>OPERATOR</th>
+                                    <td>-</td>
+                                    <th rowspan="2">-</th>
+                                </tr>
+                                <tr>
+                                    <th>YOA</th>
+                                    <td>-</td>
+                                </tr>
+                                <tr>
+                                    <th rowspan="2">-</th>
+                                    <th>OPERATOR</th>
+                                    <td>-</td>
+                                    <th rowspan="2">-</th>
+                                </tr>
+                                <tr>
+                                    <th>YOA</th>
+                                    <td>-</td>
+                                </tr>
+                            </tbody>
+                            @endif
+                        @endif
+                    @endforeach
                 </table>
             </div>
 
@@ -715,100 +765,141 @@
                         </tr>
                     </thead>
                     <!-- QCC 01 -->
-                    <thead>
-                        <tr>
-                            <th rowspan="5">QCC 01</th>
-                            <th rowspan="2">OPERATOR</td>
-                            <td >ARIF BUDIMAN</td>
-                            <th >08.00 - 16.00</th>
-                        </tr>
-                        <tr>
-                            <td>RACHMAD HIDAYAT</td>
-                            <th>08.00 - 16.00</th>
-                        </tr>
+                    @foreach ($operator_alat as $alat)
+                        @if ($alat['berth_no'] == 'I2')
+                            @php
+                                $ccFound = false;
+                            @endphp
 
-                        <tr>
-                            <th>SOA</th>
-                            <td>HASAN</td>
-                            <th rowspan="2">08.00 - 16.00</th>
+                            @foreach ($alat['detail'] as $d_alat)
+                                @if (strpos($d_alat['nama_alat'], 'CC') !== false)
+                                    @php
+                                        $ccFound = true;
+                                    @endphp
+                                    <thead>
+                                        <tr>
+                                            <th rowspan="5">{{ $d_alat['nama_alat'] }}</th>
+                                            <th rowspan="2">OPERATOR</td>
+                                            <td >{{ $d_alat['operators'][0]['nama'] }}</td>
+                                            @foreach($group_shift as $item)
+                                            <th rowspan="2">{{ $item->waktu_mulai }} - {{ $item->waktu_selesai }}</th>
+                                            @endforeach
+                                        </tr>
+                                        <tr>
+                                            <td>{{ isset($d_alat['operators'][1]['nama']) ? $d_alat['operators'][1]['nama'] : '-' }}</td>
+                                        </tr>
 
-                        </tr>
+                                        <tr>
+                                            <th>SOA</th>
+                                            <td>HASAN</td>
+                                            @foreach($group_shift as $item)
+                                                <th rowspan="2">{{ $item->waktu_mulai }} - {{ $item->waktu_selesai }}</th>
+                                            @endforeach
 
-                        <tr>
-                            <th>WOA</th>
-                            <td>BAYU</td>
-                        </tr>
-                        <tr>
-                            <th>TKBM / LASHER</th>
-                            <td> - </td>
-                            <th>08.00 - 16.00</th>
+                                        </tr>
 
-                        </tr>
-                    </thead>
+                                        <tr>
+                                            <th>WOA</th>
+                                            <td>BAYU</td>
+                                        </tr>
+                                        <tr>
+                                            <th>TKBM / LASHER</th>
+                                            <td> - </td>
+                                            @foreach($group_shift as $item)
+                                                <th>{{ $item->waktu_mulai }} - {{ $item->waktu_selesai }}</th>
+                                            @endforeach
 
-                    <!-- QCC 02 -->
-                    <thead>
-                        <tr>
-                            <th rowspan="5">QCC 02</th>
-                            <th rowspan="2">OPERATOR</td>
-                            <td >ARIFIN</td>
-                            <th >08.00 - 16.00</th>
-                        </tr>
-                        <tr>
-                            <td>RACHMAD HIDAYAT</td>
-                            <th>08.00 - 16.00</th>
-                        </tr>
+                                        </tr>
+                                    </thead>
+                                    @endif
+                            @endforeach
 
-                        <tr>
-                            <th>SOA</th>
-                            <td>HASAN</td>
-                            <th rowspan="2">08.00 - 16.00</th>
+                            @if (!$ccFound)
+                            <thead>
+                                <tr>
+                                    <th rowspan="5">-</th>
+                                    <th rowspan="2">OPERATOR</td>
+                                    <td >-</td>
+                                    <th >-</th>
+                                </tr>
+                                <tr>
+                                    <td>-</td>
+                                    <th>-</th>
+                                </tr>
 
-                        </tr>
+                                <tr>
+                                    <th>SOA</th>
+                                    <td>-</td>
+                                    <th rowspan="2">08.00 - 16.00</th>
+                                </tr>
 
-                        <tr>
-                            <th>WOA</th>
-                            <td>JOKO</td>
-                        </tr>
-                        <tr>
-                            <th>TKBM / LASHER</th>
-                            <td> - </td>
-                            <th>-</th>
+                                <tr>
+                                    <th>WOA</th>
+                                    <td>-</td>
+                                </tr>
+                                <tr>
+                                    <th>TKBM / LASHER</th>
+                                    <td> - </td>
+                                    <th>-</th>
+                                </tr>
+                            </thead>
+                            <thead>
+                                <tr>
+                                    <th rowspan="5">-</th>
+                                    <th rowspan="2">OPERATOR</td>
+                                    <td >-</td>
+                                    <th >-</th>
+                                </tr>
+                                <tr>
+                                    <td>-</td>
+                                    <th>-</th>
+                                </tr>
 
-                        </tr>
-                    </thead>
+                                <tr>
+                                    <th>SOA</th>
+                                    <td>-</td>
+                                    <th rowspan="2">08.00 - 16.00</th>
+                                </tr>
+                                <tr>
+                                    <th>WOA</th>
+                                    <td>-</td>
+                                </tr>
+                                <tr>
+                                    <th>TKBM / LASHER</th>
+                                    <td> - </td>
+                                    <th>-</th>
+                                </tr>
+                            </thead>
+                            <thead>
+                                <tr>
+                                    <th rowspan="5">-</th>
+                                    <th rowspan="2">OPERATOR</td>
+                                    <td >-</td>
+                                    <th >-</th>
+                                </tr>
+                                <tr>
+                                    <td>-</td>
+                                    <th>-</th>
+                                </tr>
 
-                    <!-- QCC 03 -->
-                    <thead>
-                        <tr>
-                            <th rowspan="5">-</th>
-                            <th rowspan="2">-</td>
-                            <td >-</td>
-                            <th >-</th>
-                        </tr>
-                        <tr>
-                            <td>- -</td>
-                            <th>-</th>
-                        </tr>
-
-                        <tr>
-                            <th>-</th>
-                            <td>-</td>
-                            <th rowspan="2">-</th>
-
-                        </tr>
-
-                        <tr>
-                            <th>-</th>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <th>-</th>
-                            <td> -</td>
-                            <th>-</th>
-
-                        </tr>
-                    </thead>
+                                <tr>
+                                    <th>SOA</th>
+                                    <td>-</td>
+                                    <th rowspan="2">08.00 - 16.00</th>
+                                </tr>
+                                <tr>
+                                    <th>WOA</th>
+                                    <td>-</td>
+                                </tr>
+                                <tr>
+                                    <th>TKBM / LASHER</th>
+                                    <td> - </td>
+                                    <th>-</th>
+                                </tr>
+                            </thead>
+                            @endif
+                        @endif
+                    @endforeach
                 </table>
             </div>
 
@@ -819,90 +910,80 @@
                             <th colspan="4" class="rtg">RTG / RMGC / RS / SL</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <!-- RTG 05 -->
-                        <tr>
-                            <th rowspan="2">RTG 04</th>
-                            <th>OPERATOR</th>
-                            <td>BAIHAQI</td>
-                            <th rowspan="15">08:00 - 16:00</th>
-                        </tr>
-                        <tr>
-                            <th>YOA</th>
-                            <td>-</td>
-                        </tr>
+                    @foreach ($operator_alat as $alat)
+                        @if ($alat['berth_no'] == 'I2')
+                        @php
+                            $rtgFound = false;
+                        @endphp
 
-                        <!-- RTG 05 -->
-                        <tr>
-                            <th rowspan="2">RTG 07</th>
-                            <th>OPERATOR</th>
-                            <td>HUTOMO</td>
-                        </tr>
-                        <tr>
-                            <th>YOA</th>
-                            <td>-</td>
-                        </tr>
+                        @foreach ($alat['detail'] as $alat_r)
+                            @if(strpos($alat_r['nama_alat'], 'RTG') !== false || strpos($alat_r['nama_alat'], 'RS') !== false)
+                            @php
+                                $rtgFound = true;
+                            @endphp
+                            <tbody>
+                                <tr>
+                                    <th rowspan="2">{{ $alat_r['nama_alat'] }}</th>
+                                    <th>OPERATOR</th>
+                                    <td >{{ $alat_r['operators'][0]['nama'] }}</td>
+                                    @foreach($group_shift as $item)
+                                        <th rowspan="2">{{ $item->waktu_mulai }} - {{ $item->waktu_selesai }}</th>
+                                    @endforeach
+                                </tr>
+                                <tr>
+                                    <th>YOA</th>
+                                    <td>-</td>
+                                </tr>
+                            </tbody>
+                            @endif
+                            @endforeach
 
-                        <!-- RTG 09 -->
-                        <tr>
-                            <th rowspan="2">RTG 07</th>
-                            <th>OPERATOR</th>
-                            <td>PURNA</td>
-                        </tr>
-                        <tr>
-                            <th>YOA</th>
-                            <td>-</td>
-                        </tr>
-
-                        <!-- RTG 09 -->
-                        <tr>
-                            <th rowspan="2">-</th>
-                            <th>-</th>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <th>-</th>
-                            <td>-</td>
-                        </tr>
-
-                        <!-- RTG 09 -->
-                        <tr>
-                            <th rowspan="2">-</th>
-                            <th>-</th>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <th>-</th>
-                            <td>-</td>
-                        </tr>
-                        <!-- RTG - -->
-                        <tr>
-                            <th rowspan="2">-</th>
-                            <th>-</th>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <th>-</th>
-                            <td>-</td>
-                        </tr>
-                        
-                        <!-- RTG -->
-                        <tr>
-                            <th rowspan="2">-</th>
-                            <th>-</th>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <th>-</th>
-                            <td>-</td>
-                        </tr>
-                        <!-- RTG -->
-                        <tr>
-                            <th rowspan="1">-</th>
-                            <th>-</th>
-                            <td>-</td>
-                        </tr>
-                    </tbody>
+                            @if (!$rtgFound)
+                            <tbody>
+                                <tr>
+                                    <th rowspan="2">-</th>
+                                    <th>OPERATOR</th>
+                                    <td>-</td>
+                                    <th rowspan="2">-</th>
+                                </tr>
+                                <tr>
+                                    <th>YOA</th>
+                                    <td>-</td>
+                                </tr>
+                                <tr>
+                                    <th rowspan="2">-</th>
+                                    <th>OPERATOR</th>
+                                    <td>-</td>
+                                    <th rowspan="2">-</th>
+                                </tr>
+                                <tr>
+                                    <th>YOA</th>
+                                    <td>-</td>
+                                </tr>
+                                <tr>
+                                    <th rowspan="2">-</th>
+                                    <th>OPERATOR</th>
+                                    <td>-</td>
+                                    <th rowspan="2">-</th>
+                                </tr>
+                                <tr>
+                                    <th>YOA</th>
+                                    <td>-</td>
+                                </tr>
+                                <tr>
+                                    <th rowspan="2">-</th>
+                                    <th>OPERATOR</th>
+                                    <td>-</td>
+                                    <th rowspan="2">-</th>
+                                </tr>
+                                <tr>
+                                    <th>YOA</th>
+                                    <td>-</td>
+                                </tr>
+                            </tbody>
+                            @endif
+                        @endif
+                    @endforeach
                 </table>
             </div>
 
@@ -970,7 +1051,7 @@
     </div>
 
     <!-- BERTH 03 -->
-    <div class="card-berth-02">
+    <div class="card-berth-03">
         <div class="card-header">
             <h5 class="header-title">BERTH 03</h5>
         </div>
@@ -1062,100 +1143,149 @@
                         </tr>
                     </thead>
                     <!-- QCC 01 -->
-                    <thead>
-                        <tr>
-                            <th rowspan="5">QCC 01</th>
-                            <th rowspan="2">OPERATOR</td>
-                            <td >ARIF BUDIMAN</td>
-                            <th >08.00 - 16.00</th>
-                        </tr>
-                        <tr>
-                            <td>RACHMAD HIDAYAT</td>
-                            <th>08.00 - 16.00</th>
-                        </tr>
+                    @foreach ($operator_alat as $alat)
+                        @if ($alat['berth_no'] == 'I3')
+                            @php
+                                $ccFound = false;
+                            @endphp
 
-                        <tr>
-                            <th>SOA</th>
-                            <td>HASAN</td>
-                            <th rowspan="2">08.00 - 16.00</th>
+                            @foreach ($alat['detail'] as $d_alat)
+                                @if (strpos($d_alat['nama_alat'], 'CC') !== false)
+                                    @php
+                                        $ccFound = true;
+                                    @endphp
+                                    <thead>
+                                        <tr>
+                                            <th rowspan="5">{{ $d_alat['nama_alat'] }}</th>
+                                            <th rowspan="2">OPERATOR</td>
+                                            <td >{{ $d_alat['operators'][0]['nama'] }}</td>
+                                            @foreach($group_shift as $item)
+                                            <th rowspan="2">{{ $item->waktu_mulai }} - {{ $item->waktu_selesai }}</th>
+                                            @endforeach
+                                        </tr>
+                                        <tr>
+                                            <td>{{ isset($d_alat['operators'][1]['nama']) ? $d_alat['operators'][1]['nama'] : '-' }}</td>
+                                        </tr>
 
-                        </tr>
+                                        <tr>
+                                            <th>SOA</th>
+                                            <td>HASAN</td>
+                                            @foreach($group_shift as $item)
+                                                <th rowspan="2">{{ $item->waktu_mulai }} - {{ $item->waktu_selesai }}</th>
+                                            @endforeach
 
-                        <tr>
-                            <th>WOA</th>
-                            <td>BAYU</td>
-                        </tr>
-                        <tr>
-                            <th>TKBM / LASHER</th>
-                            <td> - </td>
-                            <th>08.00 - 16.00</th>
+                                        </tr>
 
-                        </tr>
-                    </thead>
+                                        <tr>
+                                            <th>WOA</th>
+                                            <td>BAYU</td>
+                                        </tr>
+                                        <tr>
+                                            <th>TKBM / LASHER</th>
+                                            <td> - </td>
+                                            @foreach($group_shift as $item)
+                                                <th>{{ $item->waktu_mulai }} - {{ $item->waktu_selesai }}</th>
+                                            @endforeach
 
-                    <!-- QCC 02 -->
-                    <thead>
-                        <tr>
-                            <th rowspan="5">QCC 02</th>
-                            <th rowspan="2">OPERATOR</td>
-                            <td >ARIFIN</td>
-                            <th >08.00 - 16.00</th>
-                        </tr>
-                        <tr>
-                            <td>RACHMAD HIDAYAT</td>
-                            <th>08.00 - 16.00</th>
-                        </tr>
+                                        </tr>
+                                    </thead>                              
+                                @endif
+                            @endforeach
 
-                        <tr>
-                            <th>SOA</th>
-                            <td>HASAN</td>
-                            <th rowspan="2">08.00 - 16.00</th>
+                            @if (!$ccFound)
+                                <thead>
+                                    <tr>
+                                        <th rowspan="5">-</th>
+                                        <th rowspan="2">OPERATOR</td>
+                                        <td >-</td>
+                                        <th >-</th>
+                                    </tr>
+                                    <tr>
+                                        <td>-</td>
+                                        <th>-</th>
+                                    </tr>
 
-                        </tr>
+                                    <tr>
+                                        <th>SOA</th>
+                                        <td>-</td>
+                                        <th rowspan="2">-</th>
 
-                        <tr>
-                            <th>WOA</th>
-                            <td>JOKO</td>
-                        </tr>
-                        <tr>
-                            <th>TKBM / LASHER</th>
-                            <td> - </td>
-                            <th>-</th>
+                                    </tr>
 
-                        </tr>
-                    </thead>
+                                    <tr>
+                                        <th>WOA</th>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <th>TKBM / LASHER</th>
+                                        <td> - </td>
+                                        <th>-</th>
 
-                    <!-- QCC 03 -->
-                    <thead>
-                        <tr>
-                            <th rowspan="5">-</th>
-                            <th rowspan="2">-</td>
-                            <td >-</td>
-                            <th >-</th>
-                        </tr>
-                        <tr>
-                            <td>- -</td>
-                            <th>-</th>
-                        </tr>
+                                    </tr>
+                                </thead>
+                                <thead>
+                                    <tr>
+                                        <th rowspan="5">-</th>
+                                        <th rowspan="2">OPERATOR</td>
+                                        <td >-</td>
+                                        <th >-</th>
+                                    </tr>
+                                    <tr>
+                                        <td>-</td>
+                                        <th>-</th>
+                                    </tr>
 
-                        <tr>
-                            <th>-</th>
-                            <td>-</td>
-                            <th rowspan="2">-</th>
+                                    <tr>
+                                        <th>SOA</th>
+                                        <td>-</td>
+                                        <th rowspan="2">-</th>
 
-                        </tr>
+                                    </tr>
 
-                        <tr>
-                            <th>-</th>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <th>-</th>
-                            <td> -</td>
-                            <th>-</th>
+                                    <tr>
+                                        <th>WOA</th>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <th>TKBM / LASHER</th>
+                                        <td> - </td>
+                                        <th>-</th>
 
-                        </tr>
-                    </thead>
+                                    </tr>
+                                </thead>
+                                <thead>
+                                    <tr>
+                                        <th rowspan="5">-</th>
+                                        <th rowspan="2">OPERATOR</td>
+                                        <td >-</td>
+                                        <th >-</th>
+                                    </tr>
+                                    <tr>
+                                        <td>-</td>
+                                        <th>-</th>
+                                    </tr>
+
+                                    <tr>
+                                        <th>SOA</th>
+                                        <td>-</td>
+                                        <th rowspan="2">-</th>
+
+                                    </tr>
+
+                                    <tr>
+                                        <th>WOA</th>
+                                        <td>-</td>
+                                    </tr>
+                                    <tr>
+                                        <th>TKBM / LASHER</th>
+                                        <td> - </td>
+                                        <th>-</th>
+
+                                    </tr>
+                                </thead>
+                            @endif
+                        @endif
+                    @endforeach
                 </table>
             </div>
 
@@ -1166,90 +1296,80 @@
                             <th colspan="4" class="rtg">RTG / RMGC / RS / SL</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <!-- RTG 05 -->
-                        <tr>
-                            <th rowspan="2">RTG 04</th>
-                            <th>OPERATOR</th>
-                            <td>BAIHAQI</td>
-                            <th rowspan="15">08:00 - 16:00</th>
-                        </tr>
-                        <tr>
-                            <th>YOA</th>
-                            <td>-</td>
-                        </tr>
+                    @foreach ($operator_alat as $alat)
+                        @if ($alat['berth_no'] == 'I3')
+                        @php
+                            $rtgFound = false;
+                        @endphp
 
-                        <!-- RTG 05 -->
-                        <tr>
-                            <th rowspan="2">RTG 07</th>
-                            <th>OPERATOR</th>
-                            <td>HUTOMO</td>
-                        </tr>
-                        <tr>
-                            <th>YOA</th>
-                            <td>-</td>
-                        </tr>
+                        @foreach ($alat['detail'] as $alat_r)
+                            @if(strpos($alat_r['nama_alat'], 'RTG') !== false || strpos($alat_r['nama_alat'], 'RS') !== false)
+                            @php
+                                $rtgFound = true;
+                            @endphp
+                            <tbody>
+                                <tr>
+                                    <th rowspan="2">{{ $alat_r['nama_alat'] }}</th>
+                                    <th>OPERATOR</th>
+                                    <td >{{ $alat_r['operators'][0]['nama'] }}</td>
+                                    @foreach($group_shift as $item)
+                                        <th rowspan="2">{{ $item->waktu_mulai }} - {{ $item->waktu_selesai }}</th>
+                                    @endforeach
+                                </tr>
+                                <tr>
+                                    <th>YOA</th>
+                                    <td>-</td>
+                                </tr>
+                            </tbody>
+                            @endif
+                            @endforeach
 
-                        <!-- RTG 09 -->
-                        <tr>
-                            <th rowspan="2">RTG 07</th>
-                            <th>OPERATOR</th>
-                            <td>PURNA</td>
-                        </tr>
-                        <tr>
-                            <th>YOA</th>
-                            <td>-</td>
-                        </tr>
-
-                        <!-- RTG 09 -->
-                        <tr>
-                            <th rowspan="2">-</th>
-                            <th>-</th>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <th>-</th>
-                            <td>-</td>
-                        </tr>
-
-                        <!-- RTG 09 -->
-                        <tr>
-                            <th rowspan="2">-</th>
-                            <th>-</th>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <th>-</th>
-                            <td>-</td>
-                        </tr>
-                        <!-- RTG - -->
-                        <tr>
-                            <th rowspan="2">-</th>
-                            <th>-</th>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <th>-</th>
-                            <td>-</td>
-                        </tr>
-                        
-                        <!-- RTG -->
-                        <tr>
-                            <th rowspan="2">-</th>
-                            <th>-</th>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <th>-</th>
-                            <td>-</td>
-                        </tr>
-                        <!-- RTG -->
-                        <tr>
-                            <th rowspan="1">-</th>
-                            <th>-</th>
-                            <td>-</td>
-                        </tr>
-                    </tbody>
+                            @if (!$rtgFound)
+                            <tbody>
+                                <tr>
+                                    <th rowspan="2">-</th>
+                                    <th>OPERATOR</th>
+                                    <td>-</td>
+                                    <th rowspan="2">-</th>
+                                </tr>
+                                <tr>
+                                    <th>YOA</th>
+                                    <td>-</td>
+                                </tr>
+                                <tr>
+                                    <th rowspan="2">-</th>
+                                    <th>OPERATOR</th>
+                                    <td>-</td>
+                                    <th rowspan="2">-</th>
+                                </tr>
+                                <tr>
+                                    <th>YOA</th>
+                                    <td>-</td>
+                                </tr>
+                                <tr>
+                                    <th rowspan="2">-</th>
+                                    <th>OPERATOR</th>
+                                    <td>-</td>
+                                    <th rowspan="2">-</th>
+                                </tr>
+                                <tr>
+                                    <th>YOA</th>
+                                    <td>-</td>
+                                </tr>
+                                <tr>
+                                    <th rowspan="2">-</th>
+                                    <th>OPERATOR</th>
+                                    <td>-</td>
+                                    <th rowspan="2">-</th>
+                                </tr>
+                                <tr>
+                                    <th>YOA</th>
+                                    <td>-</td>
+                                </tr>
+                            </tbody>
+                            @endif
+                        @endif
+                    @endforeach
                 </table>
             </div>
 
